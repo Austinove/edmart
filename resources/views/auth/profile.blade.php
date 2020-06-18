@@ -8,7 +8,7 @@
               <div class="col-lg-3 order-lg-2">
                 <div class="card-profile-image">
                   <a href="#">
-                    <img src="../assets/img/theme/team-4.jpg" class="rounded-circle">
+                    <img src="{{ asset('/profiles/default.jpg') }}" class="rounded-circle">
                   </a>
                 </div>
               </div>
@@ -48,6 +48,7 @@
             </div>
             <div class="card-body">
               <form id="userInfo">
+                @csrf
                 <h6 class="heading-small text-muted mb-4">User information</h6>
                 <div class="pl-lg-4">
                   <div class="row">
@@ -83,6 +84,7 @@
                 </div>
               </form>
               <form id="changePassword" class="toggleForms">
+                @csrf
                 <h6 class="heading-small text-muted mb-4">User Password</h6>
                 <div class="pl-lg-4">
                   <div class="row">
@@ -108,7 +110,7 @@
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group" style="margin-top: 30px;">
-                        <button type="submit" class="btn btn-md font-weight-light custom-btn"><i class="fa fa-save"></i> Save Password</button>
+                        <button type="submit" id="password-btn" class="btn btn-md font-weight-light custom-btn"><i class="fa fa-save"></i> Save Password</button>
                       </div>
                     </div>
                   </div>

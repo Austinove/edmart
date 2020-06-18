@@ -13,25 +13,26 @@
             </div>
           </div>
           <!-- Card stats -->
-          <form class="form-expences toggleForms">
+          <form class="form-expences toggleForms" enctype="multipart/form-data">
+            @csrf
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1" class="small-text">Expence Description</label>
-                        <textarea class="form-control form-control-alternative" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea name="desc" class="form-control form-control-alternative" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleFormControlInput1" class="small-text">Amount</label>
                         <div class="bg-secondary">
-                            <input type="number" class="form-control form-control-alternative" placeholder="e.g 20000">
+                            <input name="amount" type="number" class="form-control form-control-alternative" placeholder="e.g 20000">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group" style="margin-top: 30px;">
-                        <button class="btn btn-outline-secondary mb-0 custom-btn btn-md">
+                        <button id="exp-btn" class="btn btn-outline-secondary mb-0 custom-btn btn-md">
                             <i class="fa fa-arrow-right"></i>
                             Request
                         </button>

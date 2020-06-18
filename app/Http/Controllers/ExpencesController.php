@@ -25,4 +25,11 @@ class ExpencesController extends Controller
     {
         return view('finance.expences');
     }
+    public function create(Request $request)
+    {
+        return $request;
+        // return response()->json([
+        //     "msg" => $request
+        // ]);
+    }
 }

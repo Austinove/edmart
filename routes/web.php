@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', "Auth\LoginController@showLoginForm")->name('login');
 Route::get('/profile', "ProfilesController@index")->name('profile');
 Route::get('/expences', 'ExpencesController@index')->name('expences');
+Route::post('/expences/create', 'ExpencesController@create')->name('createExpences');
 
 Auth::routes();
 
