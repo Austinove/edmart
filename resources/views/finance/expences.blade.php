@@ -50,26 +50,34 @@
                                 Pending Expences Requests
                             </a>
                         </li>
-                        <li class="nav-item mt-4">
+                        {{-- <li class="nav-item mt-4">
                             <a class="nav-link custom-nav-link" id="accepted-pill" data-toggle="pill" href="#accepted-req" role="tab" aria-controls="accepted-req" aria-selected="false">
                                 Accepted Requests
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item mt-4">
                             <a class="nav-link custom-nav-link" id="cancel-pill" data-toggle="pill" href="#cancel-req" role="tab" aria-controls="cancel-req" aria-selected="false">
                                 Cancelled Requests
                             </a>
                         </li>
-                        <li class="nav-item mt-4">
-                            <a class="nav-link custom-nav-link" id="exp-requests-pill" data-toggle="pill" href="#exp-requests" role="tab" aria-controls="exp-requests" aria-selected="false">
-                                Expences Requests
-                            </a>
-                        </li>
-                        <li class="nav-item mt-4">
-                            <a class="nav-link custom-nav-link" id="recommend-pill" data-toggle="pill" href="#recommend-req" role="tab" aria-controls="recommend-req" aria-selected="false">
-                                Recommended Expences
-                            </a>
-                        </li>
+                        @if (Auth::user())
+                            @if((Auth()->user()->userType==="hr"))
+                                <li class="nav-item mt-4">
+                                    <a class="nav-link custom-nav-link" id="exp-requests-pill" data-toggle="pill" href="#exp-requests" role="tab" aria-controls="exp-requests" aria-selected="false">
+                                        Expences Requests
+                                    </a>
+                                </li>
+                            @endif
+                        @endif
+                        @if (Auth::user())
+                            @if((Auth()->user()->userType==="admin"))
+                                <li class="nav-item mt-4">
+                                    <a class="nav-link custom-nav-link" id="recommend-pill" data-toggle="pill" href="#recommend-req" role="tab" aria-controls="recommend-req" aria-selected="false">
+                                        Recommended Expences
+                                    </a>
+                                </li>
+                            @endif
+                        @endif
                         <li class="nav-item mt-4">
                             <a class="nav-link custom-nav-link" id="approved-pill" data-toggle="pill" href="#approved-req" role="tab" aria-controls="approved-req" aria-selected="false">
                                 Approved Expences
@@ -127,7 +135,7 @@
 
 
 
-                        <div class="tab-pane fade" id="accepted-req" role="tabpanel" aria-labelledby="accepted-pill">
+                        {{-- <div class="tab-pane fade" id="accepted-req" role="tabpanel" aria-labelledby="accepted-pill">
                             <h5 class="mb-4 custom-color">Accepted Requests</h5>
                             <div class="table-responsive">
                             <table class="table align-items-center table-flush">
@@ -169,7 +177,7 @@
                                 </tbody>
                             </table>
                             </div>
-                        </div>
+                        </div> --}}
 
 
 
@@ -265,91 +273,97 @@
                             </div>
                         </div>
 
+                        @if (Auth::user())
+                            @if((Auth()->user()->userType==="admin"))
+                                <div class="tab-pane fade" id="recommend-req" role="tabpanel" aria-labelledby="recommend-pill">
+                                    <div class="row">
+                                        <div class="col-md-4"><h5 class="mb-4 custom-color">Recommended Expence Requests</h5></div>
+                                    </div>
+                                    
+                                    <div class="table-responsive">
+                                        <table class="table align-items-center table-flush">
+                                            <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col" class="sort" data-sort="name">Description</th>
+                                                <th scope="col" class="sort" data-sort="budget">Budget</th>
+                                                <th scope="col" class="sort" data-sort="status">User</th>
+                                                <th scope="col" class="sort" data-sort="completion">Date</th>
+                                                <th scope="col" class="sort">Actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="list">
+                                            <tr>
+                                                <td>
+                                                    Transport to NSSF
+                                                </td>
+                                                <td class="budget"> 5000 Ush </td>
+                                                <td>
+                                                    <span class="status">Bryan Austin</span>
+                                                </td>
+                                                <td> 6/17/2020 </td>
+                                                <td class="text-left">
+                                                <div class="dropdown-lg">
+                                                    <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                    <a class="dropdown-item" href="#">Cashout</a>
+                                                    <a class="dropdown-item" href="#">Remove</a>
+                                                    </div>
+                                                </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+                        @endif
 
-                        <div class="tab-pane fade" id="recommend-req" role="tabpanel" aria-labelledby="recommend-pill">
-                            <div class="row">
-                                <div class="col-md-4"><h5 class="mb-4 custom-color">Recommended Expence Requests</h5></div>
-                            </div>
-                            
-                            <div class="table-responsive">
-                                <table class="table align-items-center table-flush">
-                                    <thead class="thead-light">
-                                    <tr>
-                                        <th scope="col" class="sort" data-sort="name">Description</th>
-                                        <th scope="col" class="sort" data-sort="budget">Budget</th>
-                                        <th scope="col" class="sort" data-sort="status">User</th>
-                                        <th scope="col" class="sort" data-sort="completion">Date</th>
-                                        <th scope="col" class="sort">Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody class="list">
-                                    <tr>
-                                        <td>
-                                            Transport to NSSF
-                                        </td>
-                                        <td class="budget"> 5000 Ush </td>
-                                        <td>
-                                            <span class="status">Bryan Austin</span>
-                                        </td>
-                                        <td> 6/17/2020 </td>
-                                        <td class="text-left">
-                                        <div class="dropdown-lg">
-                                            <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="#">Cashout</a>
-                                            <a class="dropdown-item" href="#">Remove</a>
-                                            </div>
-                                        </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
 
 
-
-
-                        <div class="tab-pane fade" id="exp-requests" role="tabpanel" aria-labelledby="exp-requests-pill">
-                            <h5 class="mb-4 custom-color">Expence Requests</h5>
-                            <div class="table-responsive">
-                            <table class="table align-items-center table-flush">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th scope="col" class="sort" data-sort="name">Description</th>
-                                    <th scope="col" class="sort" data-sort="budget">Budget</th>
-                                    <th scope="col" class="sort" data-sort="status">User</th>
-                                    <th scope="col" class="sort" data-sort="completion">Date</th>
-                                    <th scope="col" class="sort">Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody class="list">
-                                <tr>
-                                    <td>
-                                        Transport
-                                    </td>
-                                    <td class="budget"> 5000 Ush </td>
-                                    <td>
-                                        <span class="status">Bryan Austin</span>
-                                    </td>
-                                    <td> 6/17/2020 </td>
-                                    <td class="text-left">
-                                        <div class="dropdown-lg">
-                                            <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="#">Cashout</a>
-                                            <a class="dropdown-item" href="#">Remove</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        @if (Auth::user())
+                            @if((Auth()->user()->userType==="hr"))
+                                <div class="tab-pane fade" id="exp-requests" role="tabpanel" aria-labelledby="exp-requests-pill">
+                                    <h5 class="mb-4 custom-color">Expence Requests</h5>
+                                    <div class="table-responsive">
+                                    <table class="table align-items-center table-flush">
+                                        <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col" class="sort" data-sort="name">Description</th>
+                                            <th scope="col" class="sort" data-sort="budget">Budget</th>
+                                            <th scope="col" class="sort" data-sort="status">User</th>
+                                            <th scope="col" class="sort" data-sort="completion">Date</th>
+                                            <th scope="col" class="sort">Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="list">
+                                        <tr>
+                                            <td>
+                                                Transport
+                                            </td>
+                                            <td class="budget"> 5000 Ush </td>
+                                            <td>
+                                                <span class="status">Bryan Austin</span>
+                                            </td>
+                                            <td> 6/17/2020 </td>
+                                            <td class="text-left">
+                                                <div class="dropdown-lg">
+                                                    <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                    <a class="dropdown-item" href="#">Cashout</a>
+                                                    <a class="dropdown-item" href="#">Remove</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @endif
+                        @endif
                     </div>
                 </div>
               </div>

@@ -91,9 +91,8 @@
                 </a>
             </div>
             <div class="navbar-inner">
-                <!-- Collapse -->
                 <div class="collapse navbar-collapse" id="sidenav-collapse-main">
-                <!-- Nav items -->
+                <!-- Dashboard Nav item -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
                     <a class="nav-link active" href="{{ route('home') }}">
@@ -103,28 +102,32 @@
                     </li>
                     
                 </ul>
-                    
-                <hr class="my-3">
-                <!-- Heading -->
-                <h6 class="navbar-heading p-0 text-muted">
-                    <span class="docs-normal">Company Tasks</span>
-                </h6>
-                <!-- Navigation -->
-                <ul class="navbar-nav mb-md-3">
-                    <li class="nav-item">
-                    <a class="nav-link" href="profile.html">
-                        <i class="fa fa-product-hunt" aria-hidden="true"></i>
-                        <span class="nav-link-text">Projects</span>
-                    </a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="tables.html">
-                        <i class="fa fa-edit"></i>
-                        <span class="nav-link-text">Contracts</span>
-                    </a>
-                    </li>
-                </ul>
-
+                {{-- Company tasts Nav items --}}
+                @if (Auth::user())
+                    @if((Auth()->user()->userType==="admin")||(Auth()->user()->userType==="hr"))
+                    <hr class="my-3">
+                    <!-- Heading -->
+                    <h6 class="navbar-heading p-0 text-muted">
+                        <span class="docs-normal">Company Tasks</span>
+                    </h6>
+                    <!-- Navigation -->
+                    <ul class="navbar-nav mb-md-3">
+                        <li class="nav-item">
+                            <a class="nav-link" href="profile.html">
+                                <i class="fa fa-product-hunt" aria-hidden="true"></i>
+                                <span class="nav-link-text">Projects</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="tables.html">
+                                <i class="fa fa-edit"></i>
+                                <span class="nav-link-text">Contracts</span>
+                            </a>
+                        </li>
+                    </ul>
+                    @endif
+                @endif
+                {{-- Company Finances Nav items --}}
                 <hr class="my-3">
                     <!-- Heading -->
                     <h6 class="navbar-heading p-0 text-muted">
@@ -138,28 +141,30 @@
                             <span class="nav-link-text">Expences</span>
                         </a>
                         </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="tables.html">
-                            <i class="fa fa-book" aria-hidden="true"></i>
-                            <span class="nav-link-text">Quatation</span>
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="profile.html">
-                            <i class="fa fa-pencil-square" aria-hidden="true"></i>
-                            <span class="nav-link-text">Payments</span>
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="tables.html">
-                            <i class="fa fa-tasks" aria-hidden="true"></i>
-                            <span class="nav-link-text">LPO</span>
-                        </a>
-                        </li>
-                        
+                        @if (Auth::user())
+                            @if((Auth()->user()->userType==="admin")||(Auth()->user()->userType==="hr"))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="tables.html">
+                                        <i class="fa fa-book" aria-hidden="true"></i>
+                                        <span class="nav-link-text">Quatation</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="profile.html">
+                                        <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                                        <span class="nav-link-text">Payments</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="tables.html">
+                                        <i class="fa fa-tasks" aria-hidden="true"></i>
+                                        <span class="nav-link-text">LPO</span>
+                                    </a>
+                                </li>
+                            @endif
+                        @endif
                     </ul>
-                
-                <!-- Divider -->
+                {{-- Managmenting Accounts --}}
                 <hr class="my-3">
                 <!-- Heading -->
                 <h6 class="navbar-heading p-0 text-muted">
@@ -173,12 +178,16 @@
                         <span class="nav-link-text">Profile</span>
                     </a>
                     </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="{{ route('register') }}">
-                        <i class="fa fa-cog" aria-hidden="true"></i>
-                        <span class="nav-link-text">Accounts Settings</span>
-                    </a>
-                    </li>
+                    @if (Auth::user())
+                        @if(Auth()->user()->userType==="hr")
+                            <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">
+                                <i class="fa fa-cog" aria-hidden="true"></i>
+                                <span class="nav-link-text">Accounts Settings</span>
+                            </a>
+                            </li>
+                        @endif
+                    @endif
                 </ul>
 
                 <hr class="my-3">
