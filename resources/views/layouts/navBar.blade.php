@@ -46,7 +46,7 @@
                 </div>
               </a>
               <div class="dropdown-menu  dropdown-menu-right ">
-                <a href="/profile" class="dropdown-item">
+                <a href="{{ route('profile') }}" class="dropdown-item">
                   <i class="fa fa-user" aria-hidden="true"></i>
                   <span>My profile</span>
                 </a>
@@ -56,11 +56,9 @@
                   <i class="fa fa-sign-out" aria-hidden="true"></i>
                   <span>Logout</span>
                 </a>
-                {{-- <a class="dropdown-item" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
-                </a> --}}
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
               </div>
             </li>
           </ul>

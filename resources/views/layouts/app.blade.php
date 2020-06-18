@@ -96,7 +96,7 @@
                 <!-- Nav items -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                    <a class="nav-link active" href="/dashboard">
+                    <a class="nav-link active" href="{{ route('home') }}">
                         <i class="fa fa-align-center" aria-hidden="true"></i>
                         <span class="nav-link-text">Dashboard</span>
                     </a>
@@ -133,7 +133,7 @@
                     <!-- Navigation -->
                     <ul class="navbar-nav mb-md-3">
                         <li class="nav-item">
-                        <a class="nav-link" href="/expences">
+                        <a class="nav-link" href="{{ route('expences') }}">
                             <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>
                             <span class="nav-link-text">Expences</span>
                         </a>
@@ -168,13 +168,13 @@
                 <!-- Navigation -->
                 <ul class="navbar-nav mb-md-3">
                     <li class="nav-item">
-                    <a class="nav-link" href="/profile">
+                    <a class="nav-link" href="{{ route('profile') }}">
                         <i class="fa fa-user-md" aria-hidden="true"></i>
                         <span class="nav-link-text">Profile</span>
                     </a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="/register">
+                    <a class="nav-link" href="{{ route('register') }}">
                         <i class="fa fa-cog" aria-hidden="true"></i>
                         <span class="nav-link-text">Accounts Settings</span>
                     </a>

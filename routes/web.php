@@ -13,19 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
-Route::get('/profile', function () {
-    return view('auth.profile');
-});
-Route::get('/dashboard', function(){
-    return view('dashboard.index');
-});
-Route::get('/expences', function() {
-    return view('finance.expences');
-});
+Route::get('/', "Auth\LoginController@showLoginForm")->name('login');
+Route::get('/profile', "ProfilesController@index")->name('profile');
+// Route::get('/dashboard', 'HomeController@index')->('dashboard');
+Route::get('/expences', 'ExpencesController@index')->name('expences');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'HomeController@index')->name('home');

@@ -96,18 +96,27 @@
                                     <label class="custom-file-label form-control-alternative" for="customFileLang">Select Image</label>
                                 </div>
                             </div>
+                            <div class="form-group mb-3">
+                                <label for="exampleFormControlInput1" class="small-text custom-color">User Type</label>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="worker" name="userType" required value="worker" class="custom-control-input">
+                                    <label class="custom-control-label custom-color font-italic font-weight-light" for="worker">Worker</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="hr" name="userType" required value="hr" class="custom-control-input">
+                                    <label class="custom-control-label custom-color font-italic font-weight-light" for="hr">Human Resource</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="admin" name="userType" required value="admin" class="custom-control-input">
+                                    <label class="custom-control-label custom-color font-italic font-weight-light" for="admin">Admin</label>
+                                </div>
+                            </div>
                             <div class="alert alert-default custom-bg" role="alert">
                                 <strong>Cation!! </strong>
                                 <div>
-                                    By default password will be <strong> user's names </strong> without spaces
+                                    By default password will be <strong> "password" </strong> without spaces
                                 </div>
                             </div>
-                            {{-- <input id="password" type="password" value="pa" class="form-control @error('password') is-invalid @enderror" name="password" required> --}}
-
-                            {{-- <div class="form-group">
-                                <label for="exampleFormControlInput1" class="small-text custom-color">Confirm Password</label>
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div> --}}
 
                             <div class="text-left">
                             <button type="submit" class="btn btn-outline-primary my-4 btn-md custom-btn">Register User</button>
