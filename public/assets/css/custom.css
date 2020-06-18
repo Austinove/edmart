@@ -1,0 +1,61 @@
+.custom-bg {
+    background-color: #efaa58 !important;
+    border-color: transparent !important;
+}
+.btn-bg {
+    background-color: #efaa58 !important;
+    border-color: #efaa58 !important;
+}
+.nav-bg {
+    background-color: #d98219;
+}
+.custom-color {
+    color: #b76c11 !important;
+}
+.custom-btn {
+    color: #d27f1b !important;
+    border-color: #d27f1b !important;
+    background-color: white !important;
+}
+.custom-btn-default {
+    color: white !important;
+    border-color: #d27f1b !important;
+    background-color: #d27f1b !important;
+}
+
+.custom-btn:hover {
+    color: white !important;
+    border-color: #d27f1b !important;
+    background-color: #d27f1b !important;
+}
+.custom-nav-link {
+    color: #d27f1b !important;
+    background-color: #fff !important;
+    height: 40px;
+    padding-top: 10px;
+}
+.custom-nav-link.active {
+    color: #fff !important;
+    background-color: #d27f1b !important;
+    height: 43px;
+    padding-top: 11px;
+}
+.small-text {
+    font-size: 14px !important;
+}
+.login-color {
+    color: #a96514 !important;
+}
+.login-card {
+    box-shadow: 0 0 0.5rem 0 #c57411 !important;
+}
+main {
+    overflow-x: hidden;
+    min-height: 81vh;
+}
+.toggleForms {
+    display: none !important;
+}
+.pointer :hover {
+    cursor: pointer !important;
+}
