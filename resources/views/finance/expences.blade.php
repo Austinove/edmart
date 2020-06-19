@@ -86,7 +86,6 @@
                         </li>
                     </ul>
 
-
                     <div class="tab-content" id="pills-tabContent">
                         <hr/>
                         <div class="tab-pane fade show active" id="pending-exp" role="tabpanel" aria-labelledby="pending-pill">
@@ -121,9 +120,8 @@
                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item" href="#">Resend</a>
+                                        <a class="dropdown-item" href="#">Edit</a>
                                         <a class="dropdown-item" href="#">Withdraw</a>
-                                        <a class="dropdown-item" href="#">Remove</a>
                                         </div>
                                     </div>
                                     </td>
@@ -308,8 +306,8 @@
                                                     <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    <a class="dropdown-item" href="#">Cashout</a>
-                                                    <a class="dropdown-item" href="#">Remove</a>
+                                                    <a class="dropdown-item" href="#">Accept</a>
+                                                    <a class="dropdown-item" href="#">Decline</a>
                                                     </div>
                                                 </div>
                                                 </td>
@@ -354,8 +352,8 @@
                                                     <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    <a class="dropdown-item" href="#">Cashout</a>
-                                                    <a class="dropdown-item" href="#">Remove</a>
+                                                    <a class="dropdown-item" href="#">Recommend</a>
+                                                    <a class="dropdown-item" href="#">Decline</a>
                                                     </div>
                                                 </div>
                                             </td>

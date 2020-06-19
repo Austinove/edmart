@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ asset('/assets/img/favicon.png')}}" type="image/png">
     <title>EDMART SYSTEM</title>
-    <link rel="stylesheet" href="{{ asset('/css/app.css') }}"  type="text/css">
+    {{-- <link rel="stylesheet" href="{{ asset('/css/app.css') }}"  type="text/css"> --}}
     <link rel="stylesheet" href="{{ asset('/assets/css/argon.css?v=1.2.0') }}"  type="text/css">
     <link rel="stylesheet" href="{{ asset('/assets/css/custom.css') }}"  type="text/css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
@@ -305,7 +305,7 @@
   {{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script> --}}
   <script src="{{ asset('/assets/js/notify.js') }}"></script>
   <script src="{{ asset('/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('/assets/js/bootstrap-notify.js') }}"></script>
+  {{-- <script src="{{ asset('/assets/js/bootstrap-notify.js') }}"></script> --}}
   <script src="{{ asset('/assets/vendor/js-cookie/js.cookie.js') }}"></script>
   <script src="{{ asset('/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
   <script src="{{ asset('/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}"></script>

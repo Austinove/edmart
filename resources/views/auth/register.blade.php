@@ -29,7 +29,7 @@
                                 @enderror
                             </div>
                             <div class="form-group mb-3">
-                                <label for="exampleFormControlInput1" class="small-text custom-color">Image(<span class="font-italic">Optional</span>)</label>
+                                <label for="exampleFormControlInput1" class="small-text custom-color">Image (<span class="font-italic"> Optional </span>)</label>
                                 <div class="custom-file pointer">
                                     <input type="file" name="image" class="image custom-file-input" id="customFileLang" lang="en">
                                     <label class="custom-file-label form-control-alternative" for="customFileLang">Select Image</label>
