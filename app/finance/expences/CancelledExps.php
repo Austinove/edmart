@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CancelledExps extends Model
 {
-    //
+    protected $fillable = [
+        "viewed"
+    ];
 }
