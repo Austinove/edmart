@@ -59,3 +59,6 @@ main {
 .pointer :hover {
     cursor: pointer !important;
 }
+.material-icons {
+    display: none !important;
+}
