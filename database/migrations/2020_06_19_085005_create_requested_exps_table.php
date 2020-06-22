@@ -15,7 +15,11 @@ class CreateRequestedExpsTable extends Migration
     {
         Schema::create('requested_exps', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("exp_id")->constrained("expences")->index();
+            $table->foreignId("expences_id")
+            ->constrained()
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+            $table->index('expences_id');
             $table->string("viewed");
             $table->string("recommended");
             $table->string("aproved");

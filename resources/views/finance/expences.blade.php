@@ -19,14 +19,14 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1" class="small-text">Expence Description</label>
-                        <textarea name="desc" class="form-control form-control-alternative" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea name="desc" class="desc form-control form-control-alternative" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleFormControlInput1" class="small-text">Amount</label>
                         <div class="bg-secondary">
-                            <input name="amount" type="number" class="form-control form-control-alternative" placeholder="e.g 20000">
+                            <input name="amount" type="number" class="amount form-control form-control-alternative" placeholder="e.g 20000">
                         </div>
                     </div>
                 </div>
@@ -51,11 +51,6 @@
                                 Pending Expences Requests
                             </a>
                         </li>
-                        {{-- <li class="nav-item mt-4">
-                            <a class="nav-link custom-nav-link" id="accepted-pill" data-toggle="pill" href="#accepted-req" role="tab" aria-controls="accepted-req" aria-selected="false">
-                                Accepted Requests
-                            </a>
-                        </li> --}}
                         <li class="nav-item mt-4">
                             <a class="nav-link custom-nav-link" id="cancel-pill" data-toggle="pill" href="#cancel-req" role="tab" aria-controls="cancel-req" aria-selected="false">
                                 Cancelled Requests
@@ -91,94 +86,21 @@
                         <div class="tab-pane fade show active" id="pending-exp" role="tabpanel" aria-labelledby="pending-pill">
                             <h5 class="mb-4 custom-color">Pending Requests</h5>
                             <div class="table-responsive">
-                            <table class="table align-items-center table-flush">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th scope="col" class="sort" data-sort="name">Description</th>
-                                    <th scope="col" class="sort" data-sort="budget">Budget</th>
-                                    <th scope="col" class="sort" data-sort="status">Status</th>
-                                    <th scope="col" class="sort" data-sort="completion">Date</th>
-                                    <th scope="col" class="sort">Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody class="list">
-                                <tr>
-                                    <td>
-                                        TransportTransport
-                                    </td>
-                                    <td class="budget"> 5000 Ush </td>
-                                    <td>
-                                    <span class="badge badge-dot mr-4">
-                                        <i class="bg-warning"></i>
-                                        <span class="status">pending</span>
-                                    </span>
-                                    </td>
-                                    <td> 6/17/2020 </td>
-                                    <td class="text-left">
-                                    <div class="dropdown-lg">
-                                        <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item" href="#">Edit</a>
-                                        <a class="dropdown-item" href="#">Withdraw</a>
-                                        </div>
-                                    </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                                <table class="table align-items-center table-flush">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col" class="sort" data-sort="name">Description</th>
+                                        <th scope="col" class="sort" data-sort="budget">Budget</th>
+                                        <th scope="col" class="sort" data-sort="status">Status</th>
+                                        <th scope="col" class="sort" data-sort="completion">Date</th>
+                                        <th scope="col" class="sort">Actions</th>
+                                    </tr>
+                                    </thead>
+                                    {{-- Expences are from jQuery --}}
+                                    <tbody class="list pending-expence"></tbody>
+                                </table>
                             </div>
                         </div>
-
-
-
-
-                        {{-- <div class="tab-pane fade" id="accepted-req" role="tabpanel" aria-labelledby="accepted-pill">
-                            <h5 class="mb-4 custom-color">Accepted Requests</h5>
-                            <div class="table-responsive">
-                            <table class="table align-items-center table-flush">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th scope="col" class="sort" data-sort="name">Description</th>
-                                    <th scope="col" class="sort" data-sort="budget">Budget</th>
-                                    <th scope="col" class="sort" data-sort="status">Status</th>
-                                    <th scope="col" class="sort" data-sort="completion">Date</th>
-                                    <th scope="col" class="sort">Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody class="list">
-                                <tr>
-                                    <td>
-                                        TransportTransport
-                                    </td>
-                                    <td class="budget"> 5000 Ush </td>
-                                    <td>
-                                    <span class="badge badge-dot mr-4">
-                                        <i class="bg-warning"></i>
-                                        <span class="status">pending</span>
-                                    </span>
-                                    </td>
-                                    <td> 6/17/2020 </td>
-                                    <td class="text-left">
-                                    <div class="dropdown-lg">
-                                        <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item" href="#">Resend</a>
-                                        <a class="dropdown-item" href="#">Withdraw</a>
-                                        <a class="dropdown-item" href="#">Remove</a>
-                                        </div>
-                                    </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            </div>
-                        </div> --}}
-
-
 
 
                         <div class="tab-pane fade" id="cancel-req" role="tabpanel" aria-labelledby="cancel-pill">
@@ -193,27 +115,8 @@
                                     <th scope="col" class="sort">Actions</th>
                                 </tr>
                                 </thead>
-                                <tbody class="list">
-                                <tr>
-                                    <td>
-                                        TransportTransport
-                                    </td>
-                                    <td class="budget"> 5000 Ush </td>
-                                    <td> 6/17/2020 </td>
-                                    <td class="text-left">
-                                    <div class="dropdown-lg">
-                                        <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item" href="#">Resend</a>
-                                        <a class="dropdown-item" href="#">Withdraw</a>
-                                        <a class="dropdown-item" href="#">Remove</a>
-                                        </div>
-                                    </div>
-                                    </td>
-                                </tr>
-                                </tbody>
+                                {{-- Expences are from jQuery --}}
+                                <tbody class="list cancelled-expence"></tbody>
                             </table>
                             </div>
                         </div>
@@ -336,29 +239,8 @@
                                             <th scope="col" class="sort">Actions</th>
                                         </tr>
                                         </thead>
-                                        <tbody class="list">
-                                        <tr>
-                                            <td>
-                                                Transport
-                                            </td>
-                                            <td class="budget"> 5000 Ush </td>
-                                            <td>
-                                                <span class="status">Bryan Austin</span>
-                                            </td>
-                                            <td> 6/17/2020 </td>
-                                            <td class="text-left">
-                                                <div class="dropdown-lg">
-                                                    <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    <a class="dropdown-item" href="#">Recommend</a>
-                                                    <a class="dropdown-item" href="#">Decline</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
+                                        {{-- Requests from jQuery --}}
+                                        <tbody class="list hr-pending-requests"></tbody>
                                     </table>
                                 </div>
                             @endif

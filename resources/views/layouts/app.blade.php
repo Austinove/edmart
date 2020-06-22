@@ -199,6 +199,7 @@
                 dataType: 'json'
             });
         }
+
         //delete request function
         function deleteRequest(url) {
             return $.ajax({
@@ -208,7 +209,16 @@
                 dataType: 'json'
             });
         }
-        //Empting inputs
+
+        //notification function
+        function Notification(description, notifType) {
+            $.notify(description, notifType, {
+                autoHide: true,
+                autoHideDelay: 2000
+            });
+        }
+
+        //Empting inputs function
         function clearInputs() {
             $('.name').val('');
             $('.email').val('');
@@ -217,9 +227,8 @@
             // $('#hr').val('');
             // $('#admin').val('');
 
-            // $('#slides-title').val('');
-            // $('#slides-desc').val('');
-            // $('#slides-image').val('');
+            $('.desc').val('');
+            $('.amount').val('');
 
             // $('#news-title').val('');
             // $('#news-image').val('');
@@ -229,14 +238,9 @@
             // $('#staff-dept').val('');
             // $('#staff-image').val('');
         }
-        // $(document).on("click", ".mybtn", function(){
-        //     $.notify("hello there", "success", {
-        //         autoHide: true,
-        //         autoHideDelay: 2000
-        //     });
-        // });
 
-        //Registration submition forms
+
+//-----------------Registration submition forms---------------------------------
         $('#registration-form').submit(function (e) {
             e.preventDefault();
             var actionUrl = "register";
@@ -254,52 +258,181 @@
                     if (response.msg === "User Registered Successfully") {
                         clearInputs();
                         $('#register-btn').text('Register User');
-                        $.notify("User Registered Successfully", {
-                            autoHide: true,
-                            autoHideDelay: 2000
-                        });
-                        // renderSlides();
+                        Notification("User Registered Successfully", "success");
                     } else {
-                        $.notify("An Error occuired !!!", "warning", {
-                            autoHide: true,
-                            autoHideDelay: 2000
-                        });
+                        Notification("An Error occuired !!!", "warning");
                     }
                 })
                 .fail(error => {
-                    console.log(error);
+                    Notification("An Error occuired !!!", "warning");
                 });
             });
 
-            //Change Password forms
-            $('.form-expences').submit(function (e) {
-                e.preventDefault();
-                
-                var actionUrl = "expences/create";
-                $('#exp-btn').html('Submiting...');
-                $.ajax({
-                    url: actionUrl,
-                    type: "post",
-                    data: new FormData(this),
-                    dataType: 'json',
-                    contentType: false,
-                    cache: false,
-                    processData: false,
+
+//---------------------------Expences--------------------------------
+
+        //Submitting Expences
+        $('.form-expences').submit(function (e) {
+            e.preventDefault();
+            var actionUrl = "expences/create";
+            $('#exp-btn').html('Submiting...');
+            $.ajax({
+                url: actionUrl,
+                type: "post",
+                data: new FormData(this),
+                dataType: 'json',
+                contentType: false,
+                cache: false,
+                processData: false,
+            })
+                .done(response => {
+                    if (response.msg === "Expence Saved Successfull") {
+                        clearInputs();
+                        pendingExpences(response.expences);
+                        $('#exp-btn').html('<i class="fa fa-arrow-right"></i>Request');
+                        Notification("Expence Saved Successfull", "success");
+                    } else {
+                        Notification("An Error occuired !!!", "warning");
+                    }
                 })
-                    .done(response => {
-                        // if (response.msg === "User Registered Successfully") {
-                            console.log(response.msg);
-                            clearInputs();
-                            $('#exp-btn').html('<i class="fa fa-arrow-right"></i>Request');
-                            // renderSlides();
-                        // } else {
-                            // notifier('error');
-                        // }
-                    })
-                    .fail(error => {
-                        console.log(error);
-                    });
+                .fail(error => {
+                    Notification("An Error occuired !!!", "warning");
                 });
+        });
+
+        //get user pending Expences
+        getPendingExpences();
+        function getPendingExpences() {
+            $.when(getRequest('expences/fetch').done(response => {
+                pendingExpences(response);
+            }));
+        }
+
+        //Rendering user pending expences
+        function pendingExpences(expence_data) {
+            $(".pending-expence").html("");
+            expence_data.forEach(expence => {
+                $(".pending-expence").append(`
+                    <tr>
+                        <td>
+                            ${expence.desc}
+                        </td>
+                        <td class="budget">${expence.amount}</td>
+                        <td>
+                            <span class="badge badge-dot mr-4">
+                                <span class="status">${expence.status}</span>
+                            </span>
+                        </td>
+                        <td>${
+                            expence.created_at.includes("T") ? 
+                            expence.created_at.split('T')[0] :
+                            expence.created_at.split(' ')[0]
+                            }</td>
+                        <td class="text-left">
+                            <div class="dropdown-lg">
+                                <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item" data="${expence.id}" href="#">Edit</a>
+                                <a class="dropdown-item" data="${expence.id}" href="#">Withdraw</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `)
+            })
+        }
+
+        
+        //get Cancelled Expences
+        getCancelledExpences();
+        function getCancelledExpences() {
+            $.when(getRequest('expences/cancelled').done(response => {
+                cancelledExpences(response);
+            }));
+        }
+        //Rendering Cancelled expences
+        function cancelledExpences(expence_data) {
+            $(".cancelled-expence").html("");
+            expence_data.forEach(expence => {
+                $(".cancelled-expence").append(`
+                    <tr>
+                        <td>
+                            ${expence.desc}
+                        </td>
+                        <td class="budget">${expence.amount}</td>
+                        <td>
+                            <span class="badge badge-dot mr-4">
+                                <span class="status">${
+                                    expence.created_at.includes("T") ? 
+                                    expence.created_at.split(' ')[0] :
+                                    expence.created_at.split(' ')[0]
+                                    }</span>
+                            </span>
+                        </td>
+                        <td class="text-left">
+                            <div class="dropdown-lg">
+                                <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item" data="${expence.id}" href="#">Edit</a>
+                                <a class="dropdown-item" data="${expence.id}" href="#">Withdraw</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `)
+            })
+        }
+
+
+        
+        //get pending Expences for hr
+        getExpencesRequests();
+        function getExpencesRequests() {
+            $.when(getRequest('expences/pending').done(response => {
+                expencesRequests(response);
+            }));
+        }
+
+        //Rendering pending expences for hr
+        function expencesRequests(expence_data) {
+            $(".hr-pending-requests").html("");
+            expence_data.forEach(expence => {
+                $(".hr-pending-requests").append(`
+                    <tr>
+                        <td>
+                            ${expence.desc}
+                        </td>
+                        <td class="budget">${expence.amount}</td>
+                        <td>
+                            <span class="status">${expence.name}</span>
+                        </td>
+                        <td>
+                            ${
+                                expence.created_at.includes("T") ? 
+                                expence.created_at.split('T')[0] :
+                                expence.created_at.split(' ')[0]
+                            }
+                        </td>
+                        <td class="text-left">
+                            <div class="dropdown-lg">
+                                <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item" data="${expence.id}" href="#">Recommend</a>
+                                <a class="dropdown-item" data="${expence.id}" href="#">Decline</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `)
+            })
+        }
+
     });
   </script>
   {{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script> --}}

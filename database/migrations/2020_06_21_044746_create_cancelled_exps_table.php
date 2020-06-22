@@ -15,9 +15,14 @@ class CreateCancelledExpsTable extends Migration
     {
         Schema::create('cancelled_exps', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("exp_id")->constrained("expences")->index();
-            $table->string("viewed");
+            $table->foreignId('expences_id')
+            ->constrained()
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+            $table->index('expences_id');
+            $table->string('viewed');
             $table->timestamps();
+            
         });
     }
 

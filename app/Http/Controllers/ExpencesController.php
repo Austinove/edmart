@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Expences;
+use App\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ExpencesController extends Controller
 {
@@ -25,11 +31,63 @@ class ExpencesController extends Controller
     {
         return view('finance.expences');
     }
+
+    //creating new expences
     public function create(Request $request)
     {
-        return $request;
-        // return response()->json([
-        //     "msg" => $request
-        // ]);
+        $this->validate($request, [
+            "desc" => "required",
+            "amount" => "required|numeric",
+        ]);
+        $user = User::findOrFail(Auth::user()->id);
+        $inputs = $request->all();
+        try {
+            $user->expences()->save(
+                new Expences([
+                    "desc" => $inputs["desc"],
+                    "amount" => $inputs["amount"],
+                    "status" => "pending"
+                ])
+            );
+            return response()->json([
+                'msg' => "Expence Saved Successfull",
+                'expences' => $user->expences
+            ]);
+        } catch (QueryException $th) {
+            throw $th->getMessage();
+        }
+    }
+
+    //fetching expences
+    public function fetch()
+    {
+        $user = User::findOrFail(Auth::user()->id);
+        return response()->json($user->expences);
+    }
+
+    //fetching cancelled expences
+    public function cancelled()
+    {
+        try {
+            $expencesCanclled = DB::table('expences')
+                ->join("cancelled_exps", "expences.id", "=", "cancelled_exps.expences_id")
+                ->select("expences.id", "expences.desc", "expences.amount", "cancelled_exps.created_at", "cancelled_exps.viewed")
+                ->where('user_id', "=", Auth::user()->id)->get();
+            return response()->json($expencesCanclled);
+        } catch (QueryException $th) {
+            throw $th->getMessage();
+        }
+        
+    }
+
+    //fetching Pending expences
+    public function pending()
+    {
+        $pending =
+        DB::table('expences')
+        ->join("users", "expences.user_id", "=", "users.id")
+        ->select("expences.id", "expences.desc", "expences.created_at", "expences.user_id", "expences.amount", "users.name")
+        ->where('status', "=", "pending")->get();
+        return response()->json($pending);
     }
 }
