@@ -1,6 +1,6 @@
 <?php
 
-namespace App\finance\expences;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 

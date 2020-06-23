@@ -211,10 +211,10 @@
         }
 
         //notification function
-        function Notification(description, notifType) {
+        function Notification(description, notifType, delayTime = 2000) {
             $.notify(description, notifType, {
                 autoHide: true,
-                autoHideDelay: 2000
+                autoHideDelay: delayTime
             });
         }
 
@@ -223,20 +223,8 @@
             $('.name').val('');
             $('.email').val('');
             $('.image').val('');
-            // $('#worker').val('');
-            // $('#hr').val('');
-            // $('#admin').val('');
-
             $('.desc').val('');
             $('.amount').val('');
-
-            // $('#news-title').val('');
-            // $('#news-image').val('');
-            // $('#news-desc').val('');
-
-            // $('#staff-name').val('');
-            // $('#staff-dept').val('');
-            // $('#staff-image').val('');
         }
 
 
@@ -275,12 +263,19 @@
         $('.form-expences').submit(function (e) {
             e.preventDefault();
             var actionUrl = "expences/create";
+            let id = $("#exp-btn").attr("data");
+            if (id !== "request") {
+                actionUrl = `expences/edit/${id}`;
+            }
             $('#exp-btn').html('Submiting...');
             $.ajax({
                 url: actionUrl,
                 type: "post",
                 data: new FormData(this),
                 dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 contentType: false,
                 cache: false,
                 processData: false,
@@ -290,6 +285,7 @@
                         clearInputs();
                         pendingExpences(response.expences);
                         $('#exp-btn').html('<i class="fa fa-arrow-right"></i>Request');
+                        $("#exp-btn").attr("data", "request");
                         Notification("Expence Saved Successfull", "success");
                     } else {
                         Notification("An Error occuired !!!", "warning");
@@ -300,11 +296,47 @@
                 });
         });
 
+        //Editing expense
+        $(document).on("click", ".editExp", function(e) {
+            e.preventDefault();
+            let id = $(this).attr("data");
+            $("#exp-btn").attr("data", id);
+            $(".desc").val($(this).attr("desc-data"));
+            $(".amount").val($(this).attr("amount-data"));
+            $('#exp-btn').html('<i class="fa fa-arrow-right"></i>Save Changes');
+            $('.form-expences').removeClass('toggleForms');
+            $(".add-expence").html(`
+                <i class="fa fa-arrow-circle-o-left"></i>
+                <span class="togglexpe">Return</span>
+                `);
+        });
+
+        // Withdrawing expense
+        $(document).on("click", ".widthdrawExp", function(e){
+            e.preventDefault();
+            let id = $(this).attr("data");
+            $(this).html('Widthdrawing....',"warning")
+            Notification("Withdrawing, Please wait.....", "warning", 5000);
+            $.when(deleteRequest(`expences/delete/${id}`).done(response => {
+                pendingExpences(response.expences);
+                if (response.msg === "Expence Widrawn Successfully"){
+                    Notification(response.msg, "success");
+                }
+            })
+            .fail(error => {
+                console.log(error);
+                Notification("An Error occuired !!!", "warning");
+            }));
+        })
+
         //get user pending Expences
         getPendingExpences();
         function getPendingExpences() {
             $.when(getRequest('expences/fetch').done(response => {
                 pendingExpences(response);
+            }).fail(error => {
+                console.log(error);
+                Notification("An Error occuired !!!", "warning");
             }));
         }
 
@@ -334,8 +366,16 @@
                                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                <a class="dropdown-item" data="${expence.id}" href="#">Edit</a>
-                                <a class="dropdown-item" data="${expence.id}" href="#">Withdraw</a>
+                                <a class="dropdown-item editExp" 
+                                    data="${expence.id}" 
+                                    desc-data="${expence.desc}"
+                                    amount-data="${expence.amount}" 
+                                    href="#" >Edit</a>
+                                <a class="dropdown-item widthdrawExp"
+                                    data="${expence.id}"
+                                    desc-data="${expence.desc}"
+                                    amount-data="${expence.amount}" 
+                                    href="#">Withdraw</a>
                                 </div>
                             </div>
                         </td>
@@ -350,6 +390,9 @@
         function getCancelledExpences() {
             $.when(getRequest('expences/cancelled').done(response => {
                 cancelledExpences(response);
+            }).fail(error => {
+                console.log(error);
+                Notification("An Error occuired !!!", "warning");
             }));
         }
         //Rendering Cancelled expences
@@ -394,6 +437,9 @@
         function getExpencesRequests() {
             $.when(getRequest('expences/pending').done(response => {
                 expencesRequests(response);
+            }).fail(error => {
+                console.log(error);
+                Notification("An Error occuired !!!", "warning");
             }));
         }
 
@@ -423,8 +469,8 @@
                                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                <a class="dropdown-item" data="${expence.id}" href="#">Recommend</a>
-                                <a class="dropdown-item" data="${expence.id}" href="#">Decline</a>
+                                <a class="dropdown-item recommend" data="${expence.id}" href="#">Recommend</a>
+                                <a class="dropdown-item decline" data="${expence.id}" href="#">Decline</a>
                                 </div>
                             </div>
                         </td>
@@ -433,6 +479,46 @@
             })
         }
 
+        // hr recommend & decline function
+        function hrActions(actionUrl, actionData) {
+            let Data = new FormData();
+            Data.append("id", actionData);
+            $.ajax({
+                url: actionUrl,
+                type: "post",
+                data: Data,
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                contentType: false,
+                cache: false,
+                processData: false,
+            })
+                .done(response => {
+                    Notification(response.msg, "success");
+                    expencesRequests(response.expense);
+                    getPendingExpences();
+                    getCancelledExpences();
+                })
+                .fail(error => {
+                    Notification("An Error occuired !!!", "danger");
+                })
+        }
+
+        // Recommendation action
+        $(document).on("click", ".recommend", function(e) {
+            e.preventDefault();
+            const id = $(this).attr("data");
+            hrActions("expences/recommended", id);
+        });
+
+        // Decline action
+        $(document).on("click", ".decline", function(e) {
+            e.preventDefault();
+            const id = $(this).attr("data");
+            hrActions("expences/decline", id);
+        });
     });
   </script>
   {{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script> --}}

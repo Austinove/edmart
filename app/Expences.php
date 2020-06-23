@@ -13,7 +13,7 @@ class Expences extends Model
     ];
 
     public function requestedExps() {
-        return $this->hasOne("App\finance\expences\RequestedExps");
+        return $this->hasOne("App\RequestedExps");
     }
 
     public function cancelledExps() {
@@ -21,7 +21,7 @@ class Expences extends Model
     }
 
     public function approvedExps() {
-        return $this->hasOne("App\finance\expences\ApprovedExps");
+        return $this->hasOne("App\ApprovedExps");
     }
 
     public function user() {

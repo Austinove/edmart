@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="form-group" style="margin-top: 30px;">
-                        <button id="exp-btn" class="btn btn-outline-secondary mb-0 custom-btn btn-md">
+                        <button id="exp-btn" data="request" class="btn btn-outline-secondary mb-0 custom-btn btn-md">
                             <i class="fa fa-arrow-right"></i>
                             Request
                         </button>
