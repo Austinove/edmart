@@ -24,6 +24,10 @@ Route::get('/expences/cancelled', 'ExpencesController@cancelled')->name('getCanc
 Route::post('/expences/create', 'ExpencesController@create')->name('createExpences');
 Route::post('/expences/recommended', 'ExpencesController@recommend')->name('recommendExpence');
 Route::post('/expences/decline', 'ExpencesController@decline')->name('declineExpence');
+Route::get('/fetch/recommended/expenses', 'ExpencesController@hrRecommendation')->name('hrRecommendation');
+Route::post('/expences/accept', 'ExpencesController@accept')->name('declineExpence');
+Route::post('/expences/admin/decline', 'ExpencesController@adminDecline')->name('adminDecline');
+Route::post('/expenses/approved/month', 'ExpencesController@approved')->name('approved');
 
 Auth::routes();
 

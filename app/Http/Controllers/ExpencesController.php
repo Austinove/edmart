@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\cancelledExps;
 use App\Expences;
+use App\ApprovedExps;
 use App\RequestedExps;
 use App\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -94,7 +95,6 @@ class ExpencesController extends Controller
         } catch (QueryException $th) {
             throw $th;
         }
-        
     }
 
     //Recommending Expense
@@ -112,15 +112,8 @@ class ExpencesController extends Controller
             Expences::where("id", "=", $inputs["id"])->update([
                 "status" => "recommended"
             ]);
-            $pending =
-            DB::table('expences')
-            ->join("users", "expences.user_id", "=", "users.id")
-            ->select("expences.id", "expences.desc", "expences.created_at", "expences.user_id", "expences.amount", "users.name")
-            ->where('status', "=", "pending")->get();
-            return response()->json([
-                "msg" => "Expense recommended Successfully",
-                "expense" => $pending
-            ]);
+            //returning pending Expenses
+            return $this->pending();
         } catch (QueryException $th) {
             throw $th;
         }
@@ -139,15 +132,8 @@ class ExpencesController extends Controller
             Expences::where("id", "=", $inputs["id"])->update([
                 "status" => "cancelled"
             ]);
-            $pending =
-                DB::table('expences')
-                ->join("users", "expences.user_id", "=", "users.id")
-                ->select("expences.id", "expences.desc", "expences.created_at", "expences.user_id", "expences.amount", "users.name")
-                ->where('status', "=", "pending")->get();
-            return response()->json([
-                "msg" => "Expense declined Successfully",
-                "expense" => $pending
-            ]);
+            //returning pending Expences
+            return $this->pending();
         } catch (QueryException $th) {
             throw $th;
         }
@@ -189,5 +175,88 @@ class ExpencesController extends Controller
             throw $th;
         }
         
+    }
+
+    //hr Recommendations
+    public function hrRecommendation(){
+        $expencesRecommended = DB::table('requested_exps')
+            ->join("expences", "requested_exps.expences_id", "=", "expences.id")
+            ->join("users", "expences.user_id", "=", "users.id")
+            ->select(
+                "expences.id",
+                "expences.desc",
+                "expences.amount",
+                "users.name",
+                "requested_exps.created_at",
+                "requested_exps.viewed"
+            )->where("recommended", "=", 1)->get();
+            return response()->json($expencesRecommended);
+    }
+
+    //Admin Acceptance
+    public function accept(Request $request){
+        $inputs = $request->all();
+        $saveExpense = new ApprovedExps([
+            "viewed" => 0
+        ]);
+        try {
+            $expense = Expences::findOrFail($inputs["id"]);
+            $expense->approvedExps()->save($saveExpense);
+            Expences::where("id", "=", $inputs["id"])->update([
+                "status" => "accepted"
+            ]);
+            RequestedExps::where("expences_id", "=", $inputs["id"])->update([
+                "recommended" => 0,
+                "aproved" => 1
+            ]);
+            
+            //getting recommended expenses
+            return $this->hrRecommendation();
+        } catch (QueryException $th) {
+            throw $th;
+        }
+    }
+
+    //Admin Declining
+    public function adminDecline(Request $request){
+        $inputs = $request->all();
+        $saveExpense = new cancelledExps([
+            "viewed" => Auth::user()->id
+        ]);
+        try {
+            $expense = Expences::findOrFail($inputs["id"]);
+            $expense->cancelledExps()->save($saveExpense);
+            Expences::where("id", "=", $inputs["id"])->update([
+                "status" => "cancelled"
+            ]);
+            RequestedExps::where("expences_id", "=", $inputs["id"])->update([
+                "recommended" => 0,
+                "aproved" => 0
+            ]);
+            // hr recommended Expences
+            return $this->hrRecommendation();
+        } catch (QueryException $th) {
+            throw $th;
+        }
+    }
+
+    //Approved Expences
+    public function approved(Request $request){
+        $inputs = $request->all();
+        $month = $inputs['month'];
+        $approvedExpences = DB::table('approved_exps')
+            ->where("created_at", "LIKE", "%{$month}%")
+            // ->join("expences", "approved_exps.expences_id", "=", "expences.id")
+            // ->join("users", "expences.user_id", "=", "users.id")
+            // ->select(
+            //     "expences.id",
+            //     "expences.desc",
+            //     "expences.amount",
+            //     "users.name",
+            //     "approved_exps.created_at",
+            //     "approved_exps.viewed"
+            //     )
+                ->get();
+        return response()->json($approvedExpences);
     }
 }

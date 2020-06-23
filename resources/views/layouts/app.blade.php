@@ -233,6 +233,7 @@
             e.preventDefault();
             var actionUrl = "register";
             $('#register-btn').text('Submiting...');
+            $("#register-btn").prop('disabled', true);
             $.ajax({
                 url: actionUrl,
                 type: "post",
@@ -246,6 +247,7 @@
                     if (response.msg === "User Registered Successfully") {
                         clearInputs();
                         $('#register-btn').text('Register User');
+                        $("#register-btn").prop('disabled', true);
                         Notification("User Registered Successfully", "success");
                     } else {
                         Notification("An Error occuired !!!", "warning");
@@ -268,6 +270,7 @@
                 actionUrl = `expences/edit/${id}`;
             }
             $('#exp-btn').html('Submiting...');
+            $("#exp-btn").prop('disabled', true);
             $.ajax({
                 url: actionUrl,
                 type: "post",
@@ -285,6 +288,7 @@
                         clearInputs();
                         pendingExpences(response.expences);
                         $('#exp-btn').html('<i class="fa fa-arrow-right"></i>Request');
+                        $("#exp-btn").prop('disabled', false);
                         $("#exp-btn").attr("data", "request");
                         Notification("Expence Saved Successfull", "success");
                     } else {
@@ -414,17 +418,6 @@
                                     }</span>
                             </span>
                         </td>
-                        <td class="text-left">
-                            <div class="dropdown-lg">
-                                <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                <a class="dropdown-item" data="${expence.id}" href="#">Edit</a>
-                                <a class="dropdown-item" data="${expence.id}" href="#">Withdraw</a>
-                                </div>
-                            </div>
-                        </td>
                     </tr>
                 `)
             })
@@ -479,8 +472,8 @@
             })
         }
 
-        // hr recommend & decline function
-        function hrActions(actionUrl, actionData) {
+        // Function for actions in the table
+        function Actions(actionUrl, actionData, sender) {
             let Data = new FormData();
             Data.append("id", actionData);
             $.ajax({
@@ -496,8 +489,19 @@
                 processData: false,
             })
                 .done(response => {
-                    Notification(response.msg, "success");
-                    expencesRequests(response.expense);
+                    
+                    if(sender === "hr" || sender === "hr-decline"){ 
+                        expencesRequests(response);
+                        sender === "hr" ? 
+                            Notification("Expence Recommended", "success") : 
+                            Notification("Expence Declined", "success");
+                        
+                    } else{
+                        recommendedExpRequests(response);
+                        sender === "admin" ?
+                            Notification("Expense Accepted", "success") :
+                            Notification("Expense Declined", "success");
+                    }
                     getPendingExpences();
                     getCancelledExpences();
                 })
@@ -510,15 +514,152 @@
         $(document).on("click", ".recommend", function(e) {
             e.preventDefault();
             const id = $(this).attr("data");
-            hrActions("expences/recommended", id);
+            Actions("expences/recommended", id, "hr");
         });
 
         // Decline action
         $(document).on("click", ".decline", function(e) {
             e.preventDefault();
             const id = $(this).attr("data");
-            hrActions("expences/decline", id);
+            Actions("expences/decline", id, "hr-decline");
         });
+
+        //get hr Recommended Expences
+        getRecommendedExpences();
+        function getRecommendedExpences() {
+            $.when(getRequest('fetch/recommended/expenses').done(response => {
+                recommendedExpRequests(response);
+            }).fail(error => {
+                console.log(error);
+                Notification("An Error occuired !!!", "warning");
+            }));
+        }
+
+        //Admin accept action
+        $(document).on("click", ".accept", function(e){
+            e.preventDefault();
+            const id = $(this).attr("data");
+            Actions("expences/accept", id, "admin");
+        });
+
+        //Admin decline action
+        $(document).on("click", ".admin-decline", function(e){
+            e.preventDefault();
+            const id = $(this).attr("data");
+            Actions("expences/admin/decline", id, "admin-decline");
+        });
+
+        //Rendering Recommended Expences for Admin
+        function recommendedExpRequests(expence_data) {
+            $(".admin-recommended").html("");
+            expence_data.forEach(expence => {
+                $(".admin-recommended").append(`
+                    <tr>
+                        <td>
+                            ${expence.desc}
+                        </td>
+                        <td class="budget">${expence.amount}</td>
+                        <td>
+                            <span class="status">${expence.name}</span>
+                        </td>
+                        <td>
+                            ${
+                                expence.created_at.includes("T") ? 
+                                expence.created_at.split('T')[0] :
+                                expence.created_at.split(' ')[0]
+                            }
+                        </td>
+                        <td class="text-left">
+                            <div class="dropdown-lg">
+                                <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item accept" data="${expence.id}" href="#">Accept</a>
+                                <a class="dropdown-item admin-decline" data="${expence.id}" href="#">Decline</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `)
+            })
+        }
+
+        //set current month
+        setMonth();
+        function setMonth(){
+            var d = new Date()
+            var currentMonth
+            (d.getMonth()+1) >= 10 ? 
+            currentMonth = (d.getMonth()+1) : 
+            currentMonth = "0" + (d.getMonth()+1);
+            $(".month").val(d.getFullYear()+"-"+currentMonth);
+        }
+
+        // request function for approved expences per month
+        function approvedRequest(){
+            var month = $(".month").val().split("-")[1];
+            let Data = new FormData();
+            Data.append("month", "-"+month+"-");
+            $.ajax({
+                url: "expenses/approved/month",
+                type: "post",
+                data: Data,
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                contentType: false,
+                cache: false,
+                processData: false,
+            });
+        }
+
+        //get Approved Expences
+        getApprovedExpences();
+        function getApprovedExpences() {
+            $.when(approvedRequest().done(response => {
+                approvedExpRequests(response);
+                $(this).html(`Retrieve <i class="fa fa-check" aria-hidden="true"></i>`);
+                $("#retrieve").prop('disabled', false);
+            }).fail(error => {
+                console.log(error);
+                Notification("An Error occuired !!!", "warning");
+            }));
+        }
+
+        // //Rendering Approved Expenses
+        function approvedExpRequests(expence_data) {
+            $(".approved-expenses").html("");
+            expence_data.forEach(expence => {
+                $(".approved-expenses").append(`
+                    <tr>
+                        <td>
+                            ${expence.desc}
+                        </td>
+                        <td class="budget">${expence.amount}</td>
+                        <td>
+                            <span class="status">${expence.name}</span>
+                        </td>
+                        <td> 
+                            ${
+                                expence.created_at.includes("T") ? 
+                                expence.created_at.split('T')[0] :
+                                expence.created_at.split(' ')[0]
+                            }
+                        </td>
+                    </tr>
+                `)
+            })
+        }
+
+        // fetch approved expences by month on click
+        $(document).on("click", ".retrieve", function(e){
+            $("#retrieve").prop('disabled', true);
+            $(this).html("Retriving....");
+            getApprovedExpences();
+        })
+
     });
   </script>
   {{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script> --}}

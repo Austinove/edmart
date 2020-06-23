@@ -112,7 +112,6 @@
                                     <th scope="col" class="sort" data-sort="name">Description</th>
                                     <th scope="col" class="sort" data-sort="budget">Budget</th>
                                     <th scope="col" class="sort" data-sort="completion">Date</th>
-                                    <th scope="col" class="sort">Actions</th>
                                 </tr>
                                 </thead>
                                 {{-- Expences are from jQuery --}}
@@ -130,9 +129,8 @@
                                 <div class="col-md-3"></div>
                                 <div class="form-group col-md-5">
                                     <div class="row">
-                                        {{-- <div class="col-md-3"><label for="example-month-input" class="form-control-label custom-color mt-2 small-text">Month</label></div> --}}
-                                        <div class="col-md-6 col-sm-6"><input class="form-control form-control-sm" type="month" value="2018-11" id="example-month-input"></div>
-                                        <button class="btn btn-sm custom-btn-default text-left ml-2">Retrieve <i class="fa fa-check" aria-hidden="true"></i></button>
+                                        <div class="col-md-6 col-sm-6"><input class="form-control form-control-sm month" type="month" value="2018-11" id="example-month-input"></div>
+                                        <button class="btn btn-sm custom-btn-default text-left ml-2 retrieve">Retrieve <i class="fa fa-check" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -145,32 +143,10 @@
                                         <th scope="col" class="sort" data-sort="budget">Budget</th>
                                         <th scope="col" class="sort" data-sort="status">User</th>
                                         <th scope="col" class="sort" data-sort="completion">Date</th>
-                                        <th scope="col" class="sort">Actions</th>
                                     </tr>
                                     </thead>
-                                    <tbody class="list">
-                                    <tr>
-                                        <td>
-                                            Transport to NSSF
-                                        </td>
-                                        <td class="budget"> 5000 Ush </td>
-                                        <td>
-                                            <span class="status">Bryan Austin</span>
-                                        </td>
-                                        <td> 6/17/2020 </td>
-                                        <td class="text-left">
-                                        <div class="dropdown-lg">
-                                            <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="#">Cashout</a>
-                                            <a class="dropdown-item" href="#">Remove</a>
-                                            </div>
-                                        </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
+                                    {{-- data is retrieven from jQuery --}}
+                                    <tbody class="list approved-expenses"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -193,29 +169,8 @@
                                                 <th scope="col" class="sort">Actions</th>
                                             </tr>
                                             </thead>
-                                            <tbody class="list">
-                                            <tr>
-                                                <td>
-                                                    Transport to NSSF
-                                                </td>
-                                                <td class="budget"> 5000 Ush </td>
-                                                <td>
-                                                    <span class="status">Bryan Austin</span>
-                                                </td>
-                                                <td> 6/17/2020 </td>
-                                                <td class="text-left">
-                                                <div class="dropdown-lg">
-                                                    <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    <a class="dropdown-item" href="#">Accept</a>
-                                                    <a class="dropdown-item" href="#">Decline</a>
-                                                    </div>
-                                                </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
+                                            {{-- expences from jQuery --}}
+                                            <tbody class="list admin-recommended"></tbody>
                                         </table>
                                     </div>
                                 </div>
