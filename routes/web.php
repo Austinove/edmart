@@ -28,6 +28,10 @@ Route::get('/fetch/recommended/expenses', 'ExpencesController@hrRecommendation')
 Route::post('/expences/accept', 'ExpencesController@accept')->name('declineExpence');
 Route::post('/expences/admin/decline', 'ExpencesController@adminDecline')->name('adminDecline');
 Route::post('/expenses/approved/month', 'ExpencesController@approved')->name('approved');
+Route::post('/user/approved', 'ExpencesController@userApproved')->name('userApproved');
+Route::post('/approved/cancelled', 'ExpencesController@cancelledViewed')->name('cancelledViewed');
+Route::post('/edit/user/info', "Auth\RegisterController@editUserInfo")->name('editUserInfo');
+Route::post('/edit/user/password', "Auth\RegisterController@editUserPassword")->name('editUserPassword');
 
 Auth::routes();
 

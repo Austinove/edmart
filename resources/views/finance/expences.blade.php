@@ -1,3 +1,6 @@
+@section('dynamic-js')
+    <script src="{{ asset('/assets/js/expenses.js')}}"></script>
+@stop
 @extends('layouts.app')
 @section('content')
     <div class="header pb-6">
@@ -48,19 +51,19 @@
                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item mt-4">
                             <a class="nav-link custom-nav-link  active" id="pending-pill" data-toggle="pill" href="#pending-exp" role="tab" aria-controls="pending-exp" aria-selected="true">
-                                Pending Expences Requests
+                                Pending Expences Requests<span class="badge badge-pending custom-badge badge-default"></span>
                             </a>
                         </li>
                         <li class="nav-item mt-4">
                             <a class="nav-link custom-nav-link" id="cancel-pill" data-toggle="pill" href="#cancel-req" role="tab" aria-controls="cancel-req" aria-selected="false">
-                                Cancelled Requests
+                                Cancelled Requests<span class="badge badge-cancelled custom-badge badge-default"></span>
                             </a>
                         </li>
                         @if (Auth::user())
                             @if((Auth()->user()->userType==="hr"))
                                 <li class="nav-item mt-4">
                                     <a class="nav-link custom-nav-link" id="exp-requests-pill" data-toggle="pill" href="#exp-requests" role="tab" aria-controls="exp-requests" aria-selected="false">
-                                        Expences Requests
+                                        Expences Requests<span class="badge badge-hr badge-requests custom-badge badge-default"></span>
                                     </a>
                                 </li>
                             @endif
@@ -69,16 +72,25 @@
                             @if((Auth()->user()->userType==="admin"))
                                 <li class="nav-item mt-4">
                                     <a class="nav-link custom-nav-link" id="recommend-pill" data-toggle="pill" href="#recommend-req" role="tab" aria-controls="recommend-req" aria-selected="false">
-                                        Recommended Expences
+                                        Recommended Expences<span class="badge badge-recommend badge-recommend custom-badge badge-default"></span>
                                     </a>
                                 </li>
                             @endif
                         @endif
                         <li class="nav-item mt-4">
                             <a class="nav-link custom-nav-link" id="approved-pill" data-toggle="pill" href="#approved-req" role="tab" aria-controls="approved-req" aria-selected="false">
-                                Approved Expences
+                                Approved Expences<span class="badge badge-approved custom-badge badge-default"></span>
                             </a>
                         </li>
+                        @if (Auth::user())
+                            @if((Auth()->user()->userType==="admin")||(Auth()->user()->userType==="hr"))
+                                <li class="nav-item mt-4">
+                                    <a class="nav-link custom-nav-link" id="all-pill" data-toggle="pill" href="#all-req" role="tab" aria-controls="all-req" aria-selected="false">
+                                        All<span class="badge badge-all badge-all custom-badge badge-default"></span>
+                                    </a>
+                                </li>
+                            @endif
+                        @endif
                     </ul>
 
                     <div class="tab-content" id="pills-tabContent">
@@ -102,9 +114,8 @@
                             </div>
                         </div>
 
-
                         <div class="tab-pane fade" id="cancel-req" role="tabpanel" aria-labelledby="cancel-pill">
-                            <h5 class="mb-4 custom-color">Cancelled Expence Requests</h5>
+                            <h5 class="mb-4 custom-color">Cancelled Expense Requests</h5>
                             <div class="table-responsive">
                             <table class="table align-items-center table-flush">
                                 <thead class="thead-light">
@@ -120,12 +131,9 @@
                             </div>
                         </div>
 
-
-
-
                         <div class="tab-pane fade" id="approved-req" role="tabpanel" aria-labelledby="approved-pill">
                             <div class="row">
-                                <div class="col-md-4"><h5 class="mb-4 custom-color">Approved Expence Requests</h5></div>
+                                <div class="col-md-4"><h5 class="mb-4 custom-color">Approved Expense Requests</h5></div>
                                 <div class="col-md-3"></div>
                                 <div class="form-group col-md-5">
                                     <div class="row">
@@ -155,7 +163,7 @@
                             @if((Auth()->user()->userType==="admin"))
                                 <div class="tab-pane fade" id="recommend-req" role="tabpanel" aria-labelledby="recommend-pill">
                                     <div class="row">
-                                        <div class="col-md-4"><h5 class="mb-4 custom-color">Recommended Expence Requests</h5></div>
+                                        <div class="col-md-4"><h5 class="mb-4 custom-color">Recommended Expense Requests</h5></div>
                                     </div>
                                     
                                     <div class="table-responsive">
@@ -177,12 +185,10 @@
                             @endif
                         @endif
 
-
-
                         @if (Auth::user())
                             @if((Auth()->user()->userType==="hr"))
                                 <div class="tab-pane fade" id="exp-requests" role="tabpanel" aria-labelledby="exp-requests-pill">
-                                    <h5 class="mb-4 custom-color">Expence Requests</h5>
+                                    <h5 class="mb-4 custom-color">Expense Requests</h5>
                                     <div class="table-responsive">
                                     <table class="table align-items-center table-flush">
                                         <thead class="thead-light">
@@ -199,6 +205,38 @@
                                     </table>
                                 </div>
                             @endif
+                        @endif
+                        @if (Auth::user())
+                            @if ((Auth()->user()->userType==="hr")||(Auth()->user()->userType==="admin"))
+                                <div class="tab-pane fade" id="all-req" role="tabpanel" aria-labelledby="all-pill">
+                                    <div class="row">
+                                        <div class="col-md-4"><h5 class="mb-4 custom-color">All Expences Approved</h5></div>
+                                        <div class="col-md-3"></div>
+                                        <div class="form-group col-md-5">
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6"><input class="form-control form-control-sm month-all" type="month" value="2018-11" id="example-month-input"></div>
+                                                <button class="btn btn-sm custom-btn-default text-left ml-2 retrieve-all">Retrieve <i class="fa fa-check" aria-hidden="true"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="table-responsive">
+                                        <table class="table align-items-center table-flush">
+                                            <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col" class="sort" data-sort="name">Description</th>
+                                                <th scope="col" class="sort" data-sort="budget">Budget</th>
+                                                <th scope="col" class="sort" data-sort="status">User</th>
+                                                <th scope="col" class="sort" data-sort="completion">Date</th>
+                                            </tr>
+                                            </thead>
+                                            {{-- data is retrieven from jQuery --}}
+                                            <tbody class="list all-expenses"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif
+                            
                         @endif
                     </div>
                 </div>

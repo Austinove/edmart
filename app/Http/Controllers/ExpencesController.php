@@ -49,7 +49,8 @@ class ExpencesController extends Controller
                 new Expences([
                     "desc" => $inputs["desc"],
                     "amount" => $inputs["amount"],
-                    "status" => "pending"
+                    "status" => "pending",
+                    "viewed" => 0
                 ])
             );
             return response()->json([
@@ -103,8 +104,7 @@ class ExpencesController extends Controller
         $inputs = $request->all();
         $saveExpense = new RequestedExps([
             "viewed" => Auth::user()->id,
-            "recommended" => 1,
-            "aproved" => 0
+            "recommended" => 1
             ]);
         try {
             $expense = Expences::findOrFail($inputs["id"]);
@@ -124,7 +124,7 @@ class ExpencesController extends Controller
     {
         $inputs = $request->all();
         $saveExpense = new cancelledExps([
-            "viewed" => Auth::user()->id
+            "viewed" => 0
         ]);
         try {
             $expense = Expences::findOrFail($inputs["id"]);
@@ -151,7 +151,8 @@ class ExpencesController extends Controller
             $user = User::findOrFail(Auth::user()->id);
             $user->expences()->where("id", "=", $id)->update([
                 "amount" => $inputs["amount"],
-                "desc" => $inputs["desc"]
+                "desc" => $inputs["desc"],
+                "viewed" => 0
             ]);
             return response()->json([
                 'msg' => "Expence Saved Successfull",
@@ -206,8 +207,7 @@ class ExpencesController extends Controller
                 "status" => "accepted"
             ]);
             RequestedExps::where("expences_id", "=", $inputs["id"])->update([
-                "recommended" => 0,
-                "aproved" => 1
+                "recommended" => 0
             ]);
             
             //getting recommended expenses
@@ -221,7 +221,7 @@ class ExpencesController extends Controller
     public function adminDecline(Request $request){
         $inputs = $request->all();
         $saveExpense = new cancelledExps([
-            "viewed" => Auth::user()->id
+            "viewed" => 0
         ]);
         try {
             $expense = Expences::findOrFail($inputs["id"]);
@@ -230,8 +230,7 @@ class ExpencesController extends Controller
                 "status" => "cancelled"
             ]);
             RequestedExps::where("expences_id", "=", $inputs["id"])->update([
-                "recommended" => 0,
-                "aproved" => 0
+                "recommended" => 0
             ]);
             // hr recommended Expences
             return $this->hrRecommendation();
@@ -245,18 +244,77 @@ class ExpencesController extends Controller
         $inputs = $request->all();
         $month = $inputs['month'];
         $approvedExpences = DB::table('approved_exps')
-            ->where("created_at", "LIKE", "%{$month}%")
-            // ->join("expences", "approved_exps.expences_id", "=", "expences.id")
-            // ->join("users", "expences.user_id", "=", "users.id")
-            // ->select(
-            //     "expences.id",
-            //     "expences.desc",
-            //     "expences.amount",
-            //     "users.name",
-            //     "approved_exps.created_at",
-            //     "approved_exps.viewed"
-            //     )
-                ->get();
+            ->where("approved_exps.created_at", "LIKE", "%{$month}%")
+            ->join("expences", "approved_exps.expences_id", "=", "expences.id")
+            ->join("users", "expences.user_id", "=", "users.id")
+            ->select(
+                "expences.id",
+                "expences.desc",
+                "expences.amount",
+                "users.name",
+                "approved_exps.created_at",
+                "approved_exps.viewed"
+            )->get();
         return response()->json($approvedExpences);
+    }
+
+    //User approved Expences
+    public function userApproved(Request $request){
+        $inputs = $request->all();
+        $month = $inputs['month'];
+        //registering view
+        if ($inputs["id"] > 0) {
+            try {
+                $expense = Expences::findOrFail($inputs["id"]);
+                $expense->approvedExps()->update([
+                    "viewed" => 1
+                ]);
+            } catch (QueryException $th) {
+                throw $th;
+            }
+        }
+
+        //retrieving Approved expences
+        try {
+            $approvedExpences = DB::table('approved_exps')
+            ->where("approved_exps.created_at", "LIKE", "%{$month}%")
+            ->join("expences", "approved_exps.expences_id", "=", "expences.id")
+            ->where('expences.user_id', "=", Auth::user()->id)
+            ->join("users", "expences.user_id", "=", "users.id")
+            ->select(
+                "expences.id",
+                "expences.desc",
+                "expences.amount",
+                "users.name",
+                "approved_exps.created_at",
+                "approved_exps.viewed"
+            )->get();
+            return response()->json($approvedExpences);
+        } catch (QueryException $th) {
+            throw $th;
+        }
+    }
+
+    //appling viewed of approved expenses
+    public function viewed(Request $request)
+    {
+        $expense = Expences::findOrFail($request["id"]);
+        $expense->approvedExps()->update([
+            "viewed" => 1
+        ]);
+    }
+
+    // appling viewed of cancelled expenses
+    public function cancelledViewed(Request $request) {
+        try {
+            $expense = Expences::findOrFail($request[0]);
+            $expense->cancelledExps()->update([
+                "viewed" => 1
+            ]);
+            //returning cancelled Expences
+            return $this->cancelled();
+        } catch (QueryException $th) {
+            throw $th;
+        }
     }
 }

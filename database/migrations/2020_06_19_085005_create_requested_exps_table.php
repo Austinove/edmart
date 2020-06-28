@@ -22,7 +22,6 @@ class CreateRequestedExpsTable extends Migration
             $table->index('expences_id');
             $table->string("viewed");
             $table->string("recommended");
-            $table->string("aproved");
             $table->timestamps();
         });
     }

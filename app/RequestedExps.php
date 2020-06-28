@@ -8,7 +8,6 @@ class RequestedExps extends Model
 {
     protected $fillable = [
         "viewed",
-        "recommended",
-        "aproved"
+        "recommended"
     ];
 }

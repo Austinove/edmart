@@ -39,9 +39,14 @@
     background-color: #d27f1b !important;
     height: 43px;
     padding-top: 11px;
+    font-size: 14px !important;
+}
+.nav-link {
+    font-size: 13px !important;
 }
 .small-text {
     font-size: 14px !important;
+    color: #523615 !important;
 }
 .login-color {
     color: #a96514 !important;
@@ -61,4 +66,12 @@ main {
 }
 .material-icons {
     display: none !important;
+}
+.new-feeds {
+    background-color: aliceblue !important;
+    font-weight: bold !important;
+}
+.custom-badge {
+    background-color: #908888 !important;
+    margin-left: 5px !important;
 }

@@ -19,6 +19,7 @@ class CreateExpencesTable extends Migration
             $table->string("desc");
             $table->string("amount");
             $table->string("status");
+            $table->string("viewed");
             $table->timestamps();
         });
     }

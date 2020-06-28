@@ -9,7 +9,8 @@ class Expences extends Model
     protected $fillable = [
         "desc",
         "amount",
-        "status"
+        "status",
+        "viewed"
     ];
 
     public function requestedExps() {
