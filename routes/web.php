@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', "Auth\LoginController@showLoginForm")->name('login');
 Route::get('/profile', "ProfilesController@index")->name('profile');
-Route::get('/expences', 'ExpencesController@index')->name('expences');
+Route::get('/expenses', 'ExpencesController@index')->name('expenses');
 Route::get('/expences/fetch', 'ExpencesController@fetch')->name('getExpences');
 Route::post("expences/edit/{id}", "ExpencesController@update")->name("editExps");
 Route::delete("expences/delete/{id}", "ExpencesController@delete")->name("deleteExps");

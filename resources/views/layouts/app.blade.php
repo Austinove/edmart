@@ -31,12 +31,11 @@
                 <!-- Dashboard Nav item -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('home') }}">
+                    <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" href="{{ route('home') }}">
                         <i class="fa fa-align-center" aria-hidden="true"></i>
                         <span class="nav-link-text">Dashboard</span>
                     </a>
                     </li>
-                    
                 </ul>
                 {{-- Company tasts Nav items --}}
                 @if (Auth::user())
@@ -72,7 +71,7 @@
                     <!-- Navigation -->
                     <ul class="navbar-nav mb-md-3">
                         <li class="nav-item">
-                        <a class="nav-link" href="{{ route('expences') }}">
+                        <a class="nav-link {{ Request::is('expenses') ? 'active' : '' }}" href="{{ route('expenses') }}">
                             <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>
                             <span class="nav-link-text">Expences</span>
                         </a>
@@ -100,48 +99,48 @@
                             @endif
                         @endif
                     </ul>
-                {{-- Managmenting Accounts --}}
-                <hr class="my-3">
-                <!-- Heading -->
-                <h6 class="navbar-heading p-0 text-muted">
-                    <span class="docs-normal">Managment Accounts</span>
-                </h6>
-                <!-- Navigation -->
-                <ul class="navbar-nav mb-md-3">
-                    <li class="nav-item">
-                    <a class="nav-link" href="{{ route('profile') }}">
-                        <i class="fa fa-user-md" aria-hidden="true"></i>
-                        <span class="nav-link-text">Profile</span>
-                    </a>
-                    </li>
-                    @if (Auth::user())
-                        @if(Auth()->user()->userType==="hr" || Auth()->user()->userType==="admin")
-                            <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">
-                                <i class="fa fa-cog" aria-hidden="true"></i>
-                                <span class="nav-link-text">Accounts Settings</span>
-                            </a>
-                            </li>
-                        @endif
-                    @endif
-                </ul>
-
-                <hr class="my-3">
+                    {{-- Managmenting Accounts --}}
+                    <hr class="my-3">
                     <!-- Heading -->
                     <h6 class="navbar-heading p-0 text-muted">
-                        <span class="docs-normal">Others</span>
+                        <span class="docs-normal">Managment Accounts</span>
                     </h6>
                     <!-- Navigation -->
                     <ul class="navbar-nav mb-md-3">
-                    <li class="nav-item">
-                    <a class="nav-link" href="icons.html">
-                        <i class="fa fa-sliders" aria-hidden="true"></i>
-                        <span class="nav-link-text">Attendance</span>
-                    </a>
-                    </li>
+                        <li class="nav-item">
+                        <a class="nav-link {{ Request::is('profile') ? 'active' : '' }}" href="{{ route('profile') }}">
+                            <i class="fa fa-user-md" aria-hidden="true"></i>
+                            <span class="nav-link-text">Profile</span>
+                        </a>
+                        </li>
+                        @if (Auth::user())
+                            @if(Auth()->user()->userType==="hr" || Auth()->user()->userType==="admin")
+                                <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">
+                                    <i class="fa fa-cog" aria-hidden="true"></i>
+                                    <span class="nav-link-text">Accounts Settings</span>
+                                </a>
+                                </li>
+                            @endif
+                        @endif
                     </ul>
+
+                    <hr class="my-3">
+                        <!-- Heading -->
+                        <h6 class="navbar-heading p-0 text-muted">
+                            <span class="docs-normal">Others</span>
+                        </h6>
+                        <!-- Navigation -->
+                        <ul class="navbar-nav mb-md-3">
+                        <li class="nav-item">
+                        <a class="nav-link" href="icons.html">
+                            <i class="fa fa-sliders" aria-hidden="true"></i>
+                            <span class="nav-link-text">Attendance</span>
+                        </a>
+                        </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
             </div>
         </nav>
     <div class="main-content" id="panel">

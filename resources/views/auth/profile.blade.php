@@ -3,11 +3,11 @@
     <div class="row">
         <div class="ml-2 col-md-4">
           <div class="card card-profile">
-            <img src="../assets/img/theme/img-1-1000x600.jpg" alt="Image placeholder" class="card-img-top">
+            <img src="{{ asset('../assets/img/theme/img-1-1000x600.jpg') }}" alt="Image placeholder" class="card-img-top">
             <div class="row justify-content-center">
               <div class="col-lg-3 order-lg-2">
                 <div class="card-profile-image">
-                  <a href="#">
+                  <a href="#" data-toggle="modal" data-target="#profileImage">
                     <img src={{ asset("profiles/".Auth()->user()->image) }} class="rounded-circle">
                   </a>
                 </div>
@@ -19,13 +19,13 @@
                   Email
                 </h5>
                 <div class="h5 font-weight-300">
-                    bryan@bryan.com
+                    {{Auth()->user()->email}}
                 </div>
                 <h5 class="h3 small-text">
                   User Name
                 </h5>
                 <div class="h5 font-weight-300">
-                    Bryan Austin
+                    {{Auth()->user()->name}}
                 </div>
               </div>
             </div>
