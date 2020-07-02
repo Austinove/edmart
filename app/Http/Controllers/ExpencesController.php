@@ -194,8 +194,25 @@ class ExpencesController extends Controller
             return response()->json($expencesRecommended);
     }
 
-    //Admin Acceptance
-    public function accept(Request $request){
+    //Fetching accepted expenses for admin
+    public function getAccepted()
+    {
+        $expencesAccepted = DB::table('requested_exps')
+        ->join("expences", "requested_exps.expences_id", "=", "expences.id")
+        ->join("users", "expences.user_id", "=", "users.id")
+        ->select(
+            "expences.id",
+            "expences.desc",
+            "expences.amount",
+            "users.name",
+            "requested_exps.created_at",
+            "requested_exps.viewed"
+        )->where("recommended", "=", "accepted")->get();
+        return response()->json($expencesAccepted);
+    }
+
+    //Hr Cash Outs
+    public function cashOut(Request $request){
         $inputs = $request->all();
         $saveExpense = new ApprovedExps([
             "viewed" => 0
@@ -209,7 +226,22 @@ class ExpencesController extends Controller
             RequestedExps::where("expences_id", "=", $inputs["id"])->update([
                 "recommended" => 0
             ]);
-            
+            //getting recommended expenses
+            return $this->getAccepted();
+        } catch (QueryException $th) {
+            throw $th;
+        }
+    }
+
+    //Admin Acceptance
+    public function accept(Request $request)
+    {
+        $inputs = $request->all();
+        try {
+            RequestedExps::where("expences_id", "=", $inputs["id"])->update([
+                "recommended" => "accepted"
+            ]);
+
             //getting recommended expenses
             return $this->hrRecommendation();
         } catch (QueryException $th) {

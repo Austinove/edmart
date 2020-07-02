@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -126,7 +127,9 @@ class RegisterController extends Controller
             User::where("id", "=", Auth::user()->id)->update([
                 'password' => Hash::make($inputs['password'])
             ]);
-            return response()->json(["msg" => "Saved Successfully"]);
+            Auth::logout();
+            Session::flush();
+            return response()->json(["msg" => "Password Updated"]);
         } catch (QueryException $th) {
             throw $th;
         }
