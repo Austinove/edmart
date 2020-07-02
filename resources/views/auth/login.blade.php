@@ -75,7 +75,7 @@
 
 @extends('layouts.auth')
 @section('content')
-    <div class="container mt--8 pb-5">
+    <div class="container mt--8 pb-1">
       <div class="row justify-content-center">
         <div class="col-md-6">
           <div class="card login-card bg-secondary border-0 mb-0">

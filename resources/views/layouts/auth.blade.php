@@ -14,7 +14,7 @@
 
 <body>
   <div class="main-content" style="min-height: 90vh;">
-    <div class="header py-3 py-lg-5">
+    <div class="header py-3 py-lg-5" style="padding-top: 2% !important;">
       <div class="container">
         <div class="header-body text-center mb-7">
           <div class="row justify-content-center">

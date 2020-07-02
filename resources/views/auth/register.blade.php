@@ -1,5 +1,7 @@
+@section('dynamic-js')
+    <script src="{{ asset('/assets/js/user.js')}}"></script>
+@stop
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

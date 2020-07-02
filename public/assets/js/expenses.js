@@ -1,9 +1,7 @@
 $(document).ready(function(){
-
     //---------------------------Expences--------------------------------
     // toggling expences forms
     $(".add-expence").click(function (e) {
-        e.preventDefault()
         var toggleText = $('.togglexpe').text();
         if (toggleText === "Add Expense") {
             $('.form-expences').removeClass('toggleForms');
@@ -68,7 +66,6 @@ $(document).ready(function(){
         $('.desc').val('');
         $('.amount').val('');
     }
-
 
     //Function for more in modal
     $(document).on("click", ".more", function () {
@@ -711,5 +708,16 @@ $(document).ready(function(){
                 `)
         })
     }
+
+    //Refreshing the System's Information
+    setInterval(() => {
+        getApprovedExpences();
+        getRecommendedExpences();
+        getAcceptedExpences();
+        getExpencesRequests();
+        getCancelledExpences();
+        getPendingExpences();
+        getAllExpences();
+    }, 60000);
 
 });

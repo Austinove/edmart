@@ -27,8 +27,8 @@
 <!-- profile image view -->
 <div class="modal fade" id="profileImage" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
+    <div class="modal-content" style="background-color: transparent;">
+      <div class="modal-header" style="background-color: transparent;">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
