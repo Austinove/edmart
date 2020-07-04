@@ -20,7 +20,7 @@
           <div class="row justify-content-center">
             <div class="col-xl-5 col-lg-6 col-md-8 px-5">
                 <h2 class="login-color"> 
-                    <img src="../assets/img/favicon.png" height="40px" class="navbar-brand-img" alt="EDMART Logo">
+                    <img src="{{ asset('/assets/img/favicon.png') }}" height="40px" class="navbar-brand-img" alt="EDMART Logo">
                     <span class="mt-4">MART SYSTEMS</span>
                 </h2>
             </div>

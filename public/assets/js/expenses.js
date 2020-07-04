@@ -718,6 +718,6 @@ $(document).ready(function(){
         getCancelledExpences();
         getPendingExpences();
         getAllExpences();
-    }, 60000);
+    },30000);
 
 });

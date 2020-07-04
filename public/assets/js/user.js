@@ -60,8 +60,8 @@ $(document).ready(function(){
     $('#userInfo').submit(function (e) {
         e.preventDefault();
         var actionUrl = "edit/user/info";
-        $('#info-btn').html('Saving...');
-        $("#info-btn").prop('disabled', true);
+        $('.info-btn').html('Saving...');
+        $(".info-btn").prop('disabled', true);
         $.ajax({
             url: actionUrl,
             type: "post",
@@ -75,15 +75,15 @@ $(document).ready(function(){
             processData: false,
         })
             .done(response => {
-                $('#info-btn').html(`<i class="fa fa-save"></i> Save Changes`);
-                $("#info-btn").prop('disabled', false);
+                $('.info-btn').html(`<i class="fa fa-save"></i> Save Changes`);
+                $(".info-btn").prop('disabled', false);
                 Notification(response.msg, "success");
                 location.reload();
             })
             .fail(error => {
                 Notification("An Error occuired !!!", "warning");
-                $('#info-btn').html(`<i class="fa fa-save"></i> Save Changes`);
-                $("#info-btn").prop('disabled', false);
+                $('.info-btn').html(`<i class="fa fa-save"></i> Save Changes`);
+                $(".info-btn").prop('disabled', false);
             });
     });
 
