@@ -39,27 +39,28 @@
                         </li>
                         
                     </ul>
-                        
-                    <hr class="my-3">
-                    <!-- Heading -->
-                    <h6 class="navbar-heading p-0 text-muted">
-                        <span class="docs-normal">Company Tasks</span>
-                    </h6>
-                    <!-- Navigation -->
-                    <ul class="navbar-nav mb-md-3">
-                        <li class="nav-item">
-                        <a {!! Request::is('profile') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="profile.html">
-                            <i class="fa fa-product-hunt" aria-hidden="true"></i>
-                            <span class="nav-link-text">Projects</span>
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a {!! Request::is('table') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="tables.html">
-                            <i class="fa fa-edit"></i>
-                            <span class="nav-link-text">Contracts</span>
-                        </a>
-                        </li>
-                    </ul>
+                    @if((Auth()->user()->userType==="admin")||(Auth()->user()->userType==="hr"))
+                        <hr class="my-3">
+                        <!-- Heading -->
+                        <h6 class="navbar-heading p-0 text-muted">
+                            <span class="docs-normal">Company Tasks</span>
+                        </h6>
+                        <!-- Navigation -->
+                        <ul class="navbar-nav mb-md-3">
+                            <li class="nav-item">
+                            <a {!! Request::is('projects') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="projects.html">
+                                <i class="fa fa-product-hunt" aria-hidden="true"></i>
+                                <span class="nav-link-text">Projects</span>
+                            </a>
+                            </li>
+                            <li class="nav-item">
+                            <a {!! Request::is('table') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="tables.html">
+                                <i class="fa fa-edit"></i>
+                                <span class="nav-link-text">Contracts</span>
+                            </a>
+                            </li>
+                        </ul>
+                    @endif
 
                     <hr class="my-3">
                         <!-- Heading -->
@@ -69,30 +70,31 @@
                         <!-- Navigation -->
                         <ul class="navbar-nav mb-md-3">
                             <li class="nav-item">
-                            <a {!! Request::is('expenses') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="expenses">
-                                <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>
-                                <span class="nav-link-text">Expenses</span>
-                            </a>
+                                <a {!! Request::is('expenses') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="expenses">
+                                    <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>
+                                    <span class="nav-link-text">Expenses</span>
+                                </a>
                             </li>
-                            <li class="nav-item">
-                            <a {!! Request::is('quatations') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="quatations.html">
-                                <i class="fa fa-book" aria-hidden="true"></i>
-                                <span class="nav-link-text">Quatation</span>
-                            </a>
-                            </li>
-                            <li class="nav-item">
-                            <a {!! Request::is('payments') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="payments.html">
-                                <i class="fa fa-pencil-square" aria-hidden="true"></i>
-                                <span class="nav-link-text">Payments</span>
-                            </a>
-                            </li>
-                            <li class="nav-item">
-                            <a {!! Request::is('lpo') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="lpo.html">
-                                <i class="fa fa-tasks" aria-hidden="true"></i>
-                                <span class="nav-link-text">LPO</span>
-                            </a>
-                            </li>
-                            
+                            @if((Auth()->user()->userType==="admin")||(Auth()->user()->userType==="hr"))
+                                <li class="nav-item">
+                                    <a {!! Request::is('quatations') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="quatations.html">
+                                        <i class="fa fa-book" aria-hidden="true"></i>
+                                        <span class="nav-link-text">Quatation</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a {!! Request::is('payments') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="payments.html">
+                                        <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                                        <span class="nav-link-text">Payments</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a {!! Request::is('lpo') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="lpo.html">
+                                        <i class="fa fa-tasks" aria-hidden="true"></i>
+                                        <span class="nav-link-text">LPO</span>
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                     
                     <!-- Divider -->
@@ -104,17 +106,19 @@
                     <!-- Navigation -->
                     <ul class="navbar-nav mb-md-3">
                         <li class="nav-item">
-                        <a {!! Request::is('profile') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="profile">
-                            <i class="fa fa-user-md" aria-hidden="true"></i>
-                            <span class="nav-link-text">Profile</span>
-                        </a>
+                            <a {!! Request::is('profile') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="profile">
+                                <i class="fa fa-user-md" aria-hidden="true"></i>
+                                <span class="nav-link-text">Profile</span>
+                            </a>
                         </li>
-                        <li class="nav-item">
-                        <a {!! Request::is('register') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="register">
-                            <i class="fa fa-cog" aria-hidden="true"></i>
-                            <span class="nav-link-text">Accounts Settings</span>
-                        </a>
-                        </li>
+                        @if((Auth()->user()->userType==="admin")||(Auth()->user()->userType==="hr"))
+                            <li class="nav-item">
+                                <a {!! Request::is('register') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="register">
+                                    <i class="fa fa-cog" aria-hidden="true"></i>
+                                    <span class="nav-link-text">Accounts Settings</span>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
 
                     <hr class="my-3">

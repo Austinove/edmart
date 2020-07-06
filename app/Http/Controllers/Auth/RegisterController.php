@@ -9,8 +9,10 @@ use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -96,6 +98,7 @@ class RegisterController extends Controller
             $file->move("profiles", $saveName);
             $inputs["image"] = $saveName;
             try {
+                File::delete('profiles/'.Auth::user()->image);
                 User::where("id", "=", Auth::user()->id)->update([
                     "name" => $inputs["name"],
                     "email" => $inputs["email"],
