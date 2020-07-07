@@ -3,7 +3,7 @@
 @stop
 @extends('layouts.app')
 @section('content')
-    <div class="header pb-6">
+    <div class="header">
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
@@ -16,34 +16,158 @@
             </div>
           </div>
           <!-- Card stats -->
-          <form class="form-expences toggleForms" enctype="multipart/form-data">
-            @csrf
-            <div class="row">
+          <div class="row expense-inputs toggleForms">
                 <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1" class="small-text">Expense Description</label>
-                        <textarea name="desc" class="desc form-control form-control-alternative" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    </div>
+                    <form class="form-expences" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1" class="small-text">Title *</label>
+                                    <input required name="title" id="title" type="text" class="desc form-control-sm form-control form-control-alternative">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1" class="small-text">Description *</label>
+                                    <textarea required name="desc" class="desc form-control-sm form-control form-control-alternative" id="exampleFormControlTextarea1" rows="2"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-5">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1" class="small-text">Quantity *</label>
+                                            <div class="bg-secondary">
+                                                <input required name="quantity" min="1" type="number" class="form-control-sm form-control form-control-alternative" placeholder="e.g 2">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-sm-5">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1" class="small-text">Units *</label>
+                                            <div class="bg-secondary">
+                                                <select class="form-control-sm form-control form-control-alternative" required>
+                                                    <option value="pc">Pcs</option>
+                                                    <option value="roll">Rolls</option>
+                                                    <option value="doz">Doz</option>
+                                                    <option value="pkt">Pkt</option>
+                                                    <option value="others">Others</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-5">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1" class="small-text">Rate *</label>
+                                            <div class="bg-secondary">
+                                                <input required name="amount" type="number" class="amount form-control-sm form-control form-control-alternative" placeholder="e.g 20000">
+                                                <span style="display: none" class="user-type small-text">{{Auth()->user()->userType}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-sm-5">
+                                        <div class="form-group" style="margin-top: 30px;">
+                                            <button id="exp-btn" data="request" class="btn-sm btn btn-outline-secondary mt-2 custom-btn btn-md">
+                                                <i class="fa fa-plus"></i>
+                                                Add to List
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1" class="small-text">Amount</label>
-                        <div class="bg-secondary">
-                            <input name="amount" type="number" class="amount form-control form-control-alternative" placeholder="e.g 20000">
+              <div class="col-md-8">
+                <div>
+                    <span class="small-text custom-color d-inline-block mb-0 title">Expense Title</span>
+                    <div class="col-md-12 mt-3">
+                        <div class="tableFixHead">
+                            <div class="scrollbar-inner">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="custom-color custom-th">S/N</th>
+                                            <th scope="col" class="custom-color custom-th">Item</th>
+                                            <th scope="col" class="custom-color custom-th">Qty</th>
+                                            <th scope="col" class="custom-color custom-th">Unit</th>
+                                            <th scope="col" class="custom-color custom-th">Rate</th>
+                                            <th scope="col" class="custom-color custom-th">Amount</th>
+                                            <th scope="col" class="custom-color custom-th"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td class="td-text custom-td">dfgfhs ykhmhg rtutuerhr vbncvndf fdshfgjjhss </td>
+                                            <td class="td-text">20</td>
+                                            <td class="td-text">Pc</td>
+                                            <td class="td-text">500</td>
+                                            <td class="td-text">10000</td>
+                                            <td class="td-text">
+                                                <span >
+                                                    <i class="fa fa-edit custom-icon icon-edit"></i> | 
+                                                    <i class="fa fa-trash custom-icon icon-delete"></i>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td class="td-text custom-td">Mark pens for the white board Mark pens for the white board Mark pens for the white board</td>
+                                            <td class="td-text">20</td>
+                                            <td class="td-text">Pc</td>
+                                            <td class="td-text">500</td>
+                                            <td class="td-text">10000000</td>
+                                            <td class="td-text">
+                                                <span >
+                                                    <i class="fa fa-edit custom-icon icon-edit"></i> | 
+                                                    <i class="fa fa-trash custom-icon icon-delete"></i>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">4</th>
+                                            <td class="td-text custom-td">Mark pens for the white board Mark pens for the white board Mark pens for the white board Mark pens for the white board</td>
+                                            <td class="td-text">20</td>
+                                            <td class="td-text">Pc</td>
+                                            <td class="td-text">500</td>
+                                            <td class="td-text">10000</td>
+                                            <td class="td-text">
+                                                <span >
+                                                    <i class="fa fa-edit custom-icon icon-edit"></i> | 
+                                                    <i class="fa fa-trash custom-icon icon-delete"></i>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr class="total-row">
+                                            <th scope="col" class="td-text custom-th">TOTAL</th>
+                                            <th scope="col" class="td-text"></th>
+                                            <th scope="col" class="td-text"></th>
+                                            <th scope="col" class="td-text"></th>
+                                            <th scope="col" class="td-text"></th>
+                                            <th scope="col" class="td-text custom-th">65000000</th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button id="exp-btn" data="request" class="float-right btn-sm btn btn-outline-secondary mt-3 mb-3 custom-btn">
+                                <i class="fa fa-arrow-right"></i>
+                                Request
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="form-group" style="margin-top: 30px;">
-                        <button id="exp-btn" data="request" class="btn btn-outline-secondary mb-0 custom-btn btn-md">
-                            <i class="fa fa-arrow-right"></i>
-                            Request
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
-          <div class="row">
+              </div>
+          </div>
+          <div class="row expenses-contents">
             <div class="col-md-12">
               <div class="card card-stats">
                 <!-- Card body -->

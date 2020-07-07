@@ -1,10 +1,15 @@
 $(document).ready(function(){
     //---------------------------Expences--------------------------------
+    var $th = $('.tableFixHead').find('thead th')
+    $('.tableFixHead').on('scroll', function(){
+        $th.css('transform', 'translateY('+ this.scrollTo + 'px)');
+    });
     // toggling expences forms
     $(".add-expence").click(function (e) {
         var toggleText = $('.togglexpe').text();
         if (toggleText === "Add Expense") {
-            $('.form-expences').removeClass('toggleForms');
+            $('.expense-inputs').removeClass('toggleForms');
+            $('.expenses-contents').addClass('toggleForms');
             $(this).html(`
                     <i class="fa fa-arrow-circle-o-left"></i>
                     <span class="togglexpe">Return</span>
@@ -14,7 +19,8 @@ $(document).ready(function(){
                     <i class="fa fa-plus"></i>
                     <span class="togglexpe">Add Expense</span>
                     `);
-            $('.form-expences').addClass('toggleForms');
+            $('.expense-inputs').addClass('toggleForms');
+            $('.expenses-contents').removeClass('toggleForms');
         }
     });
 
@@ -100,6 +106,10 @@ $(document).ready(function(){
     //Submitting Expences
     $('.form-expences').submit(function (e) {
         e.preventDefault();
+        // var userType = $(".user-type").text();
+        // if ((userType === "hr") || userType === "admin")){
+        //     var actionUrl = "expences/create";
+        // }
         var actionUrl = "expences/create";
         let id = $("#exp-btn").attr("data");
         if (id !== "request") {
@@ -130,10 +140,14 @@ $(document).ready(function(){
                     Notification("Expence Saved Successfull", "success");
                 } else {
                     Notification("An Error occuired !!!", "warning");
+                    $("#exp-btn").prop('disabled', false);
+                    $("#exp-btn").attr("data", "request");
                 }
             })
             .fail(error => {
                 Notification("An Error occuired !!!", "warning");
+                $("#exp-btn").prop('disabled', false);
+                $("#exp-btn").attr("data", "request");
             });
     });
 
@@ -403,7 +417,6 @@ $(document).ready(function(){
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                 <a class="dropdown-item cashOut" data="${expence.id}" href="#">Cash Out</a>
-                                <a class="dropdown-item decline" data="${expence.id}" href="#">Decline</a>
                                 </div>
                             </div>
                         </td>
@@ -416,7 +429,7 @@ $(document).ready(function(){
     $(document).on("click", ".cashOut", function (e) {
         e.preventDefault();
         const id = $(this).attr("data");
-        Actions("expenses/cashOut", id, "hr-cahout");
+        Actions("expenses/cashOut", id, "hr-cashout");
     });
 
     // Function for actions in the table
@@ -436,19 +449,28 @@ $(document).ready(function(){
             processData: false,
         })
             .done(response => {
-
-                if (sender === "hr" || sender === "hr-decline" || sender === "hr-cahout") {
-                    expencesRequests(response);
-                    sender === "hr" ?
-                        Notification("Expence Recommended", "success") :
-                        Notification("Expence Declined", "success");
-                    sender === "hr-cahout" ? acceptedExpRequests(response) : null;
-                } else {
-                    recommendedExpRequests(response);
-                    getApprovedExpences();
-                    sender === "admin" ?
-                        Notification("Expense Accepted", "success") :
+                switch (sender) {
+                    case "hr":
+                        expencesRequests(response);
+                        Notification("Expence Recommended", "success");
+                        break;
+                    case "hr-cashout":
+                        expencesRequests(response);
+                        acceptedExpRequests(response);
+                        Notification("Expence Cashed out", "success");
+                        break;
+                    case "admin":
+                        getApprovedExpences();
+                        recommendedExpRequests(response);
+                        Notification("Expense Accepted", "success");
+                        break;
+                    case "admin-decline":
+                        recommendedExpRequests(response);
+                        getApprovedExpences();
                         Notification("Expense Declined", "success");
+                        break;
+                    default:
+                        break;
                 }
                 getPendingExpences();
                 getCancelledExpences();
@@ -463,13 +485,6 @@ $(document).ready(function(){
         e.preventDefault();
         const id = $(this).attr("data");
         Actions("expences/recommended", id, "hr");
-    });
-
-    // Decline action
-    $(document).on("click", ".decline", function (e) {
-        e.preventDefault();
-        const id = $(this).attr("data");
-        Actions("expences/decline", id, "hr-decline");
     });
 
     //get hr Recommended Expences for Admin
@@ -703,6 +718,13 @@ $(document).ready(function(){
                         <td class="budget">${expence.amount}</td>
                         <td>
                             <span class="status">${expence.name}</span>
+                        </td>
+                        <td>
+                            ${
+                                expence.created_at.includes("T") ?
+                                expence.created_at.split('T')[0] :
+                                expence.created_at.split(' ')[0]
+                            }
                         </td>
                     </tr>
                 `)

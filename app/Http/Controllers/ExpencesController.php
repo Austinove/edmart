@@ -7,7 +7,6 @@ use App\Expences;
 use App\ApprovedExps;
 use App\RequestedExps;
 use App\User;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -55,7 +54,7 @@ class ExpencesController extends Controller
             );
             return response()->json([
                 'msg' => "Expence Saved Successfull",
-                'expences' => $user->expences
+                'expences' => $user->expences()->orderBy("created_at", "desc")->get()
             ]);
         } catch (QueryException $th) {
             throw $th;
@@ -66,7 +65,7 @@ class ExpencesController extends Controller
     public function fetch()
     {
         $user = User::findOrFail(Auth::user()->id);
-        return response()->json($user->expences);
+        return response()->json($user->expences()->orderBy("created_at", "desc")->get());
     }
 
     //fetching cancelled expences
@@ -76,7 +75,7 @@ class ExpencesController extends Controller
             $expencesCanclled = DB::table('expences')
                 ->join("cancelled_exps", "expences.id", "=", "cancelled_exps.expences_id")
                 ->select("expences.id", "expences.desc", "expences.amount", "cancelled_exps.created_at", "cancelled_exps.viewed")
-                ->where('user_id', "=", Auth::user()->id)->get();
+                ->where('user_id', "=", Auth::user()->id)->orderBy("created_at", "desc")->get();
             return response()->json($expencesCanclled);
         } catch (QueryException $th) {
             throw $th;
@@ -91,7 +90,7 @@ class ExpencesController extends Controller
             DB::table('expences')
             ->join("users", "expences.user_id", "=", "users.id")
             ->select("expences.id", "expences.desc", "expences.created_at", "expences.user_id", "expences.amount", "users.name")
-            ->where('status', "=", "pending")->get();
+            ->where('status', "=", "pending")->orderBy("created_at", "desc")->get();
             return response()->json($pending);
         } catch (QueryException $th) {
             throw $th;
@@ -156,7 +155,7 @@ class ExpencesController extends Controller
             ]);
             return response()->json([
                 'msg' => "Expence Saved Successfull",
-                'expences' => $user->expences
+                'expences' => $user->expences()->orderBy("created_at", "desc")
             ]);
         } catch (QueryException $th) {
             throw $th;
@@ -170,7 +169,7 @@ class ExpencesController extends Controller
             $user->expences()->where("id", "=", $id)->delete();
             return response()->json([
                 'msg' => "Expence Widrawn Successfully",
-                'expences' => $user->expences
+                'expences' => $user->expences()->orderBy("created_at", "desc")
             ]);
         } catch (QueryException $th) {
             throw $th;
@@ -190,7 +189,7 @@ class ExpencesController extends Controller
                 "users.name",
                 "requested_exps.created_at",
                 "requested_exps.viewed"
-            )->where("recommended", "=", 1)->get();
+            )->where("recommended", "=", 1)->orderBy("created_at", "desc")->get();
             return response()->json($expencesRecommended);
     }
 
@@ -207,7 +206,7 @@ class ExpencesController extends Controller
             "users.name",
             "requested_exps.created_at",
             "requested_exps.viewed"
-        )->where("recommended", "=", "accepted")->get();
+        )->where("recommended", "=", "accepted")->orderBy("created_at", "desc")->get();
         return response()->json($expencesAccepted);
     }
 
@@ -286,7 +285,7 @@ class ExpencesController extends Controller
                 "users.name",
                 "approved_exps.created_at",
                 "approved_exps.viewed"
-            )->get();
+            )->orderBy("created_at", "desc")->get();
         return response()->json($approvedExpences);
     }
 
@@ -320,7 +319,7 @@ class ExpencesController extends Controller
                 "users.name",
                 "approved_exps.created_at",
                 "approved_exps.viewed"
-            )->get();
+                )->orderBy("created_at", "desc")->get();
             return response()->json($approvedExpences);
         } catch (QueryException $th) {
             throw $th;
@@ -328,13 +327,13 @@ class ExpencesController extends Controller
     }
 
     //appling viewed of approved expenses
-    public function viewed(Request $request)
-    {
-        $expense = Expences::findOrFail($request["id"]);
-        $expense->approvedExps()->update([
-            "viewed" => 1
-        ]);
-    }
+    // public function viewed(Request $request)
+    // {
+    //     $expense = Expences::findOrFail($request["id"]);
+    //     $expense->approvedExps()->update([
+    //         "viewed" => 1
+    //     ]);
+    // }
 
     // appling viewed of cancelled expenses
     public function cancelledViewed(Request $request) {
