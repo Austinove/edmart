@@ -1,9 +1,12 @@
 $(document).ready(function(){
     //---------------------------Expences--------------------------------
+
+    // scrolling list table
     var $th = $('.tableFixHead').find('thead th')
     $('.tableFixHead').on('scroll', function(){
         $th.css('transform', 'translateY('+ this.scrollTo + 'px)');
     });
+
     // toggling expences forms
     $(".add-expence").click(function (e) {
         var toggleText = $('.togglexpe').text();
@@ -70,57 +73,202 @@ $(document).ready(function(){
     //Empting inputs function
     function clearInputs() {
         $('.desc').val('');
-        $('.amount').val('');
+        $('.rate').val('');
+        $('.units').val('');
+        $('.quantity').val('');
+        $('.title').val('');
     }
 
     //Function for more in modal
     $(document).on("click", ".more", function () {
         var expenceType = $(this).attr("exp-type")
-        if (expenceType === "cancelled") {
-            $.when(viewed("approved/cancelled", $(this).attr("data-id")).done(response => {
-                cancelledExpences(response)
-            }).fail(error => {
-                console.log(error)
-                Notification("An Error occuired !!!", "warning")
-            }))
-        } else if (expenceType === "approved") {
-            $.when(approvedRequest($(this).attr("data-id")).done(response => {
-                approvedExpRequests(response)
-            }).fail(error => {
-                console.log(error)
-                Notification("An Error occuired !!!", "warning")
-            }))
-        } else { null }
-        $(".expenses-body").html(`
-            <div class="row">
-                <p class=" small-text">
-                    ${$(this).attr('data-desc')}
-                </p>
-                <div style="width: 95%">
-                    <h5 class="mb-0 custom-color float-right">${$(this).attr('data-amount')} sh</h5>
-                </div>
-            </div>
+        switch (expenceType) {
+            case "cancelled":
+                $.when(viewed("approved/cancelled", $(this).attr("data-id")).done(response => {
+                    cancelledExpences(response)
+                }).fail(error => {
+                    console.log(error)
+                    Notification("View not registered!", "warning")
+                }))
+                break;
+            case "approved":
+                $.when(approvedRequest($(this).attr("data-id")).done(response => {
+                    approvedExpRequests(response)
+                }).fail(error => {
+                    console.log(error)
+                    Notification("View not registered!", "warning")
+                }))
+                break;
+            default:
+                break;
+        }
+        // if (expenceType === "cancelled") {
+        //     $.when(viewed("approved/cancelled", $(this).attr("data-id")).done(response => {
+        //         cancelledExpences(response)
+        //     }).fail(error => {
+        //         console.log(error)
+        //         Notification("An Error occuired !!!", "warning")
+        //     }))
+        // } else if (expenceType === "approved") {
+        //     $.when(approvedRequest($(this).attr("data-id")).done(response => {
+        //         approvedExpRequests(response)
+        //     }).fail(error => {
+        //         console.log(error)
+        //         Notification("An Error occuired !!!", "warning")
+        //     }))
+        // } else { null }
+        $(".expenses-body").html("");
+        $(".modal-total").text($(this).attr('data-amount')+" sh");
+        $(".expModal-title").text($(this).attr('data-desc').split(">|<")[0]);
+        (($(this).attr('data-desc').split(">|<")[1]).split("||")).forEach((item, index) => {
+            $(".expenses-body").append(`
+            <tr>
+                <th scope="row">${index+1}</th>
+                <td class="td-text custom-td">${item.split("<>")[0]}</td>
+                <td class="td-text">${item.split("<>")[1]}</td>
+                <td class="td-text">${item.split("<>")[2]}</td>
+                <td class="td-text">${item.split("<>")[3]}</td>
+                <td class="td-text">${(item.split("<>")[1]) * (item.split("<>")[3])}</td>
+            </tr>
         `)
+        });
     })
 
+    //List functionality
+    var expenseDesc = [];
+    var count = 1;
+    $("#exp-formList").validate({
+        submitHandler: function(form) {
+            // form.submit()
+            var editCheck = $("#add-list").attr("data-edit");
+            switch (editCheck) {
+                case "edit":
+                    let saveEdited = expenseDesc.find((exp) => {
+                        return exp.id === parseInt($("#add-list").attr("data-id"));
+                    })
+                    saveEdited.desc = ($(".desc").val() +
+                                        "<>" +
+                                        $(".quantity").val() +
+                                        "<>" +
+                                        $(".units").val() +
+                                        "<>" +
+                                        $(".rate").val());
+                    saveEdited.amount = ($(".rate").val() * $(".quantity").val())
+                    $("#add-list").attr("data-edit", "no")
+                                    .html(`<i class="fa fa-plus"></i> Add to List`);
+                    break;
+
+                case "no":
+                    expenseDesc.push(
+                        {               
+                            "id": count,
+                            "desc": $(".desc").val() +
+                                    "<>" +
+                                    $(".quantity").val() +
+                                    "<>" +
+                                    $(".units").val() +
+                                    "<>" +
+                                    $(".rate").val(),
+                            "amount": ($(".rate").val() * $(".quantity").val())
+                        }
+                    );
+                    count++;
+                    break;
+
+                default:
+                    break;
+            }
+            $(".title-text").text($(".title").val());
+            const arrSum = expenseDesc.reduce(function (prev, cur) {
+                return prev + cur.amount;
+            }, 0);
+            $(".total").text(arrSum);
+            renderList(expenseDesc);
+            $(".desc").val("");
+            $(".rate").val("");
+            $(".units").val("");
+            $(".quantity").val("");
+        }
+    });
+    // Editing an element in the list
+    $(document).on("click", ".icon-edit", function(e) {
+        let toEdit = expenseDesc.find((exp) => {
+            return exp.id === parseInt($(this).attr("data"));
+        })
+        var descValue = toEdit.desc.split("<>");
+        $(".desc").val(descValue[1]);
+        $(".quantity").val(descValue[2]);
+        $(".units").val(descValue[3]);
+        $(".rate").val(descValue[4]);
+        $("#add-list").attr("data-id", $(this).attr("data"))
+                        .html(`<i class="fa fa-save"></i> Save`)
+                        .attr("data-edit", "edit");
+    });
+    // Deleting element in the list
+    $(document).on("click", ".icon-delete", function(e) {
+        const newExpenseDesc = expenseDesc.filter((item) => item.id !== parseInt($(this).attr("data")));
+        expenseDesc = newExpenseDesc;
+        const arrSum = expenseDesc.reduce(function (prev, cur) {
+            return prev + cur.amount;
+        }, 0);
+        $(".total").text(arrSum);
+        renderList(expenseDesc);
+    })
+    //list rendering function
+    function renderList(expDetails){
+        $(".expences-list").html('');
+        expDetails.forEach(expense => {
+            var descValue = expense.desc.split("<>");
+            return $(".expences-list").append(`
+                <tr>
+                    <th scope="row">${expense.id}</th>
+                    <td class="td-text custom-td">${descValue[0]}</td>
+                    <td class="td-text">${descValue[1]}</td>
+                    <td class="td-text">${descValue[2]}</td>
+                    <td class="td-text">${descValue[3]}</td>
+                    <td class="td-text">
+                        ${expense.amount}
+                    </td>
+                    <td class="td-text">
+                        <span >
+                            <i class="fa fa-edit custom-icon icon-edit" data="${expense.id}"></i> | 
+                            <i class="fa fa-trash custom-icon icon-delete" data="${expense.id}"></i>
+                        </span>
+                    </td>
+                </tr>
+            `);
+        });
+    }
     //Submitting Expences
-    $('.form-expences').submit(function (e) {
+    $(document).on("click", "#exp-btn",function (e) {
         e.preventDefault();
         // var userType = $(".user-type").text();
         // if ((userType === "hr") || userType === "admin")){
         //     var actionUrl = "expences/create";
         // }
+        const descData = $(".title-text").text()+">|<"+expenseDesc.map(item => item.desc).join("||");
+        var expenseData = new FormData;
+        expenseData.append("desc", descData);
+        expenseData.append("amount", $(".total").text());
         var actionUrl = "expences/create";
         let id = $("#exp-btn").attr("data");
-        if (id !== "request") {
-            actionUrl = `expences/edit/${id}`;
-        }
-        $('#exp-btn').html('Submiting...');
-        $("#exp-btn").prop('disabled', true);
+
+        // if (id !== "request") {
+        //     actionUrl = `expences/edit/${id}`;
+        // }
+
+        // handling house keeping (disabling button and clearing inputs with title&total)
+        $("#exp-btn").prop('disabled', true).html('Submiting...');
+        expenseDesc=[];
+        renderList(expenseDesc);
+        $(".total").text("0");
+        $(".title-text").text("");
+        clearInputs();
+        // Ajax request
         $.ajax({
             url: actionUrl,
             type: "post",
-            data: new FormData(this),
+            data: expenseData,
             dataType: 'json',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -134,36 +282,23 @@ $(document).ready(function(){
                     clearInputs();
                     pendingExpences(response.expences);
                     getExpencesRequests();
-                    $('#exp-btn').html('<i class="fa fa-arrow-right"></i>Request');
-                    $("#exp-btn").prop('disabled', false);
-                    $("#exp-btn").attr("data", "request");
+                    $('#exp-btn').html('<i class="fa fa-arrow-right"></i>Request')
+                                .prop('disabled', false)
+                                .attr("data", "request");
                     Notification("Expence Saved Successfull", "success");
                 } else {
                     Notification("An Error occuired !!!", "warning");
-                    $("#exp-btn").prop('disabled', false);
-                    $("#exp-btn").attr("data", "request");
+                    $('#exp-btn').html('<i class="fa fa-arrow-right"></i>Request')
+                        .prop('disabled', false)
+                        .attr("data", "request");
                 }
             })
             .fail(error => {
                 Notification("An Error occuired !!!", "warning");
-                $("#exp-btn").prop('disabled', false);
-                $("#exp-btn").attr("data", "request");
+                $('#exp-btn').html('<i class="fa fa-arrow-right"></i>Request')
+                    .prop('disabled', false)
+                    .attr("data", "request");
             });
-    });
-
-    //Editing expense
-    $(document).on("click", ".editExp", function (e) {
-        e.preventDefault();
-        let id = $(this).attr("data");
-        $("#exp-btn").attr("data", id);
-        $(".desc").val($(this).attr("desc-data"));
-        $(".amount").val($(this).attr("amount-data"));
-        $('#exp-btn').html('<i class="fa fa-arrow-right"></i>Save Changes');
-        $('.form-expences').removeClass('toggleForms');
-        $(".add-expence").html(`
-            <i class="fa fa-arrow-circle-o-left"></i>
-            <span class="togglexpe">Return</span>
-        `);
     });
 
     // Withdrawing expense
@@ -232,11 +367,6 @@ $(document).ready(function(){
                             </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" class="disabled">
                             ${expence.status === "pending" ? `<div>
-                                <a class="dropdown-item editExp"
-                                    data="${expence.id}" 
-                                    desc-data="${expence.desc}"
-                                    amount-data="${expence.amount}" 
-                                    href="#" >Edit</a>
                                 <a class="dropdown-item widthdrawExp"
                                     data="${expence.id}"
                                     desc-data="${expence.desc}"
@@ -250,6 +380,12 @@ $(document).ready(function(){
             `)
         })
     }
+
+    // <a class="dropdown-item editExp"
+    //     data="${expence.id}"
+    //     desc-data="${expence.desc}"
+    //     amount-data="${expence.amount}"
+    //     href="#" >Edit</a>
 
     //get Cancelled Expences
     getCancelledExpences();

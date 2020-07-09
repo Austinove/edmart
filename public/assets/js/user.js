@@ -7,6 +7,13 @@ $(document).ready(function(){
         });
     }
 
+    //Empting inputs function
+    function clearInputs() {
+        $('.name').val('');
+        $('.email').val('');
+        $('.image').val('');
+    }
+
     // $('#changePassword').addClass('toggleForms');
     $('.btn-togleForm').click(function(e){
         e.preventDefault()
@@ -43,6 +50,7 @@ $(document).ready(function(){
         .done(response => {
             $('#register-btn').html('Register User');
             $("#register-btn").prop('disabled', false);
+            clearInputs();
             Notification(response.msg, "success");
         })
         .fail(error => {
@@ -53,6 +61,7 @@ $(document).ready(function(){
             }
             $('#register-btn').html('Register User');
             $("#register-btn").prop('disabled', false);
+            clearInputs();
         });
     });
 

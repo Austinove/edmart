@@ -16,7 +16,7 @@ class CreateExpencesTable extends Migration
         Schema::create('expences', function (Blueprint $table) {
             $table->id();
             $table->foreignId("user_id")->constrained("users")->index();
-            $table->string("desc");
+            $table->longText("desc");
             $table->string("amount");
             $table->string("status");
             $table->string("viewed");

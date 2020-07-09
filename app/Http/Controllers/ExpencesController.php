@@ -37,6 +37,7 @@ class ExpencesController extends Controller
     //creating new expences
     public function create(Request $request)
     {
+        return $request;
         $this->validate($request, [
             "desc" => "required",
             "amount" => "required|numeric",
@@ -139,28 +140,28 @@ class ExpencesController extends Controller
     }
 
     //Updating Expense
-    public function update(Request $request, $id)
-    {
-        $inputs = $request->all();
-        $this->validate($request, [
-            "amount" => "required",
-            "desc" => "required"
-        ]);
-        try {
-            $user = User::findOrFail(Auth::user()->id);
-            $user->expences()->where("id", "=", $id)->update([
-                "amount" => $inputs["amount"],
-                "desc" => $inputs["desc"],
-                "viewed" => 0
-            ]);
-            return response()->json([
-                'msg' => "Expence Saved Successfull",
-                'expences' => $user->expences()->orderBy("created_at", "desc")
-            ]);
-        } catch (QueryException $th) {
-            throw $th;
-        }
-    }
+    // public function update(Request $request, $id)
+    // {
+    //     $inputs = $request->all();
+    //     $this->validate($request, [
+    //         "amount" => "required",
+    //         "desc" => "required"
+    //     ]);
+    //     try {
+    //         $user = User::findOrFail(Auth::user()->id);
+    //         $user->expences()->where("id", "=", $id)->update([
+    //             "amount" => $inputs["amount"],
+    //             "desc" => $inputs["desc"],
+    //             "viewed" => 0
+    //         ]);
+    //         return response()->json([
+    //             'msg' => "Expence Saved Successfull",
+    //             'expences' => $user->expences()->orderBy("created_at", "desc")
+    //         ]);
+    //     } catch (QueryException $th) {
+    //         throw $th;
+    //     }
+    // }
 
     //Deleting Expense
     public function delete($id){

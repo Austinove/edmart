@@ -17,7 +17,7 @@ Route::get('/', "Auth\LoginController@showLoginForm")->name('login');
 Route::get('/profile', "ProfilesController@index")->name('profile');
 Route::get('/expenses', 'ExpencesController@index')->name('expenses');
 Route::get('/expences/fetch', 'ExpencesController@fetch')->name('getExpences');
-Route::post("expences/edit/{id}", "ExpencesController@update")->name("editExps");
+// Route::post("expences/edit/{id}", "ExpencesController@update")->name("editExps");
 Route::delete("expences/delete/{id}", "ExpencesController@delete")->name("deleteExps");
 Route::get('/expences/pending', 'ExpencesController@pending')->name('getPendingExps');
 Route::get('/expences/cancelled', 'ExpencesController@cancelled')->name('getCancelledExps');

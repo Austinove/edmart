@@ -107,3 +107,7 @@ main {
 .custom-th {
     font-weight: bold !important;
 }
+.error {
+    color: red;
+    font-size: 12px;
+}
