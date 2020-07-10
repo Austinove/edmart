@@ -125,6 +125,7 @@
                 </div>
             </div>
           </div>
+
           <div class="row expenses-contents">
             <div class="col-md-12">
               <div class="card card-stats">
@@ -318,6 +319,7 @@
                         @if (Auth::user())
                             @if ((Auth()->user()->userType==="hr")||(Auth()->user()->userType==="admin"))
                                 <div class="tab-pane fade" id="all-req" role="tabpanel" aria-labelledby="all-pill">
+                                    <a href="" style="margin-top: -30px;" class="print-btn btn btn-sm custom-btn float-right mr-0"><i class="fa fa-print" aria-hidden="true"></i></a>
                                     <div class="row">
                                         <div class="col-md-4"><h5 class="mb-4 custom-color">Total Amount Approved: <strong class="total-amount"> 0</strong> sh</h5></div>
                                         <div class="col-md-3"></div>

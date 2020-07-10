@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/pdf', function(){
+    return view("finance.pdf_view");
+});
 Route::get('/', "Auth\LoginController@showLoginForm")->name('login');
 Route::get('/profile', "ProfilesController@index")->name('profile');
 Route::get('/expenses', 'ExpencesController@index')->name('expenses');
@@ -38,3 +40,5 @@ Route::post('/edit/user/password', "Auth\RegisterController@editUserPassword")->
 Auth::routes();
 
 Route::get('/dashboard', 'HomeController@index')->name('home');
+
+Route::get('/expense/printPdf/{month}', ['as' => 'printPdf', 'uses' => 'ExpencesController@printPDF']);

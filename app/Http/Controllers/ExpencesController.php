@@ -11,6 +11,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class ExpencesController extends Controller
 {
@@ -37,7 +38,7 @@ class ExpencesController extends Controller
     //creating new expences
     public function create(Request $request)
     {
-        return $request;
+        // return $request;
         $this->validate($request, [
             "desc" => "required",
             "amount" => "required|numeric",
@@ -271,23 +272,28 @@ class ExpencesController extends Controller
         }
     }
 
-    //Approved Expences
+    // function to retrieve all approved expences
+    public function allApproved($month){
+        $approvedExpences = DB::table('approved_exps')
+        ->where("approved_exps.created_at", "LIKE", "%{$month}%")
+        ->join("expences", "approved_exps.expences_id", "=", "expences.id")
+        ->join("users", "expences.user_id", "=", "users.id")
+        ->select(
+            "expences.id",
+            "expences.desc",
+            "expences.amount",
+            "users.name",
+            "approved_exps.created_at",
+            "approved_exps.viewed"
+        )->orderBy("created_at", "desc")->get();
+        return response()->json($approvedExpences);
+    }
+
+    //Approved Expences for both hr and admin
     public function approved(Request $request){
         $inputs = $request->all();
         $month = $inputs['month'];
-        $approvedExpences = DB::table('approved_exps')
-            ->where("approved_exps.created_at", "LIKE", "%{$month}%")
-            ->join("expences", "approved_exps.expences_id", "=", "expences.id")
-            ->join("users", "expences.user_id", "=", "users.id")
-            ->select(
-                "expences.id",
-                "expences.desc",
-                "expences.amount",
-                "users.name",
-                "approved_exps.created_at",
-                "approved_exps.viewed"
-            )->orderBy("created_at", "desc")->get();
-        return response()->json($approvedExpences);
+        return $this->allApproved($month);
     }
 
     //User approved Expences
@@ -327,15 +333,6 @@ class ExpencesController extends Controller
         }
     }
 
-    //appling viewed of approved expenses
-    // public function viewed(Request $request)
-    // {
-    //     $expense = Expences::findOrFail($request["id"]);
-    //     $expense->approvedExps()->update([
-    //         "viewed" => 1
-    //     ]);
-    // }
-
     // appling viewed of cancelled expenses
     public function cancelledViewed(Request $request) {
         try {
@@ -348,5 +345,24 @@ class ExpencesController extends Controller
         } catch (QueryException $th) {
             throw $th;
         }
+    }
+
+    // printing the pdf
+    public function printPDF($month){
+        $show = $this->allApproved($month);
+        return $show;
+        return view('finance.pdf_view')->with("show", $show);
+        // This  $data array will be passed to our PDF blade
+        $data = [
+            'title' => "first PDF for now",
+            'heading' => 'Hello how are you',
+            'content' => '
+                Lorem Ipsum is simply dummy text of the 
+                printing and typesetting industry. 
+                Lorem Ipsum has been the industry
+            '
+        ];
+        $pdf = PDF::loadView('finance.pdf_view')->with("show", $show);
+        return $pdf->download('meduim.pdf');
     }
 }

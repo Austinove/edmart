@@ -102,21 +102,7 @@ $(document).ready(function(){
             default:
                 break;
         }
-        // if (expenceType === "cancelled") {
-        //     $.when(viewed("approved/cancelled", $(this).attr("data-id")).done(response => {
-        //         cancelledExpences(response)
-        //     }).fail(error => {
-        //         console.log(error)
-        //         Notification("An Error occuired !!!", "warning")
-        //     }))
-        // } else if (expenceType === "approved") {
-        //     $.when(approvedRequest($(this).attr("data-id")).done(response => {
-        //         approvedExpRequests(response)
-        //     }).fail(error => {
-        //         console.log(error)
-        //         Notification("An Error occuired !!!", "warning")
-        //     }))
-        // } else { null }
+
         $(".expenses-body").html("");
         $(".modal-total").text($(this).attr('data-amount')+" sh");
         $(".expModal-title").text($(this).attr('data-desc').split(">|<")[0]);
@@ -381,12 +367,6 @@ $(document).ready(function(){
         })
     }
 
-    // <a class="dropdown-item editExp"
-    //     data="${expence.id}"
-    //     desc-data="${expence.desc}"
-    //     amount-data="${expence.amount}"
-    //     href="#" >Edit</a>
-
     //get Cancelled Expences
     getCancelledExpences();
     function getCancelledExpences() {
@@ -595,6 +575,10 @@ $(document).ready(function(){
                         acceptedExpRequests(response);
                         Notification("Expence Cashed out", "success");
                         break;
+                    case "decline":
+                        expencesRequests(response);
+                        Notification("Expense Declined Successfully", "success");
+                        break;
                     case "admin":
                         getApprovedExpences();
                         recommendedExpRequests(response);
@@ -621,6 +605,13 @@ $(document).ready(function(){
         e.preventDefault();
         const id = $(this).attr("data");
         Actions("expences/recommended", id, "hr");
+    });
+
+    //hr decline action
+    $(document).on("click", ".decline", function (e) {
+        e.preventDefault();
+        const id = $(this).attr("data");
+        Actions("expences/decline", id, "decline");
     });
 
     //get hr Recommended Expences for Admin
@@ -698,6 +689,7 @@ $(document).ready(function(){
     }
 
     //set current month
+    // Setting up print url to print button
     setMonth();
     function setMonth() {
         var d = new Date()
@@ -833,6 +825,8 @@ $(document).ready(function(){
 
     //rendering all expences
     function allApprovedExp(expence_data) {
+        // first set the url of print button
+        $(".print-btn").attr("href", `/expense/printPdf/${"-" + $(".month-all").val().split("-")[1] + "-"}`)
         $(".retrieve-all").html(`Retrieve <i class="fa fa-check" aria-hidden="true"></i>`);
         $(".retrieve-all").prop('disabled', false);
         $(".all-expenses").html("");
