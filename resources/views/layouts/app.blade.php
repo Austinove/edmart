@@ -140,7 +140,7 @@
             </div>
         </nav>
     <div class="main-content" id="panel">
-        @include('layouts.navBar')
+        @include('layouts.navbar')
         <main class="py-2">
             @include('layouts.modal')
             @yield('content')

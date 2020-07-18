@@ -872,4 +872,4 @@ $(document).ready(function(){
         getAllExpences();
     },30000);
 
-});
+}); 

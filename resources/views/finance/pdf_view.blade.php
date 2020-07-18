@@ -35,13 +35,68 @@
         </style>
     </head>
     <body>
-        @if (count($show)>0)
-            @foreach ($show as $item)
-                <span>{{$item->desc}}</span>
-            @endforeach
-        @endif
         <div style="margin-bottom: 5px;">
-            <span>Expenses for <strong>Jully, 2020</strong></span><span style="float: right;">Total: <strong>20000000sh</strong></span><br>
+            {{-- retrieving month --}}
+            <span>Expenses for
+                <strong>
+                    @if ($month)
+                        @switch($month)
+                            @case("-01-")
+                                January, {{date('Y')}}
+                                @break
+                            @case("-02-")
+                                Febrary, {{date('Y')}}
+                                @break
+                            @case("-03-")
+                                March, {{date('Y')}}
+                                @break
+                            @case("-04-")
+                                April, {{date('Y')}}
+                                @break
+                            @case("-05-")
+                                May, {{date('Y')}}
+                                @break
+                            @case("-06-")
+                                June, {{date('Y')}}
+                                @break
+                            @case("-07-")
+                                Jully, {{date('Y')}}
+                                @break
+                            @case("-08-")
+                                August, {{date('Y')}}
+                                @break
+                            @case("-09-")
+                                September, {{date('Y')}}
+                                @break
+                            @case("-10-")
+                                October, {{date('Y')}}
+                                @break
+                            @case("-11-")
+                                November, {{date('Y')}}
+                                @break
+                            @case("-12-")
+                                December, {{date('Y')}}
+                                @break
+                            @default
+                                @break
+                        @endswitch
+                    @endif
+                </strong>
+            </span>
+            <span style="float: right;">Total: 
+                <strong>
+                    @if (count($show)>0)
+                        @php
+                            $sum = 0;
+                            foreach ($show as $item){
+                            $sum += intval($item->amount);
+                            }
+                        @endphp
+                        {{$sum}}
+                    @endif
+                </strong>
+            </span>
+            <br>
         </div>
         <table>
             <thead>
@@ -49,84 +104,41 @@
                     <th scope="col" class="th-main">Description</th>
                     <th scope="col" class="th-main">Budget</th>
                     <th scope="col" class="th-main">user</th>
-                    <th scope="col" class="th-main">Date</th>
+                    <th scope="col" class="th-main">Date/Time</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="td-main">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="th-inside">Items</th>
-                                    <th scope="col" class="th-inside">quantity</th>
-                                    <th scope="col" class="th-inside">unit</th>
-                                    <th scope="col" class="th-inside">Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody class="inside">
-                                <tr class="inside-row">
-                                    <td class="custom-td td-inside">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the </td>
-                                    <td class="td-inside">5</td>
-                                    <td class="td-inside">500</td>
-                                    <td class="td-inside">2500</td>
-                                </tr>
-                                <tr class="inside-row">
-                                    <td class="custom-td td-inside">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the </td>
-                                    <td class="td-inside">5</td>
-                                    <td class="td-inside">500</td>
-                                    <td class="td-inside">2500</td>
-                                </tr>
-                                <tr class="inside-row">
-                                    <td class="custom-td td-inside">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the </td>
-                                    <td class="td-inside">5</td>
-                                    <td class="td-inside">500</td>
-                                    <td class="td-inside">2500</td>
-                                </tr>
-                                <tr class="inside-row">
-                                    <td class="custom-td td-inside">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the </td>
-                                    <td class="td-inside">5</td>
-                                    <td class="td-inside">500</td>
-                                    <td class="td-inside">2500</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                    <td class="td-main">30000</td>
-                    <td class="td-main">Bryan</td>
-                    <td class="td-main">10/07/2020</td>
-                </tr>
-                <tr>
-                    <td class="td-main">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="th-inside">Items</th>
-                                    <th scope="col" class="th-inside">quantity</th>
-                                    <th scope="col" class="th-inside">unit</th>
-                                    <th scope="col" class="th-inside">Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody class="inside">
-                                <tr class="inside-row">
-                                    <td class="custom-td td-inside">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the </td>
-                                    <td class="td-inside">5</td>
-                                    <td class="td-inside">500</td>
-                                    <td class="td-inside">2500</td>
-                                </tr>
-                                <tr class="inside-row">
-                                    <td class="custom-td td-inside">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the </td>
-                                    <td class="td-inside">5</td>
-                                    <td class="td-inside">500</td>
-                                    <td class="td-inside">2500</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                    <td class="td-main">30000</td>
-                    <td class="td-main">Bryan</td>
-                    <td class="td-main">10/07/2020</td>
-                </tr>
+                @if (count($show)>0)
+                    @foreach ($show as $item)
+                        <tr>
+                            <td class="td-main">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="th-inside">{{explode('>|<', $item->desc)[0]}}</th>
+                                            <th scope="col" class="th-inside">quantity</th>
+                                            <th scope="col" class="th-inside">unit</th>
+                                            <th scope="col" class="th-inside">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="inside">
+                                        @for ($i = 0; $i < count(explode('||', (explode('>|<', $item->desc)[1]))); $i++)
+                                            <tr class="inside-row">
+                                                <td class="custom-td td-inside">{{explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[0]}}</td>
+                                                <td class="td-inside">{{explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[1]}}</td>
+                                                <td class="td-inside">{{explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[2]}}</td>
+                                                <td class="td-inside">{{explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[3]}}</td>
+                                            </tr>
+                                        @endfor
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td class="td-main">{{$item->amount}}</td>
+                            <td class="td-main">{{$item->name}}</td>
+                            <td class="td-main">{{$item->created_at}}</td>
+                        </tr>
+                    @endforeach
+                @endif
             </tbody>
         </table>
     </body>

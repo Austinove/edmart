@@ -349,20 +349,25 @@ class ExpencesController extends Controller
 
     // printing the pdf
     public function printPDF($month){
-        $show = $this->allApproved($month);
-        return $show;
-        return view('finance.pdf_view')->with("show", $show);
-        // This  $data array will be passed to our PDF blade
-        $data = [
-            'title' => "first PDF for now",
-            'heading' => 'Hello how are you',
-            'content' => '
-                Lorem Ipsum is simply dummy text of the 
-                printing and typesetting industry. 
-                Lorem Ipsum has been the industry
-            '
-        ];
-        $pdf = PDF::loadView('finance.pdf_view')->with("show", $show);
-        return $pdf->download('meduim.pdf');
+        try {
+            $show = DB::table('approved_exps')
+            ->where("approved_exps.created_at", "LIKE", "%{$month}%")
+            ->join("expences", "approved_exps.expences_id", "=", "expences.id")
+            ->join("users", "expences.user_id", "=", "users.id")
+            ->select(
+                "expences.id",
+                "expences.desc",
+                "expences.amount",
+                "users.name",
+                "approved_exps.created_at",
+                "approved_exps.viewed"
+            )->orderBy("created_at", "desc")->get();
+            // return view('finance.pdf_view', ["show" => $show, "month" => $month]);
+            $pdf = PDF::loadView('finance.pdf_view', ["show" => $show, "month" => $month]);
+            return $pdf->download('meduim.pdf');
+        } catch (QueryException $th) {
+            throw $th;
+        }
+        
     }
 }
