@@ -117,7 +117,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <button id="exp-btn" data="request" class="float-right btn-sm btn btn-outline-secondary mt-3 mb-3 custom-btn">
+                        <button id="exp-btn" data="request" user-type={{Auth()->user()->userType}} class="float-right btn-sm btn btn-outline-secondary mt-3 mb-3 custom-btn">
                             <i class="fa fa-arrow-right"></i>
                             Request
                         </button>

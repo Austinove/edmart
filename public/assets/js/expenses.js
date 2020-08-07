@@ -228,63 +228,60 @@ $(document).ready(function(){
     //Submitting Expences
     $(document).on("click", "#exp-btn",function (e) {
         e.preventDefault();
-        // var userType = $(".user-type").text();
-        // if ((userType === "hr") || userType === "admin")){
-        //     var actionUrl = "expences/create";
-        // }
+        // console.log($(this).attr('user-type'));
         const descData = $(".title-text").text()+">|<"+expenseDesc.map(item => item.desc).join("||");
-        var expenseData = new FormData;
-        expenseData.append("desc", descData);
-        expenseData.append("amount", $(".total").text());
-        var actionUrl = "expences/create";
-        let id = $("#exp-btn").attr("data");
-
-        // if (id !== "request") {
-        //     actionUrl = `expences/edit/${id}`;
-        // }
-
-        // handling house keeping (disabling button and clearing inputs with title&total)
-        $("#exp-btn").prop('disabled', true).html('Submiting...');
-        expenseDesc=[];
-        renderList(expenseDesc);
-        $(".total").text("0");
-        $(".title-text").text("");
-        clearInputs();
-        // Ajax request
-        $.ajax({
-            url: actionUrl,
-            type: "post",
-            data: expenseData,
-            dataType: 'json',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            contentType: false,
-            cache: false,
-            processData: false,
-        })
-            .done(response => {
-                if (response.msg === "Expence Saved Successfull") {
-                    clearInputs();
-                    pendingExpences(response.expences);
-                    getExpencesRequests();
-                    $('#exp-btn').html('<i class="fa fa-arrow-right"></i>Request')
-                                .prop('disabled', false)
-                                .attr("data", "request");
-                    Notification("Expence Saved Successfull", "success");
-                } else {
+        if (descData === ">|<") {
+            Notification("Add some items to the list", "warning");
+        } else {
+            var expenseData = new FormData;
+            expenseData.append("desc", descData);
+            expenseData.append("amount", $(".total").text());
+            expenseData.append("userType", $(this).attr('user-type'))
+            var actionUrl = "expences/create";
+            let id = $("#exp-btn").attr("data");
+            // handling house keeping (disabling button and clearing inputs with title&total)
+            $("#exp-btn").prop('disabled', true).html('Submiting...');
+            expenseDesc = [];
+            renderList(expenseDesc);
+            $(".total").text("0");
+            $(".title-text").text("");
+            clearInputs();
+            // Ajax request
+            $.ajax({
+                url: actionUrl,
+                type: "post",
+                data: expenseData,
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                contentType: false,
+                cache: false,
+                processData: false,
+            })
+                .done(response => {
+                    if (response.msg === "Expence Saved Successfull") {
+                        clearInputs();
+                        pendingExpences(response.expences);
+                        getExpencesRequests();
+                        $('#exp-btn').html('<i class="fa fa-arrow-right"></i>Request')
+                            .prop('disabled', false)
+                            .attr("data", "request");
+                        Notification("Expence Saved Successfull", "success");
+                    } else {
+                        Notification("An Error occuired !!!", "warning");
+                        $('#exp-btn').html('<i class="fa fa-arrow-right"></i>Request')
+                            .prop('disabled', false)
+                            .attr("data", "request");
+                    }
+                })
+                .fail(error => {
                     Notification("An Error occuired !!!", "warning");
                     $('#exp-btn').html('<i class="fa fa-arrow-right"></i>Request')
                         .prop('disabled', false)
                         .attr("data", "request");
-                }
-            })
-            .fail(error => {
-                Notification("An Error occuired !!!", "warning");
-                $('#exp-btn').html('<i class="fa fa-arrow-right"></i>Request')
-                    .prop('disabled', false)
-                    .attr("data", "request");
-            });
+                });
+        }
     });
 
     // Withdrawing expense
