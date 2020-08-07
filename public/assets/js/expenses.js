@@ -1,6 +1,5 @@
 $(document).ready(function(){
     //---------------------------Expences--------------------------------
-
     // scrolling list table
     var $th = $('.tableFixHead').find('thead th')
     $('.tableFixHead').on('scroll', function(){
@@ -547,9 +546,10 @@ $(document).ready(function(){
     });
 
     // Function for actions in the table
-    function Actions(actionUrl, actionData, sender) {
+    function Actions(actionUrl, actionData, sender, others=" ") {
         let Data = new FormData();
         Data.append("id", actionData);
+        others ? Data.append("others", others) : null;
         $.ajax({
             url: actionUrl,
             type: "post",
@@ -575,6 +575,10 @@ $(document).ready(function(){
                         break;
                     case "decline":
                         expencesRequests(response);
+                        $("#expenseCancel").modal("hide");
+                        $(".cancel-reason")
+                            .html('<i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Submit')
+                            .attr("id-data", " ");
                         Notification("Expense Declined Successfully", "success");
                         break;
                     case "admin":
@@ -608,9 +612,16 @@ $(document).ready(function(){
     //hr decline action
     $(document).on("click", ".decline", function (e) {
         e.preventDefault();
-        const id = $(this).attr("data");
-        Actions("expences/decline", id, "decline");
+        $(".cancel-btn").attr("id-data", $(this).attr("data"));
+        $("#expenseCancel").modal("show");
     });
+
+    $("#cancel-reason").submit(function(e) {
+        e.preventDefault();
+        $(".cancel-btn").html("Submiting...").prop("disabled", true);
+        const id = $(".cancel-btn").attr("id-data");
+        Actions("expences/decline", id, "decline", $(".reason").val());
+    })
 
     //get hr Recommended Expences for Admin
     getRecommendedExpences();

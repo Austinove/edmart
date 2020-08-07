@@ -21,6 +21,7 @@ class CreateCancelledExpsTable extends Migration
             ->onUpdate('cascade');
             $table->index('expences_id');
             $table->string('viewed');
+            $table->string('reason');
             $table->timestamps();
             
         });
