@@ -98,7 +98,9 @@ class RegisterController extends Controller
             $file->move("profiles", $saveName);
             $inputs["image"] = $saveName;
             try {
-                File::delete('profiles/'.Auth::user()->image);
+                if(Auth::user()->image !== "default.jpg"){
+                    File::delete('profiles/'.Auth::user()->image);
+                }
                 User::where("id", "=", Auth::user()->id)->update([
                     "name" => $inputs["name"],
                     "email" => $inputs["email"],

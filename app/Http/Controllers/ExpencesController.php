@@ -38,13 +38,19 @@ class ExpencesController extends Controller
     //creating new expences
     public function create(Request $request)
     {
-        // return $request;
         $this->validate($request, [
             "desc" => "required",
             "amount" => "required|numeric",
         ]);
         $user = User::findOrFail(Auth::user()->id);
         $inputs = $request->all();
+        
+        //if expense is for Executive, we call executive expenses creator
+        if (Auth::user()->userType !== "worker") {
+            $content = new Request();
+            $content = $request;
+            return $this->executiveExpenses($content);
+        }
         try {
             $user->expences()->save(
                 new Expences([
@@ -52,6 +58,41 @@ class ExpencesController extends Controller
                     "amount" => $inputs["amount"],
                     "status" => "pending",
                     "viewed" => 0
+                ])
+            );
+            return response()->json([
+                'msg' => "Expence Saved Successfull",
+                'expences' => $user->expences()->orderBy("created_at", "desc")->get()
+            ]);
+        } catch (QueryException $th) {
+            throw $th;
+        }
+    }
+
+    //Executive expenses being created function
+    public function executiveExpenses(Request $request){
+        $user = User::findOrFail(Auth::user()->id);
+        $inputs = $request->all();
+        $recommendStatus = 1;
+        $newExpenseStatus = "recommended";
+        if(Auth::user()->userType === "admin") {
+            $recommendStatus = "accepted";
+            $newExpenseStatus = "accepted";
+        }
+        try {
+            $expenseId = $user->expences()->save(
+                new Expences([
+                    "desc" => $inputs["desc"],
+                    "amount" => $inputs["amount"],
+                    "status" => $newExpenseStatus,
+                    "viewed" => 0
+                ])
+            )->id;
+            $expense = Expences::findOrFail($expenseId);
+            $expense->requestedExps()->save(
+                new RequestedExps([
+                    "viewed" => Auth::user()->id,
+                    "recommended" => $recommendStatus
                 ])
             );
             return response()->json([

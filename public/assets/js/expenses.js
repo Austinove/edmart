@@ -228,7 +228,6 @@ $(document).ready(function(){
     //Submitting Expences
     $(document).on("click", "#exp-btn",function (e) {
         e.preventDefault();
-        // console.log($(this).attr('user-type'));
         const descData = $(".title-text").text()+">|<"+expenseDesc.map(item => item.desc).join("||");
         if (descData === ">|<") {
             Notification("Add some items to the list", "warning");
@@ -239,6 +238,7 @@ $(document).ready(function(){
             expenseData.append("userType", $(this).attr('user-type'))
             var actionUrl = "expences/create";
             let id = $("#exp-btn").attr("data");
+            
             // handling house keeping (disabling button and clearing inputs with title&total)
             $("#exp-btn").prop('disabled', true).html('Submiting...');
             expenseDesc = [];
@@ -246,6 +246,7 @@ $(document).ready(function(){
             $(".total").text("0");
             $(".title-text").text("");
             clearInputs();
+
             // Ajax request
             $.ajax({
                 url: actionUrl,
@@ -321,7 +322,7 @@ $(document).ready(function(){
             $(".pending-expence").append(`
                 <tr >
                     <td>
-                        ${descValue[0]} ${descValue[1] ? descValue[1] : ""}..... 
+                        ${descValue[0]}  .....
                         <a href="#" data-toggle="modal" 
                             data-desc="${expence.desc}"
                             data-amount="${expence.amount}"
@@ -392,7 +393,7 @@ $(document).ready(function(){
             $(".cancelled-expence").append(`
                 <tr class=${newfeeds}>
                     <td>
-                        ${descValue[0]} ${descValue[1] ? descValue[1] : ""}..... 
+                        ${descValue[0]}  ..... 
                         <a href="#" data-toggle="modal" 
                             data-desc="${expence.desc}"
                             data-amount="${expence.amount}"
@@ -442,7 +443,7 @@ $(document).ready(function(){
             $(".hr-pending-requests").append(`
             <tr class="${newfeeds}">
                 <td>
-                ${descValue[0]} ${descValue[1] ? descValue[1] : ""}..... 
+                ${descValue[0]}  ..... 
                 <a href="#" data-toggle="modal"
                     data-desc="${expence.desc}"
                     data-amount="${expence.amount}"
@@ -502,7 +503,7 @@ $(document).ready(function(){
             $(".admin-accepted").append(`
                     <tr class="${newfeeds}">
                         <td>
-                            ${descValue[0]} ${descValue[1] ? descValue[1] : ""}..... 
+                            ${descValue[0]}  ..... 
                             <a href="#" data-toggle="modal" 
                                 data-desc="${expence.desc}"
                                 data-amount="${expence.amount}"
@@ -648,7 +649,7 @@ $(document).ready(function(){
             $(".admin-recommended").append(`
                     <tr class="${newfeeds}">
                         <td>
-                            ${descValue[0]} ${descValue[1] ? descValue[1] : ""}..... 
+                            ${descValue[0]}  ..... 
                             <a href="#" data-toggle="modal" 
                                 data-desc="${expence.desc}"
                                 data-amount="${expence.amount}"
@@ -748,7 +749,7 @@ $(document).ready(function(){
             $(".approved-expenses").append(`
                     <tr class=${newfeeds}>
                         <td>
-                            ${descValue[0]} ${descValue[1] ? descValue[1] : ""}..... 
+                            ${descValue[0]}  ..... 
                             <a href="#" data-toggle="modal" 
                                 data-desc="${expence.desc}"
                                 data-amount="${expence.amount}"
@@ -834,8 +835,8 @@ $(document).ready(function(){
             $(".all-expenses").append(`
                     <tr>
                         <td>
-                            ${descValue[0]} ${descValue[1] ? descValue[1] : ""}..... 
-                            <a href="#" data-toggle="modal" 
+                            ${descValue[0]}  .....
+                            <a href="#" data-toggle="modal"
                                 data-desc="${expence.desc}"
                                 data-amount="${expence.amount}"
                                 data-target="#expenseDetails"
