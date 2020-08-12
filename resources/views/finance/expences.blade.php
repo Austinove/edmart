@@ -128,6 +128,7 @@
 
           <div class="row expenses-contents">
             <div class="col-md-12">
+                <I class="text-danger font-12 checker"></I>
               <div class="card card-stats">
                 <!-- Card body -->
                 <div class="card-body">

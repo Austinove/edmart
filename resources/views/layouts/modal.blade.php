@@ -69,7 +69,7 @@
         <form id="cancel-reason">
           <div class="modal-header">
             <h3 class="mb-0 custom-color font-12">Reason for cancelling expense</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -91,8 +91,8 @@
               </div>
           </div>
           <div class="modal-footer pt-0">
-            <button type="button" class="btn btn-outline-warning btn-sm" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-            <button type="submit" id-data="" class="cancel-btn btn btn-outline-secondary btn-sm custom-btn"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Submit</button>
+            <button type="button" class="btn btn-outline-warning btn-sm modal-close" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            <button type="submit" user-data="" id-data="" class="cancel-btn btn btn-outline-secondary btn-sm custom-btn"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Submit</button>
           </div>
         </form>
       </div>

@@ -78,6 +78,11 @@ $(document).ready(function(){
         $('.title').val('');
     }
 
+    //close reasoning modal
+    $(document).on("click", ".modal-close", function(){
+        $(".reason").val("");
+    })
+
     //Function for more in modal
     $(document).on("click", ".more", function () {
         var expenceType = $(this).attr("exp-type");
@@ -119,11 +124,12 @@ $(document).ready(function(){
         `)
         });
         if(reason != null){
+            console.log(reason)
             $(".reason-content").html(`
                 <strong class="small-text">Reson for cancellation</strong>
                 <br>
-                <span class="small-text td-text"><strong>By:</strong> Bryan Austin</span>
-                <p class="small-text" style="font-size: 12px!important;">${reason}</p>
+                <span class="small-text td-text"><strong>By:</strong> ${reason.split(":")[0]}</span>
+                <p class="small-text" style="font-size: 12px!important;">${reason.split(":")[1]}</p>
             `)
         }
     })
@@ -406,8 +412,8 @@ $(document).ready(function(){
                             data-desc="${expence.desc}"
                             data-amount="${expence.amount}"
                             exp-type="cancelled"
-                            data-id = ${expence.id}
-                            data-reason = ${expence.reason}
+                            data-id = "${expence.id}"
+                            data-reason = "${expence.reason}"
                             data-target="#expenseDetails"
                             class="more"
                         >more details</a>
@@ -600,6 +606,11 @@ $(document).ready(function(){
                     case "admin-decline":
                         recommendedExpRequests(response);
                         getApprovedExpences();
+                        $("#expenseCancel").modal("hide");
+                        $(".cancel-btn").prop("disabled", false)
+                            .html('<i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Submit')
+                            .attr("id-data", " ");
+                        $(".reason").val(" ");
                         Notification("Expense Declined", "success");
                         break;
                     default:
@@ -623,7 +634,7 @@ $(document).ready(function(){
     //hr decline action
     $(document).on("click", ".decline", function (e) {
         e.preventDefault();
-        $(".cancel-btn").attr("id-data", $(this).attr("data"));
+        $(".cancel-btn").attr("id-data", $(this).attr("data")).attr("user-data", "hr");
         $("#expenseCancel").modal("show");
     });
 
@@ -631,7 +642,11 @@ $(document).ready(function(){
         e.preventDefault();
         $(".cancel-btn").html("Submiting...").prop("disabled", true);
         const id = $(".cancel-btn").attr("id-data");
-        Actions("expences/decline", id, "decline", $(".reason").val());
+        if($(".cancel-btn").attr("user-data") === "admin") {
+            Actions("expences/admin/decline", id, "admin-decline", ("Manager:" + $(".reason").val().trim()));
+        }else if($(".cancel-btn").attr("user-data") === "hr"){
+            Actions("expences/decline", id, "decline", ("Human Resource:" + $(".reason").val().trim()));
+        }
     });
 
     //get hr Recommended Expences for Admin
@@ -655,8 +670,8 @@ $(document).ready(function(){
     //Admin decline action
     $(document).on("click", ".admin-decline", function (e) {
         e.preventDefault();
-        const id = $(this).attr("data");
-        Actions("expences/admin/decline", id, "admin-decline");
+        $(".cancel-btn").attr("id-data", $(this).attr("data")).attr("user-data", "admin");
+        $("#expenseCancel").modal("show");
     });
 
     //Rendering Recommended Expences for Admin
@@ -883,13 +898,22 @@ $(document).ready(function(){
 
     //Refreshing the System's Information
     setInterval(() => {
-        getApprovedExpences();
-        getRecommendedExpences();
-        getAcceptedExpences();
-        getExpencesRequests();
-        getCancelledExpences();
-        getPendingExpences();
-        getAllExpences();
+        $.when(getRequest('expences/pending').done(response => {
+            expencesRequests(response);
+            $(".checker").text('');
+            // retriev other information after check
+            getApprovedExpences();
+            getRecommendedExpences();
+            getAcceptedExpences();
+            getCancelledExpences();
+            getPendingExpences();
+            getAllExpences();
+        }).fail(error => {
+            $(".checker").text("No internet access, please check your connection");
+            console.log(error);
+            Notification("An Error occuired OR No internet access", "warning");
+        }));
+        
     },30000);
 
 }); 

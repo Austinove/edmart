@@ -189,30 +189,6 @@ class ExpencesController extends Controller
         }
     }
 
-    //Updating Expense
-    // public function update(Request $request, $id)
-    // {
-    //     $inputs = $request->all();
-    //     $this->validate($request, [
-    //         "amount" => "required",
-    //         "desc" => "required"
-    //     ]);
-    //     try {
-    //         $user = User::findOrFail(Auth::user()->id);
-    //         $user->expences()->where("id", "=", $id)->update([
-    //             "amount" => $inputs["amount"],
-    //             "desc" => $inputs["desc"],
-    //             "viewed" => 0
-    //         ]);
-    //         return response()->json([
-    //             'msg' => "Expence Saved Successfull",
-    //             'expences' => $user->expences()->orderBy("created_at", "desc")
-    //         ]);
-    //     } catch (QueryException $th) {
-    //         throw $th;
-    //     }
-    // }
-
     //Deleting Expense
     public function delete($id){
         try {
@@ -303,7 +279,8 @@ class ExpencesController extends Controller
     public function adminDecline(Request $request){
         $inputs = $request->all();
         $saveExpense = new cancelledExps([
-            "viewed" => 0
+            "viewed" => 0,
+            "reason" => $inputs['others']
         ]);
         try {
             $expense = Expences::findOrFail($inputs["id"]);
