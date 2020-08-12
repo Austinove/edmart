@@ -111,3 +111,6 @@ main {
     color: red;
     font-size: 12px;
 }
+.font-12 {
+    font-size: 12px !important;
+}

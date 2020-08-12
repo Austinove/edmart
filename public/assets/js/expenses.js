@@ -80,7 +80,8 @@ $(document).ready(function(){
 
     //Function for more in modal
     $(document).on("click", ".more", function () {
-        var expenceType = $(this).attr("exp-type")
+        var expenceType = $(this).attr("exp-type");
+        var reason = $(this).attr("data-reason");
         switch (expenceType) {
             case "cancelled":
                 $.when(viewed("approved/cancelled", $(this).attr("data-id")).done(response => {
@@ -117,6 +118,14 @@ $(document).ready(function(){
             </tr>
         `)
         });
+        if(reason != null){
+            $(".reason-content").html(`
+                <strong class="small-text">Reson for cancellation</strong>
+                <br>
+                <span class="small-text td-text"><strong>By:</strong> Bryan Austin</span>
+                <p class="small-text" style="font-size: 12px!important;">${reason}</p>
+            `)
+        }
     })
 
     //List functionality
@@ -398,6 +407,7 @@ $(document).ready(function(){
                             data-amount="${expence.amount}"
                             exp-type="cancelled"
                             data-id = ${expence.id}
+                            data-reason = ${expence.reason}
                             data-target="#expenseDetails"
                             class="more"
                         >more details</a>
@@ -576,9 +586,10 @@ $(document).ready(function(){
                     case "decline":
                         expencesRequests(response);
                         $("#expenseCancel").modal("hide");
-                        $(".cancel-reason")
+                        $(".cancel-btn").prop("disabled", false)
                             .html('<i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Submit')
                             .attr("id-data", " ");
+                        $(".reason").val(" ");
                         Notification("Expense Declined Successfully", "success");
                         break;
                     case "admin":
@@ -621,7 +632,7 @@ $(document).ready(function(){
         $(".cancel-btn").html("Submiting...").prop("disabled", true);
         const id = $(".cancel-btn").attr("id-data");
         Actions("expences/decline", id, "decline", $(".reason").val());
-    })
+    });
 
     //get hr Recommended Expences for Admin
     getRecommendedExpences();

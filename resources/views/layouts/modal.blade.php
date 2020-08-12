@@ -27,13 +27,16 @@
                                       <th scope="col" class="custom-color custom-th">Amount</th>
                                   </tr>
                               </thead>
+                              {{-- data is from jQuery --}}
                               <tbody class="expenses-body"></tbody>
                           </table>
                       </div>
                   </div>
                   <div style="width: 95%; margin-top: 20px;">
-                    <h5 class="mb-0 custom-color float-right modal-total"></h5>
-                </div>
+                      <h5 class="mb-0 custom-color float-right modal-total"></h5>
+                  </div>
+                  {{-- data from jQuery --}}
+                  <div class="reason-content"></div>
                 </div>
             </div>
           </div>
@@ -65,7 +68,7 @@
       <div class="modal-content">
         <form id="cancel-reason">
           <div class="modal-header">
-            <h3 class="mb-0 custom-color expModal-title">Reaseon for cancelling expense</h3>
+            <h3 class="mb-0 custom-color font-12">Reason for cancelling expense</h3>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -77,9 +80,9 @@
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
-                          <label for="cancellingReason" class="small-test">Reason <span class="error">*</span></label>
+                          <label for="cancellingReason" class="small-text">Reason <span class="error">*</span></label>
                           <div class="bg-secondary">
-                            <textarea required name="reason" rows="3" type="text" class="reason form-control-sm form-control form-control-alternative" placeholder="Enter reason for cancelling the expense"></textarea>
+                            <textarea required name="reason" rows="2" type="text" class="reason form-control-sm form-control form-control-alternative" placeholder="Enter reason for cancelling the expense"></textarea>
                           </div>
                         </div>
                       </div>

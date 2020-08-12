@@ -117,7 +117,14 @@ class ExpencesController extends Controller
         try {
             $expencesCanclled = DB::table('expences')
                 ->join("cancelled_exps", "expences.id", "=", "cancelled_exps.expences_id")
-                ->select("expences.id", "expences.desc", "expences.amount", "cancelled_exps.created_at", "cancelled_exps.viewed")
+                ->select(
+                    "expences.id", 
+                    "expences.desc", 
+                    "expences.amount", 
+                    "cancelled_exps.created_at", 
+                    "cancelled_exps.viewed",
+                    "cancelled_exps.reason"
+                    )
                 ->where('user_id', "=", Auth::user()->id)->orderBy("created_at", "desc")->get();
             return response()->json($expencesCanclled);
         } catch (QueryException $th) {
@@ -166,7 +173,8 @@ class ExpencesController extends Controller
     {
         $inputs = $request->all();
         $saveExpense = new cancelledExps([
-            "viewed" => 0
+            "viewed" => 0,
+            "reason" => $inputs["others"]
         ]);
         try {
             $expense = Expences::findOrFail($inputs["id"]);
