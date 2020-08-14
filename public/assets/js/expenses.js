@@ -85,6 +85,7 @@ $(document).ready(function(){
 
     //Function for more in modal
     $(document).on("click", ".more", function () {
+        $(".reason-content").html("");
         var expenceType = $(this).attr("exp-type");
         var reason = $(this).attr("data-reason");
         switch (expenceType) {
@@ -124,7 +125,7 @@ $(document).ready(function(){
         `)
         });
         if(reason != null){
-            console.log(reason)
+            console.log(reason);
             $(".reason-content").html(`
                 <strong class="small-text">Reson for cancellation</strong>
                 <br>
@@ -178,7 +179,7 @@ $(document).ready(function(){
                 default:
                     break;
             }
-            $(".title-text").text($(".title").val());
+            $(".title-text").text($(".title").val()+" ");
             const arrSum = expenseDesc.reduce(function (prev, cur) {
                 return prev + cur.amount;
             }, 0);
@@ -196,10 +197,11 @@ $(document).ready(function(){
             return exp.id === parseInt($(this).attr("data"));
         })
         var descValue = toEdit.desc.split("<>");
-        $(".desc").val(descValue[1]);
-        $(".quantity").val(descValue[2]);
-        $(".units").val(descValue[3]);
-        $(".rate").val(descValue[4]);
+        console.log(descValue);
+        $(".desc").val(descValue[0]);
+        $(".quantity").val(descValue[1]);
+        $(".units").val(descValue[2]);
+        $(".rate").val(descValue[3]);
         $("#add-list").attr("data-id", $(this).attr("data"))
                         .html(`<i class="fa fa-save"></i> Save`)
                         .attr("data-edit", "edit");
@@ -242,7 +244,7 @@ $(document).ready(function(){
     //Submitting Expences
     $(document).on("click", "#exp-btn",function (e) {
         e.preventDefault();
-        const descData = $(".title-text").text()+">|<"+expenseDesc.map(item => item.desc).join("||");
+        const descData = $(".title-text").text()+" >|<"+expenseDesc.map(item => item.desc).join("||");
         if (descData === ">|<") {
             Notification("Add some items to the list", "warning");
         } else {
