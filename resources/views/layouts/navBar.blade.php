@@ -38,15 +38,15 @@
               <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
+                    <img alt="Image placeholder" src={{ asset("profiles/".Auth()->user()->image) }}>
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                    <span class="mb-0 text-sm  font-weight-bold">{{Auth()->user()->name}}</span>
                   </div>
                 </div>
               </a>
               <div class="dropdown-menu  dropdown-menu-right ">
-                <a href="/profile" class="dropdown-item">
+                <a href="{{ route('profile') }}" class="dropdown-item">
                   <i class="fa fa-user" aria-hidden="true"></i>
                   <span>My profile</span>
                 </a>
@@ -56,11 +56,9 @@
                   <i class="fa fa-sign-out" aria-hidden="true"></i>
                   <span>Logout</span>
                 </a>
-                {{-- <a class="dropdown-item" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
-                </a> --}}
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
               </div>
             </li>
           </ul>

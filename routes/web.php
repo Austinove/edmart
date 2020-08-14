@@ -12,20 +12,33 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('auth.login');
+Route::get('/pdf', function(){
+    return view("finance.pdf_view");
 });
-Route::get('/profile', function () {
-    return view('auth.profile');
-});
-Route::get('/dashboard', function(){
-    return view('dashboard.index');
-});
-Route::get('/expences', function() {
-    return view('finance.expences');
-});
+Route::get('/', "Auth\LoginController@showLoginForm")->name('login');
+Route::get('/profile', "ProfilesController@index")->name('profile');
+Route::get('/expenses', 'ExpencesController@index')->name('expenses');
+Route::get('/expences/fetch', 'ExpencesController@fetch')->name('getExpences');
+// Route::post("expences/edit/{id}", "ExpencesController@update")->name("editExps");
+Route::delete("expences/delete/{id}", "ExpencesController@delete")->name("deleteExps");
+Route::get('/expences/pending', 'ExpencesController@pending')->name('getPendingExps');
+Route::get('/expences/cancelled', 'ExpencesController@cancelled')->name('getCancelledExps');
+Route::post('/expences/create', 'ExpencesController@create')->name('createExpences');
+Route::post('/expences/recommended', 'ExpencesController@recommend')->name('recommendExpence');
+Route::post('/expences/decline', 'ExpencesController@decline')->name('declineExpence');
+Route::get('/fetch/recommended/expenses', 'ExpencesController@hrRecommendation')->name('hrRecommendation');
+Route::post('/expences/accept', 'ExpencesController@accept')->name('accept');
+Route::get('/fetch/expenses/accepted', 'ExpencesController@getAccepted')->name("getAccepted");
+Route::post('/expenses/cashOut', 'ExpencesController@cashOut')->name('cashOut');
+Route::post('/expences/admin/decline', 'ExpencesController@adminDecline')->name('adminDecline');
+Route::post('/expenses/approved/month', 'ExpencesController@approved')->name('approved');
+Route::post('/user/approved', 'ExpencesController@userApproved')->name('userApproved');
+Route::post('/approved/cancelled', 'ExpencesController@cancelledViewed')->name('cancelledViewed');
+Route::post('/edit/user/info', "Auth\RegisterController@editUserInfo")->name('editUserInfo');
+Route::post('/edit/user/password', "Auth\RegisterController@editUserPassword")->name('editUserPassword');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'HomeController@index')->name('home');
+
+Route::get('/expense/printPdf/{month}', ['as' => 'printPdf', 'uses' => 'ExpencesController@printPDF']);

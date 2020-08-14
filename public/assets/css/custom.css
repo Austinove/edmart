@@ -39,9 +39,15 @@
     background-color: #d27f1b !important;
     height: 43px;
     padding-top: 11px;
+    font-size: 14px !important;
+}
+.nav-link {
+    font-size: 13px !important;
 }
 .small-text {
     font-size: 14px !important;
+    color: #523615 !important;
+    font-family: sans-serif !important;
 }
 .login-color {
     color: #a96514 !important;
@@ -51,11 +57,60 @@
 }
 main {
     overflow-x: hidden;
-    min-height: 81vh;
+    min-height: 75vh;
 }
 .toggleForms {
     display: none !important;
 }
 .pointer :hover {
     cursor: pointer !important;
+}
+.material-icons {
+    display: none !important;
+}
+.new-feeds {
+    background-color: aliceblue !important;
+    font-weight: bold !important;
+}
+.custom-badge {
+    background-color: #908888 !important;
+    margin-left: 5px !important;
+}
+.custom-td{
+    white-space: break-spaces !important;
+    min-width: 150px !important;
+}
+.tableFixHead {
+    overflow-y: auto;
+    height: 50vh;
+    background-color: whitesmoke;
+}
+.td-text {
+    font-size: 11px !important;
+}
+.icon-delete{
+    color: #f35e2f;
+}
+.icon-edit{
+    color: #2196f3;
+}
+.custom-icon {
+    cursor: pointer;
+    font-weight: bold;
+}
+.tableFixHead thead th{ 
+    position: sticky !important; top: 0 !important;
+}
+.total-row {
+    font-weight: bold;
+}
+.custom-th {
+    font-weight: bold !important;
+}
+.error {
+    color: red;
+    font-size: 12px;
+}
+.font-12 {
+    font-size: 12px !important;
 }
