@@ -50,7 +50,9 @@ $(document).ready(function(){
         return $.ajax({
             url: url,
             type: 'delete',
-            data: { _token: "{{ csrf_token() }}" },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             dataType: 'json'
         });
     }
@@ -152,7 +154,6 @@ $(document).ready(function(){
             //assiginig units
             var requiredUnits = "others";
             $(".selectInput").hasClass("d-none") ? requiredUnits = $(".specify").val() : requiredUnits = $(".units").val();
-            console.log(requiredUnits);
             // form.submit()
             var editCheck = $("#add-list").attr("data-edit");
             switch (editCheck) {
@@ -173,6 +174,7 @@ $(document).ready(function(){
                     break;
 
                 case "no":
+                    (expenseDesc.length <= 6) ? 
                     expenseDesc.push(
                         {               
                             "id": count,
@@ -185,7 +187,8 @@ $(document).ready(function(){
                                     $(".rate").val(),
                             "amount": ($(".rate").val() * $(".quantity").val())
                         }
-                    );
+                    ) : $(".checker-list").text("Atlease 5 items please");
+                    console.log(expenseDesc.length);
                     count++;
                     break;
 
@@ -211,7 +214,7 @@ $(document).ready(function(){
     // toggling units inputs
     $(document).on("change", ".units", function(){
         if($(this).children("option:selected").val() === "specify") {
-            $(".specifyInput").removeClass("d-none").find("input.units").focus();
+            $(".specifyInput").removeClass("d-none").find("input.specify").focus();
             $(".selectInput").addClass("d-none");
         }
     });

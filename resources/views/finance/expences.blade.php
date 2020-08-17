@@ -22,6 +22,7 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
+                                <I class="text-danger font-12 checker-list"></I>
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1" class="small-text">Title <span class="error">*</span></label>
                                     <input required name="title" id="title" type="text" class="title form-control-sm form-control form-control-alternative">
@@ -54,7 +55,7 @@
                                                     <option value="pkt">Pkt</option>
                                                     <option value="Kg">Kg</option>
                                                     <option value="rims">Rims</option>
-                                                    <option value="specify">Specify</option>
+                                                    <option value="specify"> Others </option>
                                                 </select>
                                             </div>
                                             <div class="bg-secondary d-none specifyInput">
