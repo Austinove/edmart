@@ -46,14 +46,19 @@
                                     <div class="col-md-5 col-sm-5">
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1" class="small-text">Units <span class="error">*</span></label>
-                                            <div class="bg-secondary">
+                                            <div class="bg-secondary selectInput">
                                                 <select name="units" class="units form-control-sm form-control form-control-alternative" required>
                                                     <option value="pc">Pcs</option>
                                                     <option value="roll">Rolls</option>
                                                     <option value="doz">Doz</option>
                                                     <option value="pkt">Pkt</option>
-                                                    <option value="others">Others</option>
+                                                    <option value="Kg">Kg</option>
+                                                    <option value="rims">Rims</option>
+                                                    <option value="specify">Specify</option>
                                                 </select>
+                                            </div>
+                                            <div class="bg-secondary d-none specifyInput">
+                                                <input required name="specify" class="specify form-control-sm form-control form-control-alternative" placeholder="specify">
                                             </div>
                                         </div>
                                     </div>

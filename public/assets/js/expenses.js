@@ -1,13 +1,23 @@
 $(document).ready(function(){
     //---------------------------Expences--------------------------------
+    // variable for listing
+    // var expenseDesc = [];
     // scrolling list table
     var $th = $('.tableFixHead').find('thead th')
     $('.tableFixHead').on('scroll', function(){
         $th.css('transform', 'translateY('+ this.scrollTo + 'px)');
     });
 
+    //setting up commas in budget
+    const numberWithCommas = (number) => {
+        var parts = number.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return parts.join(".");
+    }
+
     // toggling expences forms
     $(".add-expence").click(function (e) {
+        // expenseDesc = [];
         var toggleText = $('.togglexpe').text();
         if (toggleText === "Add Expense") {
             $('.expense-inputs').removeClass('toggleForms');
@@ -110,7 +120,7 @@ $(document).ready(function(){
         }
 
         $(".expenses-body").html("");
-        $(".modal-total").text($(this).attr('data-amount')+" sh");
+        $(".modal-total").text(numberWithCommas($(this).attr('data-amount'))+" sh");
         $(".expModal-title").text($(this).attr('data-desc').split(">|<")[0]);
         (($(this).attr('data-desc').split(">|<")[1]).split("||")).forEach((item, index) => {
             $(".expenses-body").append(`
@@ -125,7 +135,6 @@ $(document).ready(function(){
         `)
         });
         if(reason != null){
-            console.log(reason);
             $(".reason-content").html(`
                 <strong class="small-text">Reson for cancellation</strong>
                 <br>
@@ -140,6 +149,10 @@ $(document).ready(function(){
     var count = 1;
     $("#exp-formList").validate({
         submitHandler: function(form) {
+            //assiginig units
+            var requiredUnits = "others";
+            $(".selectInput").hasClass("d-none") ? requiredUnits = $(".specify").val() : requiredUnits = $(".units").val();
+            console.log(requiredUnits);
             // form.submit()
             var editCheck = $("#add-list").attr("data-edit");
             switch (editCheck) {
@@ -151,7 +164,7 @@ $(document).ready(function(){
                                         "<>" +
                                         $(".quantity").val() +
                                         "<>" +
-                                        $(".units").val() +
+                                        requiredUnits +
                                         "<>" +
                                         $(".rate").val());
                     saveEdited.amount = ($(".rate").val() * $(".quantity").val())
@@ -167,7 +180,7 @@ $(document).ready(function(){
                                     "<>" +
                                     $(".quantity").val() +
                                     "<>" +
-                                    $(".units").val() +
+                                    requiredUnits +
                                     "<>" +
                                     $(".rate").val(),
                             "amount": ($(".rate").val() * $(".quantity").val())
@@ -189,10 +202,23 @@ $(document).ready(function(){
             $(".rate").val("");
             $(".units").val("");
             $(".quantity").val("");
+            $(".specify").val("");
+            $(".specifyInput").addClass("d-none");
+            $(".selectInput").removeClass("d-none");
         }
     });
+
+    // toggling units inputs
+    $(document).on("change", ".units", function(){
+        if($(this).children("option:selected").val() === "specify") {
+            $(".specifyInput").removeClass("d-none").find("input.units").focus();
+            $(".selectInput").addClass("d-none");
+        }
+    });
+
     // Editing an element in the list
     $(document).on("click", ".icon-edit", function(e) {
+        var units = ["pc", "roll", "doz", "pkt", "kg", "rims"];
         let toEdit = expenseDesc.find((exp) => {
             return exp.id === parseInt($(this).attr("data"));
         })
@@ -200,7 +226,15 @@ $(document).ready(function(){
         console.log(descValue);
         $(".desc").val(descValue[0]);
         $(".quantity").val(descValue[1]);
-        $(".units").val(descValue[2]);
+        if (units.indexOf(descValue[2]) < 0) {
+            $(".specifyInput").removeClass("d-none");
+            $(".selectInput").addClass("d-none");
+            $(".specify").val(descValue[2]);
+        }else{
+            $(".selectInput").removeClass("d-none");
+            $(".specifyInput").addClass("d-none");
+            $(".units").val(descValue[2]);
+        }
         $(".rate").val(descValue[3]);
         $("#add-list").attr("data-id", $(this).attr("data"))
                         .html(`<i class="fa fa-save"></i> Save`)
@@ -213,7 +247,7 @@ $(document).ready(function(){
         const arrSum = expenseDesc.reduce(function (prev, cur) {
             return prev + cur.amount;
         }, 0);
-        $(".total").text(arrSum);
+        $(".total").text(numberWithCommas(arrSum));
         renderList(expenseDesc);
     })
     //list rendering function
@@ -229,7 +263,7 @@ $(document).ready(function(){
                     <td class="td-text">${descValue[2]}</td>
                     <td class="td-text">${descValue[3]}</td>
                     <td class="td-text">
-                        ${expense.amount}
+                        ${numberWithCommas(expense.amount)}
                     </td>
                     <td class="td-text">
                         <span >
@@ -347,7 +381,7 @@ $(document).ready(function(){
                             class="more"
                         >more details</a>
                     </td>
-                    <td class="budget">${expence.amount}</td>
+                    <td class="budget">${numberWithCommas(expence.amount)}</td>
                     <td>
                         <span class="badge badge-dot mr-4">
                             <span class="status">${expence.status}</span>
@@ -464,13 +498,13 @@ $(document).ready(function(){
                 <a href="#" data-toggle="modal"
                     data-desc="${expence.desc}"
                     data-amount="${expence.amount}"
-                    exp-type="cancelled"
+                    exp-type="pending"
                     data-id = ${expence.id}
                     data-target="#expenseDetails"
                     class="more"
                 >more details</a>
                 </td>
-                <td class="budget">${expence.amount}</td>
+                <td class="budget">${numberWithCommas(expence.amount)}</td>
                 <td>
                     <span class="status">${expence.name}</span>
                 </td>
@@ -530,7 +564,7 @@ $(document).ready(function(){
                                 class="more"
                             >more details</a>
                         </td>
-                        <td class="budget">${expence.amount}</td>
+                        <td class="budget">${numberWithCommas(expence.amount)}</td>
                         <td>
                             <span class="status">${expence.name}</span>
                         </td>
@@ -698,7 +732,7 @@ $(document).ready(function(){
                                 class="more"
                             >more details</a>
                         </td>
-                        <td class="budget">${expence.amount}</td>
+                        <td class="budget">${numberWithCommas(expence.amount)}</td>
                         <td>
                             <span class="status">${expence.name}</span>
                         </td>
@@ -798,7 +832,7 @@ $(document).ready(function(){
                                 class="more"
                             >more details</a>
                         </td>
-                        <td class="budget">${expence.amount}</td>
+                        <td class="budget">${numberWithCommas(expence.amount)}</td>
                         <td>
                             <span class="status">${expence.name}</span>
                         </td>
@@ -882,7 +916,7 @@ $(document).ready(function(){
                                 class="more"
                             >more details</a>
                         </td>
-                        <td class="budget">${expence.amount}</td>
+                        <td class="budget">${numberWithCommas(expence.amount)}</td>
                         <td>
                             <span class="status">${expence.name}</span>
                         </td>
@@ -903,7 +937,7 @@ $(document).ready(function(){
         $.when(getRequest('expences/pending').done(response => {
             expencesRequests(response);
             $(".checker").text('');
-            // retriev other information after check
+            // retrieve other information after check
             getApprovedExpences();
             getRecommendedExpences();
             getAcceptedExpences();
