@@ -125,7 +125,8 @@ class ExpencesController extends Controller
                     "cancelled_exps.viewed",
                     "cancelled_exps.reason"
                     )
-                ->where('user_id', "=", Auth::user()->id)->orderBy("created_at", "desc")->get();
+                ->where('user_id', "=", Auth::user()->id)->orderBy("created_at", "desc")
+                ->where("reason", "LIKE", "Human %")->get();
             return response()->json($expencesCanclled);
         } catch (QueryException $th) {
             throw $th;
@@ -153,7 +154,8 @@ class ExpencesController extends Controller
         $inputs = $request->all();
         $saveExpense = new RequestedExps([
             "viewed" => Auth::user()->id,
-            "recommended" => 1
+            "recommended" => 1,
+            "reason" => "No Reason"
             ]);
         try {
             $expense = Expences::findOrFail($inputs["id"]);

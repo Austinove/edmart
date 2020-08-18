@@ -188,7 +188,6 @@ $(document).ready(function(){
                             "amount": ($(".rate").val() * $(".quantity").val())
                         }
                     ) : $(".checker-list").text("Atlease 5 items please");
-                    console.log(expenseDesc.length);
                     count++;
                     break;
 
@@ -226,7 +225,6 @@ $(document).ready(function(){
             return exp.id === parseInt($(this).attr("data"));
         })
         var descValue = toEdit.desc.split("<>");
-        console.log(descValue);
         $(".desc").val(descValue[0]);
         $(".quantity").val(descValue[1]);
         if (units.indexOf(descValue[2]) < 0) {

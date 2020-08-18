@@ -103,7 +103,7 @@
                 <tr>
                     <th scope="col" class="th-main">Description</th>
                     <th scope="col" class="th-main">Budget</th>
-                    <th scope="col" class="th-main">user</th>
+                    <th scope="col" class="th-main">Name</th>
                     <th scope="col" class="th-main">Date/Time</th>
                 </tr>
             </thead>
