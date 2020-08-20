@@ -83,7 +83,7 @@
                     @endif
                 </strong>
             </span>
-            <span style="float: right;">Total: 
+            <span style="float: right;">Grand Total: 
                 <strong>
                     @if (count($show)>0)
                         @php
@@ -102,7 +102,7 @@
             <thead>
                 <tr>
                     <th scope="col" class="th-main">Description</th>
-                    <th scope="col" class="th-main">Budget</th>
+                    <th scope="col" class="th-main">Total</th>
                     <th scope="col" class="th-main">Name</th>
                     <th scope="col" class="th-main">Date/Time</th>
                 </tr>
@@ -118,7 +118,7 @@
                                             <th scope="col" class="th-inside">{{explode('>|<', $item->desc)[0]}}</th>
                                             <th scope="col" class="th-inside">quantity</th>
                                             <th scope="col" class="th-inside">unit</th>
-                                            <th scope="col" class="th-inside">Amount</th>
+                                            <th scope="col" class="th-inside">Unit Price</th>
                                         </tr>
                                     </thead>
                                     <tbody class="inside">
