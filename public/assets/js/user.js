@@ -29,6 +29,23 @@ $(document).ready(function(){
         }
     });
 
+    //Toggling for user position
+    $(document).on("change", ".userType", function(){
+        if($(this).children("option:selected").val() === "worker") {
+            $(".positionInput").removeClass("d-none").find("input.position").focus();
+            $(".return-selection").removeClass("d-none");
+            $(".selectInput").addClass("d-none");
+        }
+    })
+    
+    $(document).on("click", ".return-selection", function(e){
+        e.preventDefault();
+        $(".userType").val("");
+        $(this).addClass("d-none");
+        $(".selectInput").removeClass("d-none").find("input.userType").focus();
+        $(".positionInput").addClass("d-none");
+    })
+
     //Submitting Registration
     $('#registration-form').submit(function (e) {
         e.preventDefault();

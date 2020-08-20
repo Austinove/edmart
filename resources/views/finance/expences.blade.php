@@ -47,6 +47,10 @@
                                     <div class="col-md-5 col-sm-5">
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1" class="small-text">Units <span class="error">*</span></label>
+                                            <br>
+                                            <a href="#" class="return-selection mb-3 d-none">
+                                                <U><I class="font-12">Select again</I></U>
+                                            </a>
                                             <div class="bg-secondary selectInput">
                                                 <select name="units" class="units form-control-sm form-control form-control-alternative" required>
                                                     <option value="pc">Pcs</option>

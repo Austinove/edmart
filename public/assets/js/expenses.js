@@ -221,10 +221,19 @@ $(document).ready(function(){
     // toggling units inputs
     $(document).on("change", ".units", function(){
         if($(this).children("option:selected").val() === "specify") {
+            $(".return-selection").removeClass("d-none");
             $(".specifyInput").removeClass("d-none").find("input.specify").focus();
             $(".selectInput").addClass("d-none");
         }
     });
+
+    $(document).on("click", ".return-selection", function (e) {
+        e.preventDefault();
+        $(".units").val("pc");
+        $(this).addClass("d-none");
+        $(".selectInput").removeClass("d-none").find("input.units").focus();
+        $(".specifyInput").addClass("d-none");
+    })
 
     // Editing an element in the list
     $(document).on("click", ".icon-edit", function(e) {

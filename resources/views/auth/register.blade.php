@@ -52,9 +52,29 @@
                                     <label class="custom-control-label custom-color font-italic font-weight-light" for="admin">Admin</label>
                                 </div>
                             </div>
+                            <div class="form-group mb-3">
+                                <label for="exampleFormControlInput1" class="small-text">
+                                    User Type 
+                                    <span class="error">*</span>
+                                </label><br>
+                                <a href="#" class="return-selection d-none">
+                                    <U><I class="font-12">Select again</I></U>
+                                </a>
+                                <div class="bg-secondary selectInput">
+                                    <select name="userType" class="userType form-control form-control form-control-alternative" required>
+                                        <option value="">Select user type</option>
+                                        <option value="worker">Worker</option>
+                                        <option value="hr">Human Resource</option>
+                                        <option value="admin">Administrator</option>
+                                    </select>
+                                </div>
+                                <div class="bg-secondary d-none positionInput">
+                                    <input required name="position" class="position form-control form-control form-control-alternative" placeholder="Enter worker's position">
+                                </div>
+                            </div>
                             <div class="alert alert-default custom-bg" role="alert">
-                                <strong>Cation!! </strong>
-                                <div>
+                                <strong class="font-13">Cation!! </strong>
+                                <div class="font-13">
                                     By default password will be <strong> "password" </strong> without spaces
                                 </div>
                             </div>
