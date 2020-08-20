@@ -119,6 +119,7 @@
                                             <th scope="col" class="th-inside">quantity</th>
                                             <th scope="col" class="th-inside">unit</th>
                                             <th scope="col" class="th-inside">Unit Price</th>
+                                            <th scope="col" class="th-inside">Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody class="inside">
@@ -127,7 +128,12 @@
                                                 <td class="custom-td td-inside">{{explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[0]}}</td>
                                                 <td class="td-inside">{{explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[1]}}</td>
                                                 <td class="td-inside">{{explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[2]}}</td>
-                                                <td class="td-inside">{{number_format(explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[3], 2)}}</td>
+                                                <td class="td-inside">{{number_format(explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[3])}}</td>
+                                                <td class="td-inside">{{
+                                                number_format(
+                                                    intval(explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[3]) * intval(explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[1])
+                                                    )
+                                                }}</td>
                                             </tr>
                                         @endfor
                                     </tbody>
