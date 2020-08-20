@@ -26,6 +26,7 @@ Route::get('/expences/cancelled', 'ExpencesController@cancelled')->name('getCanc
 Route::post('/expences/create', 'ExpencesController@create')->name('createExpences');
 Route::post('/expences/recommended', 'ExpencesController@recommend')->name('recommendExpence');
 Route::post('/expences/decline', 'ExpencesController@decline')->name('declineExpence');
+Route::post('/expences/revised', 'ExpencesController@revised')->name('revisedExpence');
 Route::get('/fetch/recommended/expenses', 'ExpencesController@hrRecommendation')->name('hrRecommendation');
 Route::post('/expences/accept', 'ExpencesController@accept')->name('accept');
 Route::get('/fetch/expenses/accepted', 'ExpencesController@getAccepted')->name("getAccepted");

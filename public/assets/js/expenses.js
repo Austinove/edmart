@@ -93,6 +93,8 @@ $(document).ready(function(){
     //close reasoning modal
     $(document).on("click", ".modal-close", function(){
         $(".reason").val("");
+        $(".cancel-title").html("Reason for cancelling expense");
+        
     })
 
     //Function for more in modal
@@ -137,12 +139,19 @@ $(document).ready(function(){
         `)
         });
         if(reason != null){
-            $(".reason-content").html(`
-                <strong class="small-text">Reson for cancellation</strong>
-                <br>
-                <span class="small-text td-text"><strong>By:</strong> ${reason.split(":")[0]}</span>
-                <p class="small-text" style="font-size: 12px!important;">${reason.split(":")[1]}</p>
-            `)
+            reason.split(':')[0] === 'Rivised' ? 
+                $(".reason-content").html(`
+                    <strong class="small-text">Reson for recommending again</strong>
+                    <br>
+                    <p class="small-text" style="font-size: 12px!important;">${reason.split(":")[1]}</p>
+                `)
+                :
+                $(".reason-content").html(`
+                    <strong class="small-text">Reson for cancellation</strong>
+                    <br>
+                    <span class="small-text td-text"><strong>By:</strong> ${reason.split(":")[0]}</span>
+                    <p class="small-text" style="font-size: 12px!important;">${reason.split(":")[1]}</p>
+                `)
         }
     })
 
@@ -251,6 +260,7 @@ $(document).ready(function(){
         $(".total").text(numberWithCommas(arrSum));
         renderList(expenseDesc);
     })
+
     //list rendering function
     function renderList(expDetails){
         $(".expences-list").html('');
@@ -276,11 +286,12 @@ $(document).ready(function(){
             `);
         });
     }
+
     //Submitting Expences
     $(document).on("click", "#exp-btn",function (e) {
         e.preventDefault();
         const descData = $(".title-text").text()+" >|<"+expenseDesc.map(item => item.desc).join("||");
-        if (descData === ">|<") {
+        if ($(".title-text").text() === "") {
             Notification("Add some items to the list", "warning");
         } else {
             var expenseData = new FormData;
@@ -344,7 +355,7 @@ $(document).ready(function(){
         Notification("Withdrawing, Please wait.....", "warning", 5000);
         $.when(deleteRequest(`expences/delete/${id}`).done(response => {
             pendingExpences(response.expences);
-            if (response.msg === "Expence Widrawn Successfully") {
+            if (response.msg === "Expense Widrawn Successfully") {
                 Notification(response.msg, "success");
             }
         })
@@ -501,6 +512,7 @@ $(document).ready(function(){
                     data-amount="${expence.amount}"
                     exp-type="pending"
                     data-id = ${expence.id}
+                    data-reason = "${expence.reason}"
                     data-target="#expenseDetails"
                     class="more"
                 >more details</a>
@@ -522,7 +534,10 @@ $(document).ready(function(){
                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                        <a class="dropdown-item recommend" data="${expence.id}" href="#">Recommend</a>
+                        ${expence.status === 'pending' ? 
+                            '<a class="dropdown-item recommend" data="'+expence.id+'" href="#">Recommend</a>' :
+                            '<a class="dropdown-item revised" data="'+expence.id+'" href="#">Revised</a>'
+                        }
                         <a class="dropdown-item decline" data="${expence.id}" href="#">Decline</a>
                         </div>
                     </div>
@@ -621,6 +636,16 @@ $(document).ready(function(){
                         expencesRequests(response);
                         Notification("Expence Recommended", "success");
                         break;
+                    case "rivised":
+                        expencesRequests(response);
+                        console.log("Again")
+                        $("#expenseCancel").modal("hide");
+                        $(".cancel-btn").prop("disabled", false)
+                            .html('<i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Submit')
+                            .attr("id-data", " ");
+                        $(".cancel-title").html("Reason for cancelling expense");
+                        Notification("Expense Recommended Again", "success");
+                        break;
                     case "hr-cashout":
                         expencesRequests(response);
                         acceptedExpRequests(response);
@@ -675,15 +700,42 @@ $(document).ready(function(){
         $("#expenseCancel").modal("show");
     });
 
+    //hr recommend again after revising expense
+    $(document).on("click", ".revised", function(e){
+        e.preventDefault();
+        $(".cancel-btn").attr("id-data", $(this).attr("data"))
+            .attr("user-data", "hr-revised")
+            .html('<i class="fa fa-check" aria-hidden="true"></i>Revised');
+        $(".cancel-title").html("Reason for Recommending again");
+        $("#expenseCancel").modal("show");
+    })
+
     $("#cancel-reason").submit(function(e) {
         e.preventDefault();
         $(".cancel-btn").html("Submiting...").prop("disabled", true);
         const id = $(".cancel-btn").attr("id-data");
-        if($(".cancel-btn").attr("user-data") === "admin") {
-            Actions("expences/admin/decline", id, "admin-decline", ("Manager:" + $(".reason").val().trim()));
-        }else if($(".cancel-btn").attr("user-data") === "hr"){
-            Actions("expences/decline", id, "decline", ("Human Resource:" + $(".reason").val().trim()));
+        var userAction = $(".cancel-btn").attr("user-data");
+        switch (userAction) {
+            case "admin":
+                Actions("expences/admin/decline", id, "admin-decline", ("Manager:" + $(".reason").val().trim()));
+                break;
+            
+            case "hr":
+                Actions("expences/decline", id, "decline", ("Human Resource:" + $(".reason").val().trim()));
+                break;
+            
+            case "hr-revised":
+                Actions("expences/revised", id, "rivised", ("Rivised:" + $(".reason").val().trim()));
+                break;
+        
+            default:
+                break;
         }
+        // if($(".cancel-btn").attr("user-data") === "admin") {
+        //     Actions("expences/admin/decline", id, "admin-decline", ("Manager:" + $(".reason").val().trim()));
+        // }else if($(".cancel-btn").attr("user-data") === "hr"){
+        //     Actions("expences/decline", id, "decline", ("Human Resource:" + $(".reason").val().trim()));
+        // }
     });
 
     //get hr Recommended Expences for Admin
