@@ -68,7 +68,7 @@
       <div class="modal-content">
         <form id="cancel-reason">
           <div class="modal-header">
-            <h3 class="mb-0 custom-color font-12 cancel-title">Reason for cancelling expense</h3>
+            <h3 class="mb-0 custom-color font-14 cancel-title">Reason for cancelling expense</h3>
             <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

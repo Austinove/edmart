@@ -57,7 +57,8 @@ class ExpencesController extends Controller
                     "desc" => $inputs["desc"],
                     "amount" => $inputs["amount"],
                     "status" => "pending",
-                    "viewed" => 0
+                    "viewed" => 0,
+                    "reason" => "No Reason"
                 ])
             );
             return response()->json([
@@ -85,15 +86,15 @@ class ExpencesController extends Controller
                     "desc" => $inputs["desc"],
                     "amount" => $inputs["amount"],
                     "status" => $newExpenseStatus,
-                    "viewed" => 0
+                    "viewed" => 0,
+                    "reason" => "No Reason"
                 ])
             )->id;
             $expense = Expences::findOrFail($expenseId);
             $expense->requestedExps()->save(
                 new RequestedExps([
                     "viewed" => Auth::user()->id,
-                    "recommended" => $recommendStatus,
-                    "reason" => "No Reason"
+                    "recommended" => $recommendStatus
                 ])
             );
             return response()->json([
@@ -126,8 +127,7 @@ class ExpencesController extends Controller
                     "cancelled_exps.viewed",
                     "cancelled_exps.reason"
                     )
-                ->where('user_id', "=", Auth::user()->id)->orderBy("created_at", "desc")
-                ->where("reason", "LIKE", "Human %")->get();
+                ->where('user_id', "=", Auth::user()->id)->orderBy("created_at", "desc")->get();
             return response()->json($expencesCanclled);
         } catch (QueryException $th) {
             throw $th;
@@ -141,19 +141,17 @@ class ExpencesController extends Controller
             $pending =
             DB::table('expences')
             ->join("users", "expences.user_id", "=", "users.id")
-            ->join("cancelled_exps", "expences.id", "=", "cancelled_exps.expences_id")
             ->select(
-                "expences.id", 
-                "expences.desc", 
-                "expences.created_at", 
-                "expences.user_id", 
-                "expences.amount", 
+                "expences.id",
+                "expences.desc",
+                "expences.created_at",
+                "expences.user_id",
+                "expences.amount",
                 "users.name",
                 "expences.status",
-                "cancelled_exps.reason"
+                "expences.reason"
                 )
             ->where("status", "=", "pending")
-            ->orwhere("cancelled_exps.reason", "LIKE", "Manager%")
             ->orwhere("status", "=", "waiting")
             ->orderBy("created_at", "desc")->get();
             return response()->json($pending);
@@ -168,8 +166,7 @@ class ExpencesController extends Controller
         $inputs = $request->all();
         $saveExpense = new RequestedExps([
             "viewed" => Auth::user()->id,
-            "recommended" => 1,
-            "reason" => "No Reason"
+            "recommended" => 1
             ]);
         try {
             $expense = Expences::findOrFail($inputs["id"]);
@@ -178,6 +175,25 @@ class ExpencesController extends Controller
                 "status" => "recommended"
             ]);
             //returning pending Expenses
+            return $this->pending();
+        } catch (QueryException $th) {
+            throw $th;
+        }
+    }
+
+    //Hr revised Expense to Admin
+    public function revised(Request $request){
+        $inputs = $request->all();
+        try {
+            RequestedExps::where("expences_id", "=", $inputs["id"])->update([
+                "viewed" => Auth::user()->id,
+                "recommended" => 1
+            ]);
+            Expences::where("id", "=", $inputs["id"])->update([
+                "status" => "recommended",
+                "reason" => $inputs["others"]
+            ]);
+            //returning pending expenses
             return $this->pending();
         } catch (QueryException $th) {
             throw $th;
@@ -199,25 +215,6 @@ class ExpencesController extends Controller
                 "status" => "cancelled"
             ]);
             //returning pending Expenses
-            return $this->pending();
-        } catch (QueryException $th) {
-            throw $th;
-        }
-    }
-
-    //Hr revised Expense to Admin
-    public function revised(Request $request){
-        $inputs = $request->all();
-        try {
-            $expense = Expences::findOrFail($inputs["id"]);
-            RequestedExps::where("id", "=", $inputs["id"])->update([
-                "recommended" => 1,
-                "reason" => $inputs["others"]
-            ]);
-            Expences::where("id", "=", $inputs["id"])->update([
-                "status" => "recommended"
-            ]);
-            //returning pending expenses
             return $this->pending();
         } catch (QueryException $th) {
             throw $th;
@@ -250,7 +247,8 @@ class ExpencesController extends Controller
                 "expences.amount",
                 "users.name",
                 "requested_exps.created_at",
-                "requested_exps.viewed"
+                "requested_exps.viewed",
+                "expences.reason"
             )->where("recommended", "=", 1)->orderBy("created_at", "desc")->get();
             return response()->json($expencesRecommended);
     }
@@ -313,15 +311,10 @@ class ExpencesController extends Controller
     //Admin Declining
     public function adminDecline(Request $request){
         $inputs = $request->all();
-        $saveExpense = new cancelledExps([
-            "viewed" => 0,
-            "reason" => $inputs['others']
-        ]);
         try {
-            $expense = Expences::findOrFail($inputs["id"]);
-            $expense->cancelledExps()->save($saveExpense);
             Expences::where("id", "=", $inputs["id"])->update([
-                "status" => "waiting"
+                "status" => "waiting",
+                "reason" => $inputs["others"]
             ]);
             RequestedExps::where("expences_id", "=", $inputs["id"])->update([
                 "recommended" => 0

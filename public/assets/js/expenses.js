@@ -138,7 +138,7 @@ $(document).ready(function(){
             </tr>
         `)
         });
-        if(reason != null){
+        if((reason != null)&&(reason != "No Reason")){
             reason.split(':')[0] === 'Rivised' ? 
                 $(".reason-content").html(`
                     <strong class="small-text">Reson for recommending again</strong>
@@ -638,8 +638,8 @@ $(document).ready(function(){
                         break;
                     case "rivised":
                         expencesRequests(response);
-                        console.log("Again")
                         $("#expenseCancel").modal("hide");
+                        $(".reason").val(" ");
                         $(".cancel-btn").prop("disabled", false)
                             .html('<i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Submit')
                             .attr("id-data", " ");
@@ -781,6 +781,7 @@ $(document).ready(function(){
                                 data-amount="${expence.amount}"
                                 exp-type="approved"
                                 data-id = ${expence.id}
+                                data-reason = "${expence.reason}"
                                 data-target="#expenseDetails"
                                 class="more"
                             >more details</a>
@@ -956,7 +957,7 @@ $(document).ready(function(){
         $(".all-expenses").html("");
         var amount = 0;
         expence_data.forEach(expence => {
-            $(".total-amount").text(amount = amount + parseInt(expence.amount));
+            $(".total-amount").text(numberWithCommas(amount = amount + parseInt(expence.amount)));
             var descValue = expence.desc.split(" ");
             $(".all-expenses").append(`
                     <tr>
