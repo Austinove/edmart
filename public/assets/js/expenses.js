@@ -956,6 +956,7 @@ $(document).ready(function(){
         $(".retrieve-all").prop('disabled', false);
         $(".all-expenses").html("");
         var amount = 0;
+        $(".total-amount").text(amount);
         expence_data.forEach(expence => {
             $(".total-amount").text(numberWithCommas(amount = amount + parseInt(expence.amount)));
             var descValue = expence.desc.split(" ");
