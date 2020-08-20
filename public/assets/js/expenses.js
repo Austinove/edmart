@@ -94,7 +94,6 @@ $(document).ready(function(){
     $(document).on("click", ".modal-close", function(){
         $(".reason").val("");
         $(".cancel-title").html("Reason for cancelling expense");
-        
     })
 
     //Function for more in modal
@@ -133,8 +132,8 @@ $(document).ready(function(){
                 <td class="td-text custom-td">${item.split("<>")[0]}</td>
                 <td class="td-text">${item.split("<>")[1]}</td>
                 <td class="td-text">${item.split("<>")[2]}</td>
-                <td class="td-text">${item.split("<>")[3]}</td>
-                <td class="td-text">${(item.split("<>")[1]) * (item.split("<>")[3])}</td>
+                <td class="td-text">${numberWithCommas(item.split("<>")[3])}</td>
+                <td class="td-text">${numberWithCommas((item.split("<>")[1]) * (item.split("<>")[3]))}</td>
             </tr>
         `)
         });
@@ -250,6 +249,7 @@ $(document).ready(function(){
                         .html(`<i class="fa fa-save"></i> Save`)
                         .attr("data-edit", "edit");
     });
+
     // Deleting element in the list
     $(document).on("click", ".icon-delete", function(e) {
         const newExpenseDesc = expenseDesc.filter((item) => item.id !== parseInt($(this).attr("data")));
@@ -466,7 +466,7 @@ $(document).ready(function(){
                             class="more"
                         >more details</a>
                     </td>
-                    <td class="budget">${expence.amount}</td>
+                    <td class="budget">${numberWithCommas(expence.amount)}</td>
                     <td>
                         <span class="badge badge-dot mr-4">
                             <span class="status">

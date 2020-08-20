@@ -92,7 +92,7 @@
                             $sum += intval($item->amount);
                             }
                         @endphp
-                        {{$sum}}
+                        {{number_format($sum, 2)}} UGX
                     @endif
                 </strong>
             </span>
@@ -127,13 +127,13 @@
                                                 <td class="custom-td td-inside">{{explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[0]}}</td>
                                                 <td class="td-inside">{{explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[1]}}</td>
                                                 <td class="td-inside">{{explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[2]}}</td>
-                                                <td class="td-inside">{{explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[3]}}</td>
+                                                <td class="td-inside">{{number_format(explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[3], 2)}}</td>
                                             </tr>
                                         @endfor
                                     </tbody>
                                 </table>
                             </td>
-                            <td class="td-main">{{$item->amount}}</td>
+                            <td class="td-main">{{number_format($item->amount, 2)}}</td>
                             <td class="td-main">{{$item->name}}</td>
                             <td class="td-main">{{$item->created_at}}</td>
                         </tr>
