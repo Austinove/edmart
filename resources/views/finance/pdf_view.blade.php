@@ -102,9 +102,10 @@
             <thead>
                 <tr>
                     <th scope="col" class="th-main">Description</th>
-                    <th scope="col" class="th-main">Total</th>
-                    <th scope="col" class="th-main">Name</th>
-                    <th scope="col" class="th-main">Date/Time</th>
+                    <th scope="col" class="th-main" style="width: 8%;">Total</th>
+                    <th scope="col" class="th-main" style="width: 10%;">Name</th>
+                    <th scope="col" class="th-main" style="width: 10%">Position</th>
+                    <th scope="col" class="th-main" style="width: 8%;">Date/Time</th>
                 </tr>
             </thead>
             <tbody>
@@ -129,11 +130,7 @@
                                                 <td class="td-inside">{{explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[1]}}</td>
                                                 <td class="td-inside">{{explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[2]}}</td>
                                                 <td class="td-inside">{{number_format(explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[3])}}</td>
-                                                <td class="td-inside">{{
-                                                number_format(
-                                                    intval(explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[3]) * intval(explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[1])
-                                                    )
-                                                }}</td>
+                                                <td class="td-inside">{{number_format(intval(explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[3]) * intval(explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[1]))}}</td>
                                             </tr>
                                         @endfor
                                     </tbody>
@@ -141,6 +138,7 @@
                             </td>
                             <td class="td-main">{{number_format($item->amount, 2)}}</td>
                             <td class="td-main">{{$item->name}}</td>
+                            <td class="td-main">Software Engineer</td>
                             <td class="td-main">{{$item->created_at}}</td>
                         </tr>
                     @endforeach
