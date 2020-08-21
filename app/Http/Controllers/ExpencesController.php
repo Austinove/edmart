@@ -413,10 +413,11 @@ class ExpencesController extends Controller
                 "expences.desc",
                 "expences.amount",
                 "users.name",
+                "users.position",
                 "approved_exps.created_at",
                 "approved_exps.viewed"
             )->orderBy("created_at", "desc")->get();
-            return view('finance.pdf_view', ["show" => $show, "month" => $month]);
+            // return view('finance.pdf_view', ["show" => $show, "month" => $month]);
             $pdf = PDF::loadView('finance.pdf_view', ["show" => $show, "month" => $month]);
             return $pdf->download('edmart_expenses.pdf');
         } catch (QueryException $th) {
