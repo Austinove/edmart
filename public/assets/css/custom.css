@@ -120,3 +120,7 @@ main {
 .font-14 {
     font-size: 14px !important;
 }
+.custom-close {
+    font-size: 30px !important;
+    color: black !important;
+}

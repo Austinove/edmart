@@ -19,6 +19,9 @@
     <div id="app">
         <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
             <div class="scrollbar-inner">
+                <button type="button" class="d-xl-none pr-3 mt-2 sidenav-toggler sidenav-toggler-dark close" data-action="sidenav-pin" data-target="#sidenav-main" aria-label="Close">
+                    <span aria-hidden="true" class="custom-close">&times;</span>
+                </button>
                 <!-- Brand -->
                 <div class="sidenav-header  align-items-center">
                     <a class="navbar-brand" href="javascript:void(0)">
@@ -29,40 +32,40 @@
                 <div class="navbar-inner">
                     <!-- Collapse -->
                     <div class="collapse navbar-collapse" id="sidenav-collapse-main">
-                    <!-- Nav items -->
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                        <a {!! Request::is('dashboard') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="dashboard">
-                            <i class="fa fa-align-center" aria-hidden="true"></i>
-                            <span class="nav-link-text">Dashboard</span>
-                        </a>
-                        </li>
-                        
-                    </ul>
-                    @if((Auth()->user()->userType==="admin")||(Auth()->user()->userType==="hr"))
-                        <hr class="my-3">
-                        <!-- Heading -->
-                        <h6 class="navbar-heading p-0 text-muted">
-                            <span class="docs-normal">Company Tasks</span>
-                        </h6>
-                        <!-- Navigation -->
-                        <ul class="navbar-nav mb-md-3">
+                        <!-- Nav items -->
+                        <ul class="navbar-nav">
                             <li class="nav-item">
-                            <a {!! Request::is('projects') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="projects.html">
-                                <i class="fa fa-product-hunt" aria-hidden="true"></i>
-                                <span class="nav-link-text">Projects</span>
+                            <a {!! Request::is('dashboard') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="dashboard">
+                                <i class="fa fa-align-center" aria-hidden="true"></i>
+                                <span class="nav-link-text">Dashboard</span>
                             </a>
                             </li>
-                            <li class="nav-item">
-                            <a {!! Request::is('table') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="tables.html">
-                                <i class="fa fa-edit"></i>
-                                <span class="nav-link-text">Contracts</span>
-                            </a>
-                            </li>
+                            
                         </ul>
-                    @endif
+                        @if((Auth()->user()->userType==="admin")||(Auth()->user()->userType==="hr"))
+                            <hr class="my-3">
+                            <!-- Heading -->
+                            <h6 class="navbar-heading p-0 text-muted">
+                                <span class="docs-normal">Company Tasks</span>
+                            </h6>
+                            <!-- Navigation -->
+                            <ul class="navbar-nav mb-md-3">
+                                <li class="nav-item">
+                                <a {!! Request::is('projects') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="projects.html">
+                                    <i class="fa fa-product-hunt" aria-hidden="true"></i>
+                                    <span class="nav-link-text">Projects</span>
+                                </a>
+                                </li>
+                                <li class="nav-item">
+                                <a {!! Request::is('table') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="tables.html">
+                                    <i class="fa fa-edit"></i>
+                                    <span class="nav-link-text">Contracts</span>
+                                </a>
+                                </li>
+                            </ul>
+                        @endif
 
-                    <hr class="my-3">
+                        <hr class="my-3">
                         <!-- Heading -->
                         <h6 class="navbar-heading p-0 text-muted">
                             <span class="docs-normal">Finance</span>
@@ -97,31 +100,31 @@
                             @endif
                         </ul>
                     
-                    <!-- Divider -->
-                    <hr class="my-3">
-                    <!-- Heading -->
-                    <h6 class="navbar-heading p-0 text-muted">
-                        <span class="docs-normal">Managment Accounts</span>
-                    </h6>
-                    <!-- Navigation -->
-                    <ul class="navbar-nav mb-md-3">
-                        <li class="nav-item">
-                            <a {!! Request::is('profile') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="profile">
-                                <i class="fa fa-user-md" aria-hidden="true"></i>
-                                <span class="nav-link-text">Profile</span>
-                            </a>
-                        </li>
-                        @if((Auth()->user()->userType==="admin")||(Auth()->user()->userType==="hr"))
+                        <!-- Divider -->
+                        <hr class="my-3">
+                        <!-- Heading -->
+                        <h6 class="navbar-heading p-0 text-muted">
+                            <span class="docs-normal">Managment Accounts</span>
+                        </h6>
+                        <!-- Navigation -->
+                        <ul class="navbar-nav mb-md-3">
                             <li class="nav-item">
-                                <a {!! Request::is('register') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="register">
-                                    <i class="fa fa-cog" aria-hidden="true"></i>
-                                    <span class="nav-link-text">Accounts Settings</span>
+                                <a {!! Request::is('profile') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="profile">
+                                    <i class="fa fa-user-md" aria-hidden="true"></i>
+                                    <span class="nav-link-text">Profile</span>
                                 </a>
                             </li>
-                        @endif
-                    </ul>
+                            @if((Auth()->user()->userType==="admin")||(Auth()->user()->userType==="hr"))
+                                <li class="nav-item">
+                                    <a {!! Request::is('register') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="register">
+                                        <i class="fa fa-cog" aria-hidden="true"></i>
+                                        <span class="nav-link-text">Accounts Settings</span>
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
 
-                    <hr class="my-3">
+                        <hr class="my-3">
                         <!-- Heading -->
                         <h6 class="navbar-heading p-0 text-muted">
                             <span class="docs-normal">Others</span>
