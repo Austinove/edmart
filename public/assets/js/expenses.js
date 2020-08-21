@@ -215,6 +215,7 @@ $(document).ready(function(){
             $(".specify").val("");
             $(".specifyInput").addClass("d-none");
             $(".selectInput").removeClass("d-none");
+            $(".return-selection").addClass("d-none");
         }
     });
 

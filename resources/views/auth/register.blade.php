@@ -37,7 +37,7 @@
                                     <label class="custom-file-label form-control-alternative" for="customFileLang">Select Image</label>
                                 </div>
                             </div>
-                            <div class="form-group mb-3">
+                            {{-- <div class="form-group mb-3">
                                 <label for="exampleFormControlInput1" class="small-text custom-color">User Type</label>
                                 <div class="custom-control custom-radio">
                                     <input type="radio" id="worker" name="userType" required value="worker" class="custom-control-input">
@@ -51,10 +51,10 @@
                                     <input type="radio" id="admin" name="userType" required value="admin" class="custom-control-input">
                                     <label class="custom-control-label custom-color font-italic font-weight-light" for="admin">Admin</label>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="form-group mb-3">
                                 <label for="exampleFormControlInput1" class="small-text">
-                                    User Type 
+                                    User Type
                                     <span class="error">*</span>
                                 </label><br>
                                 <a href="#" class="return-selection d-none">
@@ -69,7 +69,8 @@
                                     </select>
                                 </div>
                                 <div class="bg-secondary d-none positionInput">
-                                    <input required name="position" class="position form-control form-control form-control-alternative" placeholder="Enter worker's position">
+                                    <span class="error error-user"></span>
+                                    <input name="position" class="position form-control form-control form-control-alternative" placeholder="Enter worker's position">
                                 </div>
                             </div>
                             <div class="alert alert-default custom-bg" role="alert">

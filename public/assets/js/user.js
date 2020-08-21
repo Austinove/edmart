@@ -12,6 +12,7 @@ $(document).ready(function(){
         $('.name').val('');
         $('.email').val('');
         $('.image').val('');
+        $(".userType").val("");
     }
 
     // $('#changePassword').addClass('toggleForms');
@@ -37,19 +38,24 @@ $(document).ready(function(){
             $(".selectInput").addClass("d-none");
         }
     })
-    
+
     $(document).on("click", ".return-selection", function(e){
         e.preventDefault();
         $(".userType").val("");
         $(this).addClass("d-none");
         $(".selectInput").removeClass("d-none").find("input.userType").focus();
         $(".positionInput").addClass("d-none");
+        $(".position").val("");
     })
 
     //Submitting Registration
     $('#registration-form').submit(function (e) {
         e.preventDefault();
         var actionUrl = "register";
+        console.log($(".userType").val());
+        console.log($(".position").val());
+        //checking for position specification input
+        if (($(".userType").val() !== "worker")||(($(".userType").val() === "worker") && ($(".position").val() != null))) {
         $('#register-btn').html('Submiting...');
         $("#register-btn").prop('disabled', true);
         $.ajax({
@@ -80,6 +86,7 @@ $(document).ready(function(){
             $("#register-btn").prop('disabled', false);
             clearInputs();
         });
+        } else { $(".error-user").text("Required please *") }
     });
 
     //Editing User information
