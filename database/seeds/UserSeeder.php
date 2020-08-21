@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
                 "userType" => "admin",
                 "image" => "default.jpg",
                 "password" => Hash::make("password"),
+                "position" => "Managing Director"
             ]
         );
     }

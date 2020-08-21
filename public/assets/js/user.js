@@ -77,14 +77,13 @@ $(document).ready(function(){
             Notification(response.msg, "success");
         })
         .fail(error => {
+            $('#register-btn').html('Register User');
+            $("#register-btn").prop('disabled', false);
             if (error.responseJSON.errors.email[0] === "The email has already been taken."){
                 Notification(error.responseJSON.errors.email[0], "warning");
             }else{
                 Notification("An Error occuired !!!", "warning");
             }
-            $('#register-btn').html('Register User');
-            $("#register-btn").prop('disabled', false);
-            clearInputs();
         });
         } else { $(".error-user").text("Required please *") }
     });
