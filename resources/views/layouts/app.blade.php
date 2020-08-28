@@ -25,8 +25,8 @@
                 <!-- Brand -->
                 <div class="sidenav-header  align-items-center">
                     <a class="navbar-brand" href="javascript:void(0)">
-                    <img src="{{ asset('/assets/img/favicon.png') }}" class="navbar-brand-img" alt="EDMART Logo">
-                        <span class="small-text">MART SYSTEMS</span>
+                    <img src="{{ asset('/assets/img/edmart_logo.jpg') }}" class="navbar-brand-img" alt="EDMART Logo">
+                        {{-- <span class="small-text">MART SYSTEMS</span> --}}
                     </a>
                 </div>
                 <div class="navbar-inner">

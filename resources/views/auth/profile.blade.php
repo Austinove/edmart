@@ -6,7 +6,7 @@
     <div class="row">
         <div class="ml-2 col-md-4">
           <div class="card card-profile">
-            <img src="{{ asset('/assets/img/theme/img-1-1000x600.jpg') }}" alt="Image placeholder" class="card-img-top">
+            <img src="{{ asset('/assets/img/edmart_logo.jpg') }}" alt="Image placeholder" class="card-img-top">
             <div class="row justify-content-center">
               <div class="col-lg-3 order-lg-2">
                 <div class="card-profile-image">
