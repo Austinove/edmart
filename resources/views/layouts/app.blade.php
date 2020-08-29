@@ -82,7 +82,7 @@
                                 <li class="nav-item">
                                     <a {!! Request::is('quatations') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="quatations.html">
                                         <i class="fa fa-book" aria-hidden="true"></i>
-                                        <span class="nav-link-text">Quatation</span>
+                                        <span class="nav-link-text">Quotation</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">

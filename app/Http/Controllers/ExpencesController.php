@@ -151,8 +151,8 @@ class ExpencesController extends Controller
                 "expences.status",
                 "expences.reason"
                 )
-            ->where("status", "=", "pending")
-            ->orwhere("status", "=", "waiting")
+            ->where("expences.status", "=", "pending")
+            ->orwhere("expences.status", "=", "waiting")
             ->orderBy("created_at", "desc")->get();
             return response()->json($pending);
         } catch (QueryException $th) {

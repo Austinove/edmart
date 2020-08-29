@@ -4,8 +4,8 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="row ">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header font-weight-bold custom-color">Register New Users</div>
                 <div class="row">
@@ -64,13 +64,20 @@
                                     By default password will be <strong> "password" </strong> without spaces
                                 </div>
                             </div>
-
                             <div class="text-left">
                             <button type="submit" id="register-btn" class="btn btn-outline-primary my-4 btn-md custom-btn">Register User</button>
                             </div>
                         </form>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header font-weight-bold custom-color">Current Users <span class="badge badge-users custom-badge badge-default font-weight-bold"></span></div>
+                {{-- Users are fro jQuery --}}
+                <div class="row users-container"></div>
             </div>
         </div>
     </div>
