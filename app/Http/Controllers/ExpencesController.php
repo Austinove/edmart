@@ -64,6 +64,7 @@ class ExpencesController extends Controller
             return response()->json([
                 'msg' => "Expence Saved Successfull",
                 'expences' => $user->expences()->orderBy("created_at", "desc")->get()
+                // $user->expences()->whereStatus("pending")->orderBy("created_at", "desc")->get()
             ]);
         } catch (QueryException $th) {
             throw $th;
@@ -253,7 +254,7 @@ class ExpencesController extends Controller
             return response()->json($expencesRecommended);
     }
 
-    //Fetching accepted expenses for admin
+    //Fetching accepted expenses for hr
     public function getAccepted()
     {
         $expencesAccepted = DB::table('requested_exps')

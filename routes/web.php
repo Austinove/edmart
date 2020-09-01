@@ -1,46 +1,52 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\CheckHr;
+use App\Http\Middleware\CheckUser;
+use App\Http\Middleware\PreventBackHistory;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-Route::get('/pdf', function(){
-    return view("finance.pdf_view");
-});
+// Route::get('/pdf', function(){
+//     return view("finance.pdf_view");
+// });
+
 Route::get('/', "Auth\LoginController@showLoginForm")->name('login');
-Route::get('/profile', "ProfilesController@index")->name('profile');
-Route::get('/expenses', 'ExpencesController@index')->name('expenses');
-Route::get('/expences/fetch', 'ExpencesController@fetch')->name('getExpences');
-Route::delete("expences/delete/{id}", "ExpencesController@delete")->name("deleteExps");
-Route::get('/expences/pending', 'ExpencesController@pending')->name('getPendingExps');
-Route::get('/expences/cancelled', 'ExpencesController@cancelled')->name('getCancelledExps');
-Route::post('/expences/create', 'ExpencesController@create')->name('createExpences');
-Route::post('/expences/recommended', 'ExpencesController@recommend')->name('recommendExpence');
-Route::post('/expences/decline', 'ExpencesController@decline')->name('declineExpence');
-Route::post('/expences/revised', 'ExpencesController@revised')->name('revisedExpence');
-Route::get('/fetch/recommended/expenses', 'ExpencesController@hrRecommendation')->name('hrRecommendation');
-Route::post('/expences/accept', 'ExpencesController@accept')->name('accept');
-Route::get('/fetch/expenses/accepted', 'ExpencesController@getAccepted')->name("getAccepted");
-Route::post('/expenses/cashOut', 'ExpencesController@cashOut')->name('cashOut');
-Route::post('/expences/admin/decline', 'ExpencesController@adminDecline')->name('adminDecline');
-Route::post('/expenses/approved/month', 'ExpencesController@approved')->name('approved');
-Route::post('/user/approved', 'ExpencesController@userApproved')->name('userApproved');
-Route::post('/approved/cancelled', 'ExpencesController@cancelledViewed')->name('cancelledViewed');
-Route::post('/edit/user/info', "Auth\RegisterController@editUserInfo")->name('editUserInfo');
-Route::post('/edit/user/password', "Auth\RegisterController@editUserPassword")->name('editUserPassword');
-Route::post('/user/action', "Auth\RegisterController@userActions")->name("userActions");
-Route::get("/fetch/users", "Auth\RegisterController@fetchUsers")->name("fetchUsers");
 
-Auth::routes();
+Route::middleware([PreventBackHistory::class])->group(function() {
+    Auth::routes();
+    //Aunthentication routes
+    Route::get('/dashboard', 'HomeController@index')->name('home')->middleware("userActivation");
+    Route::get('/profile', "ProfilesController@index")->name('profile');
+    Route::get('/expenses', 'ExpencesController@index')->name('expenses');
+    Route::get('/expences/fetch', 'ExpencesController@fetch')->name('getExpences');
+    Route::delete("expences/delete/{id}", "ExpencesController@delete")->name("deleteExps");
+    Route::get('/expences/cancelled', 'ExpencesController@cancelled')->name('getCancelledExps');
+    Route::post('/expences/create', 'ExpencesController@create')->name('createExpences');
+    Route::post('/user/approved', 'ExpencesController@userApproved')->name('userApproved');
+    Route::post('/approved/cancelled', 'ExpencesController@cancelledViewed')->name('cancelledViewed');
+    Route::post('/edit/user/info', "Auth\RegisterController@editUserInfo")->name('editUserInfo');
+    Route::post('/edit/user/password', "Auth\RegisterController@editUserPassword")->name('editUserPassword');
 
-Route::get('/dashboard', 'HomeController@index')->name('home');
+    // hr or admin routes only
+    Route::middleware([CheckHr::class])->group(function() {
+        Route::get("/register", "Auth\RegisterController@showRegistrationForm")->name("register");
+        Route::post("/register", "Auth\RegisterController@register");
+        Route::get('/expences/pending', 'ExpencesController@pending')->name('getPendingExps');
+        Route::post('/expences/recommended', 'ExpencesController@recommend')->name('recommendExpence');
+        Route::post('/expences/decline', 'ExpencesController@decline')->name('declineExpence');
+        Route::post('/expences/revised', 'ExpencesController@revised')->name('revisedExpence');
+        Route::get('/fetch/expenses/accepted', 'ExpencesController@getAccepted')->name("getAccepted");
+        Route::post('/expenses/cashOut', 'ExpencesController@cashOut')->name('cashOut');
+        Route::post('/expenses/approved/month', 'ExpencesController@approved')->name('approved');
+        Route::post('/user/action', "Auth\RegisterController@userActions")->name("userActions");
+        Route::get("/fetch/users", "Auth\RegisterController@fetchUsers")->name("fetchUsers");
+        Route::get('/expense/printPdf/{month}', ['as' => 'printPdf', 'uses' => 'ExpencesController@printPDF']);
+    });
 
-Route::get('/expense/printPdf/{month}', ['as' => 'printPdf', 'uses' => 'ExpencesController@printPDF']);
+    //Admin routes only
+    Route::middleware([CheckUser::class])->group(function() {
+        Route::post('/expences/accept', 'ExpencesController@accept')->name('accept');
+        Route::post('/expences/admin/decline', 'ExpencesController@adminDecline')->name('adminDecline');
+        Route::get('/fetch/recommended/expenses', 'ExpencesController@hrRecommendation')->name('hrRecommendation');
+    });
+});
+

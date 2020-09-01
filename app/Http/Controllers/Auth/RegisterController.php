@@ -168,7 +168,7 @@ class RegisterController extends Controller
             //activation action
             try {
                 User::where("id", "=", $inputs["id"])->update([
-                    'password' => Hash::make("password"),
+                    // 'password' => Hash::make("password"),
                     "status" => $inputs["action"]
                 ]);
                 return $this->fetchUsers();
@@ -179,7 +179,7 @@ class RegisterController extends Controller
             //deactivation actions
             try {
                 User::where("id", "=", $inputs["id"])->update([
-                    'password' => Hash::make("askAdminK-DeBryan"),
+                    // 'password' => Hash::make("askAdminK-DeBryan"),
                     "status" => $inputs["action"]
                 ]);
                 return $this->fetchUsers();
