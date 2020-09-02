@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExpencesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckHr;
 use App\Http\Middleware\CheckUser;
@@ -19,7 +20,7 @@ Route::middleware([PreventBackHistory::class])->group(function() {
     Route::get('/expenses', 'ExpencesController@index')->name('expenses');
     Route::get('/expences/fetch', 'ExpencesController@fetch')->name('getExpences');
     Route::delete("expences/delete/{id}", "ExpencesController@delete")->name("deleteExps");
-    Route::get('/expences/cancelled', 'ExpencesController@cancelled')->name('getCancelledExps');
+    Route::post('/expences/cancelled', 'ExpencesController@cancelled')->name('getCancelledExps');
     Route::post('/expences/create', 'ExpencesController@create')->name('createExpences');
     Route::post('/user/approved', 'ExpencesController@userApproved')->name('userApproved');
     Route::post('/approved/cancelled', 'ExpencesController@cancelledViewed')->name('cancelledViewed');
@@ -39,6 +40,7 @@ Route::middleware([PreventBackHistory::class])->group(function() {
         Route::post('/expenses/approved/month', 'ExpencesController@approved')->name('approved');
         Route::post('/user/action', "Auth\RegisterController@userActions")->name("userActions");
         Route::get("/fetch/users", "Auth\RegisterController@fetchUsers")->name("fetchUsers");
+        Route::post(("/expenses/seen"), "ExpencesController@viewed")->name("viewed");
         Route::get('/expense/printPdf/{month}', ['as' => 'printPdf', 'uses' => 'ExpencesController@printPDF']);
     });
 

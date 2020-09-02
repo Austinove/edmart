@@ -97,7 +97,7 @@ class RegisterController extends Controller
             $nameWithExt = $file->getClientOriginalName();
             $name = pathinfo($nameWithExt, PATHINFO_FILENAME);
             $extension = $file->getClientOriginalExtension();
-            $saveName = $name . "_" . time() . "." . $extension;
+            $saveName = "image_" . time() . "." . $extension;
             $file->move("profiles", $saveName);
             $inputs["image"] = $saveName;
             try {

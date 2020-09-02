@@ -6,6 +6,22 @@ $(document).ready(function(){
     //cancelled-->danger
     //recommended-->info
     //approved--success
+
+    //set current month
+    // Setting up print url to print button
+    setMonth();
+    function setMonth() {
+        var d = new Date()
+        var currentMonth
+        (d.getMonth() + 1) >= 10 ?
+            currentMonth = (d.getMonth() + 1) :
+            currentMonth = "0" + (d.getMonth() + 1);
+        $(".month").val(d.getFullYear() + "-" + currentMonth);
+        $(".month-all").val(d.getFullYear() + "-" + currentMonth);
+        $(".cancel-month").val(d.getFullYear() + "-" + currentMonth);
+    }
+
+
     // variable for listing
     // var expenseDesc = [];
     // scrolling list table
@@ -73,6 +89,7 @@ $(document).ready(function(){
 
     // function to send viewed
     function viewed(viewedUrl, expenses) {
+        console.log(expenses);
         return $.ajax({
             url: viewedUrl,
             type: "post",
@@ -110,14 +127,14 @@ $(document).ready(function(){
         switch (expenceType) {
             case "cancelled":
                 $.when(viewed("approved/cancelled", $(this).attr("data-id")).done(response => {
-                    cancelledExpences(response)
+                    getApprovedExpences()
                 }).fail(error => {
                     console.log(error)
                     Notification("View not registered!", "warning")
                 }))
                 break;
             case "approved":
-                $.when(approvedRequest($(this).attr("data-id")).done(response => {
+                $.when(approvedRequest("user/approved", $(this).attr("data-id")).done(response => {
                     approvedExpRequests(response)
                 }).fail(error => {
                     console.log(error)
@@ -158,7 +175,7 @@ $(document).ready(function(){
                     <p class="small-text" style="font-size: 12px!important;">${reason.split(":")[1]}</p>
                 `)
         }
-    })
+    });
 
     //List functionality
     var expenseDesc = [];
@@ -240,7 +257,7 @@ $(document).ready(function(){
         $(this).addClass("d-none");
         $(".selectInput").removeClass("d-none").find("input.units").focus();
         $(".specifyInput").addClass("d-none");
-    })
+    });
 
     // Editing an element in the list
     $(document).on("click", ".icon-edit", function(e) {
@@ -275,7 +292,7 @@ $(document).ready(function(){
         }, 0);
         $(".total").text(numberWithCommas(arrSum));
         renderList(expenseDesc);
-    })
+    });
 
     //list rendering function
     function renderList(expDetails){
@@ -380,206 +397,244 @@ $(document).ready(function(){
             }));
     })
 
-    //get user pending Expences
-    getPendingExpences();
-    function getPendingExpences() {
-        $.when(getRequest('expences/fetch').done(response => {
-            pendingExpences(response);
-        }).fail(error => {
-            console.log(error);
-            Notification("An Error occuired !!!", "warning");
-        }));
-    }
 
-    //Rendering user pending expences
-    function pendingExpences(expence_data) {
-        $(".pending-expence").html("");
-        expence_data.forEach(expence => {
-            var descValue = expence.desc.split(" ");
-            $(".pending-expence").append(`
-                <tr >
-                    <td>
-                        ${descValue[0]}  .....
-                        <a href="#" data-toggle="modal" 
-                            data-desc="${expence.desc}"
-                            data-amount="${expence.amount}"
-                            exp-type="pending"
-                            data-target="#expenseDetails"
-                            class="more"
-                        >more details</a>
-                    </td>
-                    <td class="budget">${numberWithCommas(expence.amount)}</td>
-                    <td>
-                        <span class="badge badge-dot mr-4">
-                            <span class="status">${expence.status}</span>
-                        </span>
-                    </td>
-                    <td>
-                        ${
-                            expence.created_at.includes("T") ?
-                            expence.created_at.split('T')[0] :
-                            expence.created_at.split(' ')[0]
-                        }
-                    </td>
-                    <td class="text-left">
-                        <div class="dropdown-lg">
-                            <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" class="disabled">
-                            ${expence.status === "pending" ? `<div>
-                                <a class="dropdown-item widthdrawExp"
-                                    data="${expence.id}"
-                                    desc-data="${expence.desc}"
-                                    amount-data="${expence.amount}" 
-                                    href="#">Withdraw</a>
-                            </div>` : '<span class="ml-4 text-muted small-text">Not pending</span>'}
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            `)
-        })
-    }
 
-    //get Cancelled Expences
-    getCancelledExpences();
-    function getCancelledExpences() {
-        $.when(getRequest('expences/cancelled').done(response => {
-            cancelledExpences(response);
-        }).fail(error => {
-            console.log(error);
-            Notification("An Error occuired !!!", "warning");
-        }));
-    }
+    //user/hr route requests only
+    if(initialUser!="admin") {
+        //get user pending Expenses
+        getPendingExpences();
+        function getPendingExpences() {
+            $.when(getRequest('expences/fetch').done(response => {
+                pendingExpences(response);
+            }).fail(error => {
+                console.log(error);
+                Notification("An Error occuired !!!", "warning");
+            }));
+        }
 
-    //Rendering Cancelled expences
-    function cancelledExpences(expence_data) {
-        var counter = 0;
-        var newfeeds;
-        expence_data.forEach(expence => {
-            if (expence.viewed === "0") {
-                counter++;
-            }
-        });
-        (counter != 0) ? ($(".badge-cancelled").text(counter)) : ($(".badge-cancelled").text(""))
-        $(".cancelled-expence").html("");
-        expence_data.forEach(expence => {
-            (expence.viewed === "0") ? (newfeeds = "new-feeds") : (newfeeds = " ")
-            var descValue = expence.desc.split(" ");
-            $(".cancelled-expence").append(`
-                <tr class=${newfeeds}>
-                    <td>
-                        ${descValue[0]}  ..... 
-                        <a href="#" data-toggle="modal" 
-                            data-desc="${expence.desc}"
-                            data-amount="${expence.amount}"
-                            exp-type="cancelled"
-                            data-id = "${expence.id}"
-                            data-reason = "${expence.reason}"
-                            data-target="#expenseDetails"
-                            class="more"
-                        >more details</a>
-                    </td>
-                    <td class="budget">${numberWithCommas(expence.amount)}</td>
-                    <td>
-                        <span class="badge badge-dot mr-4">
-                            <span class="status">
+        //Rendering user pending expences
+        function pendingExpences(expence_data) {
+            $(".pending-expence").html("");
+            expence_data.forEach(expence => {
+                var descValue = expence.desc.split(" ");
+                var status = expence.status;
+                ((status === "recommended")||(status==="waiting")) ? status = "Under Review": null;
+                var textClass;
+                switch (status) {
+                    case "Under Review":
+                    textClass = "status text-info"
+                        break;
+                    
+                    case "Viewed":
+                        textClass = "status text-warning"
+                        break;
+                    
+                    case "Not Viewed":
+                        textClass = "status text-primary"
+                        break;
+
+                    default:
+                        break;
+                }
+                $(".pending-expence").append(`
+                    <tr >
+                        <td>
+                            ${descValue[0]}  .....
+                            <a href="#" data-toggle="modal" 
+                                data-desc="${expence.desc}"
+                                data-amount="${expence.amount}"
+                                exp-type="pending"
+                                data-target="#expenseDetails"
+                                class="more"
+                            >more details</a>
+                        </td>
+                        <td class="budget">${numberWithCommas(expence.amount)}</td>
+                        <td>
+                            <span class="badge badge-dot mr-4">
+                                <span class="${textClass}">${status}</span>
+                            </span>
+                        </td>
+                        <td>
                             ${
                                 expence.created_at.includes("T") ?
-                                expence.created_at.split(' ')[0] :
+                                expence.created_at.split('T')[0] :
                                 expence.created_at.split(' ')[0]
                             }
-                            </span>
-                        </span>
-                    </td>
-                </tr>
-            `)
-        })
-    }
+                        </td>
+                        <td class="text-left">
+                            <div class="dropdown-lg">
+                                <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" class="disabled">
+                                ${status === "Not Viewed" ? `<div>
+                                    <a class="dropdown-item widthdrawExp text-danger"
+                                        data="${expence.id}"
+                                        desc-data="${expence.desc}"
+                                        amount-data="${expence.amount}" 
+                                        href="#"><i class="fa fa-times-circle-o" aria-hidden="true"></i> Withdraw</a>
+                                </div>` : '<span class="ml-4 text-muted small-text">Not pending</span>'}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `)
+            })
+        }
 
-    // request function for user approved expenses per month
-    function approvedRequest(viewId = 0) {
-        var month = $(".month").val().split("-")[1];
-        let Data = new FormData();
-        Data.append("month", "-" + month + "-");
-        Data.append("id", viewId);
-        return $.ajax({
-            url: "user/approved",
-            type: "post",
-            data: Data,
-            dataType: 'json',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            contentType: false,
-            cache: false,
-            processData: false,
-        });
-    }
+        // request function for user approved expenses per month
+        // This is also used by the cancell requests though it has a confusing name
+        function approvedRequest(requestUrl, viewId = 0) {
+            var month;
+            (requestUrl === "user/approved") ?
+                month = $(".month").val().split("-")[1] : month = $(".cancel-month").val().split("-")[1];
+            let Data = new FormData();
+            Data.append("month", "-" + month + "-");
+            Data.append("id", viewId);
+            return $.ajax({
+                url: requestUrl,
+                type: "post",
+                data: Data,
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                contentType: false,
+                cache: false,
+                processData: false,
+            });
+        }
 
-    //get User Approved Expences
-    getApprovedExpences();
-    function getApprovedExpences() {
-        $.when(approvedRequest().done(response => {
-            approvedExpRequests(response);
-        }).fail(error => {
-            console.log(error);
-            Notification("An Error occuired !!!", "warning");
-        }));
-    }
-
-    //Rendering Approved Expenses
-    function approvedExpRequests(expence_data) {
-        $(".retrieve").html(`Retrieve <i class="fa fa-check" aria-hidden="true"></i>`);
-        $(".retrieve").prop('disabled', false);
-        $(".approved-expenses").html("");
-        var counter = 0;
-        var newfeeds;
-        expence_data.forEach(expence => {
-            if (expence.viewed === "0") {
-                counter++;
-            }
-        });
-        (counter != 0) ? ($(".badge-approved").text(counter)) : ($(".badge-approved").text(""))
-        expence_data.forEach(expence => {
-            (expence.viewed === "0") ? (newfeeds = "new-feeds") : (newfeeds = " ")
-            var descValue = expence.desc.split(" ");
-            $(".approved-expenses").append(`
-                        <tr class=${newfeeds}>
-                            <td>
-                                ${descValue[0]}  ..... 
-                                <a href="#" data-toggle="modal" 
-                                    data-desc="${expence.desc}"
-                                    data-amount="${expence.amount}"
-                                    exp-type="approved"
-                                    data-id = ${expence.id}
-                                    data-target="#expenseDetails"
-                                    class="more"
-                                >more details</a>
-                            </td>
-                            <td class="budget">${numberWithCommas(expence.amount)}</td>
-                            <td>
-                                <span class="status">${expence.name}</span>
-                            </td>
-                            <td> 
-                                ${
-                expence.created_at.includes("T") ?
-                    expence.created_at.split('T')[0] :
-                    expence.created_at.split(' ')[0]
-                }
-                            </td>
-                        </tr>
-                    `)
-        })
-    }
-
-    // fetch user approved expences by month on click
-    $(document).on("click", ".retrieve", function (e) {
-        $(".retrieve").prop('disabled', true);
-        $(this).html("Retriving....");
+        //get User Approved Expenses
         getApprovedExpences();
-    });
+        function getApprovedExpences() {
+            $.when(approvedRequest("user/approved").done(response => {
+                approvedExpRequests(response);
+            }).fail(error => {
+                console.log(error);
+                Notification("An Error occuired !!!", "warning");
+            }));
+        }
+
+        //Rendering Approved Expenses
+        function approvedExpRequests(expence_data) {
+            $(".retrieve").html(`Retrieve <i class="fa fa-check" aria-hidden="true"></i>`);
+            $(".retrieve").prop('disabled', false);
+            $(".approved-expenses").html("");
+            var counter = 0;
+            var newfeeds;
+            expence_data.forEach(expence => {
+                if (expence.viewed === "0") {
+                    counter++;
+                }
+            });
+            (counter != 0) ? ($(".badge-approved").text(counter)) : ($(".badge-approved").text(""))
+            expence_data.forEach(expence => {
+                (expence.viewed === "0") ? (newfeeds = "new-feeds") : (newfeeds = " ")
+                var descValue = expence.desc.split(" ");
+                $(".approved-expenses").append(`
+                            <tr class=${newfeeds}>
+                                <td>
+                                    ${descValue[0]}  ..... 
+                                    <a href="#" data-toggle="modal" 
+                                        data-desc="${expence.desc}"
+                                        data-amount="${expence.amount}"
+                                        exp-type="approved"
+                                        data-id = ${expence.id}
+                                        data-target="#expenseDetails"
+                                        class="more"
+                                    >more details</a>
+                                </td>
+                                <td class="budget">${numberWithCommas(expence.amount)}</td>
+                                <td>
+                                    <span class="status">${expence.name}</span>
+                                </td>
+                                <td> 
+                                    ${
+                    expence.created_at.includes("T") ?
+                        expence.created_at.split('T')[0] :
+                        expence.created_at.split(' ')[0]
+                    }
+                                </td>
+                            </tr>
+                        `)
+            })
+        }
+
+        // fetch user approved expences by month on click
+        $(document).on("click", ".retrieve", function (e) {
+            $(this).prop('disabled', true);
+            $(this).html("Retrieving....");
+            getApprovedExpences();
+        });
+
+
+        //get Cancelled Expences
+        getCancelledExpences();
+        function getCancelledExpences() {
+            $.when(approvedRequest('expences/cancelled').done(response => {
+                cancelledExpences(response);
+            }).fail(error => {
+                console.log(error);
+                Notification("An Error occuired !!!", "warning");
+            }));
+        }
+
+        //Rendering Cancelled expences
+        function cancelledExpences(expence_data) {
+            $(".cancel-retrieve").html(`Retrieve <i class="fa fa-check" aria-hidden="true"></i>`);
+            $(".cancel-retrieve").prop('disabled', false);
+            var counter = 0;
+            var newfeeds;
+            expence_data.forEach(expence => {
+                if (expence.viewed === "0") {
+                    counter++;
+                }
+            });
+            (counter != 0) ? ($(".badge-cancelled").text(counter)) : ($(".badge-cancelled").text(""))
+            $(".cancelled-expence").html("");
+            expence_data.forEach(expence => {
+                (expence.viewed === "0") ? (newfeeds = "new-feeds") : (newfeeds = " ")
+                var descValue = expence.desc.split(" ");
+                $(".cancelled-expence").append(`
+                    <tr class=${newfeeds}>
+                        <td>
+                            ${descValue[0]}  ..... 
+                            <a href="#" data-toggle="modal" 
+                                data-desc="${expence.desc}"
+                                data-amount="${expence.amount}"
+                                exp-type="cancelled"
+                                data-id = "${expence.id}"
+                                data-reason = "${expence.reason}"
+                                data-target="#expenseDetails"
+                                class="more"
+                            >more details</a>
+                        </td>
+                        <td class="budget">${numberWithCommas(expence.amount)}</td>
+                        <td>
+                            <span class="badge badge-dot mr-4">
+                                <span class="status">
+                                ${
+                                    expence.created_at.includes("T") ?
+                                    expence.created_at.split(' ')[0] :
+                                    expence.created_at.split(' ')[0]
+                                }
+                                </span>
+                            </span>
+                        </td>
+                    </tr>
+                `)
+            })
+        }
+
+        //fetch user cancelled expenses by month on click
+        $(document).on("click", ".cancel-retrieve", function (e) {
+            $(this).prop("disabled", true).html("Retrieving....");
+            getCancelledExpences();
+        })
+    }
+
+
 
 
     //Administrator routes only
@@ -635,11 +690,14 @@ $(document).ready(function(){
                             <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                            ${expence.status === 'pending' ? 
-                                '<a class="dropdown-item recommend" data="'+expence.id+'" href="#">Recommend</a>' :
-                                '<a class="dropdown-item revised" data="'+expence.id+'" href="#">Revised</a>'
+                            ${expence.status === 'waiting' ? 
+                                '<a class="dropdown-item text-info revised" data="'+expence.id+'" href="#"><i class="fa fa-check-circle" aria-hidden="true"></i> Revised</a>' :
+                                '<a class="dropdown-item text-success recommend" data="'+expence.id+'" href="#"><i class="fa fa-check" aria-hidden="true"></i> Recommend</a>'
                             }
-                            <a class="dropdown-item decline" data="${expence.id}" href="#">Decline</a>
+                            <a class="dropdown-item decline text-danger" data="${expence.id}" href="#"><i class="fa fa-times-circle-o" aria-hidden="true"></i> Decline</a>
+                            ${expence.status === 'Viewed' ?
+                                '' : '<a class="dropdown-item text-primary viewed" data="'+expence.id+'" href="#"><i class="fa fa-archive" aria-hidden="true"></i> Viewed</a>'
+                            }
                             </div>
                         </div>
                     </td>
@@ -697,7 +755,7 @@ $(document).ready(function(){
                                     <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                    <a class="dropdown-item cashOut" data="${expence.id}" href="#">Cash Out</a>
+                                    <a class="dropdown-item text-success cashOut" data="${expence.id}" href="#"><i class="fa fa-check" aria-hidden="true"></i> Cash Out</a>
                                     </div>
                                 </div>
                             </td>
@@ -734,10 +792,14 @@ $(document).ready(function(){
                     switch (sender) {
                         case "hr":
                             expencesRequests(response);
-                            Notification("Expence Recommended", "success");
+                            getPendingExpences();
+                            getCancelledExpences();
+                            Notification("Request was successfull", "success");
                             break;
                         case "rivised":
                             expencesRequests(response);
+                            getPendingExpences();
+                            getCancelledExpences();
                             $("#expenseCancel").modal("hide");
                             $(".reason").val(" ");
                             $(".cancel-btn").prop("disabled", false)
@@ -747,12 +809,15 @@ $(document).ready(function(){
                             Notification("Expense Recommended Again", "success");
                             break;
                         case "hr-cashout":
-                            // expencesRequests(response);
                             acceptedExpRequests(response);
+                            getPendingExpences();
+                            getCancelledExpences();
                             Notification("Expence Cashed out", "success");
                             break;
                         case "decline":
                             expencesRequests(response);
+                            getPendingExpences();
+                            getCancelledExpences();
                             $("#expenseCancel").modal("hide");
                             $(".cancel-btn").prop("disabled", false)
                                 .html('<i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Submit')
@@ -761,13 +826,11 @@ $(document).ready(function(){
                             Notification("Expense Declined Successfully", "success");
                             break;
                         case "admin":
-                            getApprovedExpences();
                             recommendedExpRequests(response);
                             Notification("Expense Accepted", "success");
                             break;
                         case "admin-decline":
                             recommendedExpRequests(response);
-                            getApprovedExpences();
                             $("#expenseCancel").modal("hide");
                             $(".cancel-btn").prop("disabled", false)
                                 .html('<i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Submit')
@@ -778,8 +841,6 @@ $(document).ready(function(){
                         default:
                             break;
                     }
-                    getPendingExpences();
-                    getCancelledExpences();
                 })
                 .fail(error => {
                     Notification("An Error occuired !!!", "danger");
@@ -791,6 +852,12 @@ $(document).ready(function(){
             e.preventDefault();
             const id = $(this).attr("data");
             Actions("expences/recommended", id, "hr");
+        });
+
+        $(document).on("click", ".viewed", function(e) {
+            e.preventDefault();
+            const id = $(this).attr("data");
+            Actions("expenses/seen", id, "hr");
         });
 
         //hr decline action
@@ -808,7 +875,7 @@ $(document).ready(function(){
                 .html('<i class="fa fa-check" aria-hidden="true"></i>Revised');
             $(".cancel-title").html("Reason for Recommending again");
             $("#expenseCancel").modal("show");
-        })
+        });
 
         $("#cancel-reason").submit(function(e) {
             e.preventDefault();
@@ -837,6 +904,7 @@ $(document).ready(function(){
             //     Actions("expences/decline", id, "decline", ("Human Resource:" + $(".reason").val().trim()));
             // }
         });
+
 
         // Admin only requests
         if(initialUser === "admin"){
@@ -881,7 +949,7 @@ $(document).ready(function(){
                                     <a href="#" data-toggle="modal" 
                                         data-desc="${expence.desc}"
                                         data-amount="${expence.amount}"
-                                        exp-type="approved"
+                                        exp-type="recommended"
                                         data-id = ${expence.id}
                                         data-reason = "${expence.reason}"
                                         data-target="#expenseDetails"
@@ -905,8 +973,8 @@ $(document).ready(function(){
                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item accept" data="${expence.id}" href="#">Accept</a>
-                                        <a class="dropdown-item admin-decline" data="${expence.id}" href="#">Decline</a>
+                                        <a class="dropdown-item text-success accept" data="${expence.id}" href="#"><i class="fa fa-check" aria-hidden="true"></i> Accept</a>
+                                        <a class="dropdown-item text-danger admin-decline" data="${expence.id}" href="#"><i class="fa fa-times-circle-o" aria-hidden="true"></i> Decline</a>
                                         </div>
                                     </div>
                                 </td>
@@ -914,19 +982,6 @@ $(document).ready(function(){
                         `)
                 })
             }
-        }
-
-        //set current month
-        // Setting up print url to print button
-        setMonth();
-        function setMonth() {
-            var d = new Date()
-            var currentMonth
-            (d.getMonth() + 1) >= 10 ?
-                currentMonth = (d.getMonth() + 1) :
-                currentMonth = "0" + (d.getMonth() + 1);
-            $(".month").val(d.getFullYear() + "-" + currentMonth);
-            $(".month-all").val(d.getFullYear() + "-" + currentMonth);
         }
         
         // fetch All approved Expenses per month on click
@@ -1011,20 +1066,25 @@ $(document).ready(function(){
     //Refreshing the System's Information
     setInterval(() => {
         $.when(getRequest('expences/fetch').done(response => {
-            pendingExpences(response);
             $(".checker").text('');
             // retrieve other information after check
             if(initialUser === "hr"){
                 getAllExpences();
                 getAcceptedExpences();
                 getExpencesRequests();
+                getPendingExpences();
+                getApprovedExpences();
+                getCancelledExpences();
             } else if(initialUser === "admin"){
                 getAllExpences();
                 getRecommendedExpences();
                 getAcceptedExpences();
+            }else{
+                getPendingExpences();
+                getApprovedExpences();
+                getCancelledExpences();
             }
-            getApprovedExpences();
-            getCancelledExpences();
+            
         }).fail(error => {
             $(".checker").text("No internet access, please check your connection");
             console.log(error);

@@ -151,6 +151,12 @@ $(document).ready(function(){
                 $('#register-btn').html('Register User');
                 $("#register-btn").prop('disabled', false);
                 clearInputs();
+                //returning select input
+                $(".userType").val("");
+                $(".return-selection").addClass("d-none");
+                $(".selectInput").removeClass("d-none").find("input.userType").focus();
+                $(".positionInput").addClass("d-none");
+                $(".position").val("");
                 Notification(response.msg, "success");
             })
             .fail(error => {
