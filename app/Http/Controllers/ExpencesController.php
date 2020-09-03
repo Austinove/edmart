@@ -113,7 +113,7 @@ class ExpencesController extends Controller
     {
         $user = User::findOrFail(Auth::user()->id);
         return response()->json($user->expences()
-                        ->whereIn("status", ["Not Viewed", "Viewed", "Under Review", "recommended"])
+                        ->whereIn("status", ["Not Viewed", "Viewed", "Under Review", "recommended", "waiting"])
                         ->orderBy("created_at", "desc")->get());
     }
 
@@ -209,7 +209,7 @@ class ExpencesController extends Controller
         try {
             RequestedExps::where("expences_id", "=", $inputs["id"])->update([
                 "viewed" => Auth::user()->id,
-                "recommended" => 1
+                "recommended" => 2
             ]);
             Expences::where("id", "=", $inputs["id"])->update([
                 "status" => "recommended",

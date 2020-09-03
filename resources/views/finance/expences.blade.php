@@ -170,12 +170,22 @@
                                     </a>
                                 </li>
                                 <li class="nav-item mt-4">
+                                    <a class="nav-link custom-nav-link" id="clarify-pill" data-toggle="pill" href="#clarify-req" role="tab" aria-controls="clarify-req" aria-selected="false">
+                                        Clarify<span class="badge badge-clarify custom-badge badge-default"></span>
+                                    </a>
+                                </li>
+                                <li class="nav-item mt-4">
                                     <a class="nav-link custom-nav-link" id="accepted-pill" data-toggle="pill" href="#accepted-req" role="tab" aria-controls="accepted-req" aria-selected="false">
                                         Accepted<span class="badge badge-accepted custom-badge badge-default"></span>
                                     </a>
                                 </li>
                             @endif
                             @if((Auth()->user()->userType==="admin"))
+                                <li class="nav-item mt-4">
+                                    <a class="nav-link custom-nav-link" id="revised-pill" data-toggle="pill" href="#revised-req" role="tab" aria-controls="revised-req" aria-selected="false">
+                                        Revised<span class="badge badge-revised badge-revised custom-badge badge-default"></span>
+                                    </a>
+                                </li>
                                 <li class="nav-item mt-4">
                                     <a class="nav-link custom-nav-link" id="recommend-pill" data-toggle="pill" href="#recommend-req" role="tab" aria-controls="recommend-req" aria-selected="false">
                                         Recommended<span class="badge badge-recommend badge-recommend custom-badge badge-default"></span>
@@ -271,6 +281,27 @@
 
                         @if (Auth::user())
                             @if((Auth()->user()->userType==="admin"))
+                                <div class="tab-pane fade" id="revised-req" role="tabpanel" aria-labelledby="revised-pill">
+                                    <div class="row">
+                                        <div class="col-md-4"><h5 class="mb-4 custom-color">Revised Expense Requests</h5></div>
+                                    </div>
+                                    
+                                    <div class="table-responsive">
+                                        <table class="table align-items-center table-flush">
+                                            <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col" class="sort" data-sort="name">Description</th>
+                                                <th scope="col" class="sort" data-sort="budget">Budget</th>
+                                                <th scope="col" class="sort" data-sort="status">User</th>
+                                                <th scope="col" class="sort" data-sort="completion">Date</th>
+                                                <th scope="col" class="sort">Actions</th>
+                                            </tr>
+                                            </thead>
+                                            {{-- expenses from jQuery --}}
+                                            <tbody class="list admin-revised"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
                                 <div class="tab-pane fade" id="recommend-req" role="tabpanel" aria-labelledby="recommend-pill">
                                     <div class="row">
                                         <div class="col-md-4"><h5 class="mb-4 custom-color">Recommended Expense Requests</h5></div>
@@ -298,7 +329,7 @@
                         @if (Auth::user())
                             @if((Auth()->user()->userType==="hr"))
                                 <div class="tab-pane fade" id="exp-requests" role="tabpanel" aria-labelledby="exp-requests-pill">
-                                    <h5 class="mb-4 custom-color">Expense Requests</h5>
+                                    <h5 class="mb-4 custom-color">Submitted Requests</h5>
                                     <div class="table-responsive">
                                         <table class="table align-items-center table-flush">
                                             <thead class="thead-light">
@@ -312,6 +343,27 @@
                                             </thead>
                                             {{-- Requests from jQuery --}}
                                             <tbody class="list hr-pending-requests"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="clarify-req" role="tabpanel" aria-labelledby="clarify-pill">
+                                    <div class="row">
+                                        <div class="col-md-4"><h5 class="mb-4 custom-color">Review these expense requests</h5></div>
+                                    </div>
+                                    
+                                    <div class="table-responsive">
+                                        <table class="table align-items-center table-flush">
+                                            <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col" class="sort" data-sort="name">Description</th>
+                                                <th scope="col" class="sort" data-sort="budget">Budget</th>
+                                                <th scope="col" class="sort" data-sort="status">User</th>
+                                                <th scope="col" class="sort" data-sort="completion">Date</th>
+                                                <th scope="col" class="sort">Actions</th>
+                                            </tr>
+                                            </thead>
+                                            {{-- expenses from jQuery --}}
+                                            <tbody class="list admin-clarify"></tbody>
                                         </table>
                                     </div>
                                 </div>
