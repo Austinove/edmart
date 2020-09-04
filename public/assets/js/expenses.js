@@ -418,7 +418,7 @@ $(document).ready(function(){
             expence_data.forEach(expence => {
                 var descValue = expence.desc.split(" ");
                 var status = expence.status;
-                ((status === "recommended")||(status==="waiting")) ? status = "Under Review": null;
+                ((status === "recommended")||(status==="waiting")||(status==="ViewedClarify")) ? status = "Under Review": null;
                 var textClass;
                 switch (status) {
                     case "Under Review":
@@ -637,7 +637,7 @@ $(document).ready(function(){
 
 
 
-    //Administrator routes only
+    //Administrator/hr routes only
     if ((initialUser === "admin") || (initialUser === "hr")){
         //get pending Expences for hr
         getExpencesRequests();
@@ -648,6 +648,67 @@ $(document).ready(function(){
                 console.log(error);
                 Notification("An Error occuired !!!", "warning");
             }));
+        }
+
+        //get admin-declined expenses
+        getClarifyExpenses();
+        function getClarifyExpenses() {
+            $.when(getRequest("expenses/clarify").done(response=>{
+                clarifyExpenses(response);
+            }).fail(error => {
+                console.log(error);
+            }));
+        }
+
+        //Rendering pending expences for hr
+        function clarifyExpenses(expence_data) {
+            var counter = expence_data.length;
+            (counter === 0) ? $(".badge-clarify").text("") : $(".badge-clarify").text(counter)
+            var newfeeds = "nothing";
+            $(".admin-clarify").html("");
+            expence_data.forEach(expence => {
+                newfeeds = "new-feeds"
+                var descValue = expence.desc.split(" ");
+                $(".admin-clarify").append(`
+                <tr class="${newfeeds}">
+                    <td>
+                    ${descValue[0]}  ..... 
+                    <a href="#" data-toggle="modal"
+                        data-desc="${expence.desc}"
+                        data-amount="${expence.amount}"
+                        exp-type="pending"
+                        data-id = ${expence.id}
+                        data-reason = "${expence.reason}"
+                        data-target="#expenseDetails"
+                        class="more"
+                    >more details</a>
+                    </td>
+                    <td class="budget">${numberWithCommas(expence.amount)}</td>
+                    <td>
+                        <span class="status">${expence.name}</span>
+                    </td>
+                    <td>
+                        ${
+                    expence.created_at.includes("T") ?
+                        expence.created_at.split('T')[0] :
+                        expence.created_at.split(' ')[0]
+                    }
+                    </td>
+                    <td class="text-left">
+                        <div class="dropdown-lg">
+                            <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item text-info revised" data="${expence.id}" href="#"><i class="fa fa-check-circle" aria-hidden="true"></i> Revised</a>
+                                <a class="dropdown-item decline text-danger" data="${expence.id}" href="#"><i class="fa fa-times-circle-o" aria-hidden="true"></i> Decline</a>
+                                ${expence.status === 'ViewedClarify' ? '' : '<a class="dropdown-item text-primary viewed" data-revised="clarify" data="' + expence.id + '" href="#"><i class="fa fa-archive" aria-hidden="true"></i> Viewed</a>'}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                `)
+            })
         }
 
         //Rendering pending expences for hr
@@ -696,7 +757,7 @@ $(document).ready(function(){
                             }
                             <a class="dropdown-item decline text-danger" data="${expence.id}" href="#"><i class="fa fa-times-circle-o" aria-hidden="true"></i> Decline</a>
                             ${expence.status === 'Viewed' ?
-                                '' : '<a class="dropdown-item text-primary viewed" data="'+expence.id+'" href="#"><i class="fa fa-archive" aria-hidden="true"></i> Viewed</a>'
+                                '' : '<a class="dropdown-item text-primary viewed" data-revised=" " data="'+expence.id+'" href="#"><i class="fa fa-archive" aria-hidden="true"></i> Viewed</a>'
                             }
                             </div>
                         </div>
@@ -772,10 +833,11 @@ $(document).ready(function(){
         });
 
         // Function for actions in the table
-        function Actions(actionUrl, actionData, sender, others=" ") {
+        function Actions(actionUrl, actionData, sender, others=" ", pauseClarify=" ") {
             let Data = new FormData();
             Data.append("id", actionData);
             others ? Data.append("others", others) : null;
+            Data.append("clarify", pauseClarify);
             $.ajax({
                 url: actionUrl,
                 type: "post",
@@ -792,14 +854,14 @@ $(document).ready(function(){
                     switch (sender) {
                         case "hr":
                             expencesRequests(response);
+                            getClarifyExpenses();
                             getPendingExpences();
                             getCancelledExpences();
                             Notification("Request was successfull", "success");
                             break;
                         case "rivised":
-                            expencesRequests(response);
-                            getPendingExpences();
-                            getCancelledExpences();
+                            clarifyExpenses(response);
+                            getClarifyExpenses();
                             $("#expenseCancel").modal("hide");
                             $(".reason").val(" ");
                             $(".cancel-btn").prop("disabled", false)
@@ -815,6 +877,7 @@ $(document).ready(function(){
                             Notification("Expence Cashed out", "success");
                             break;
                         case "decline":
+                            getClarifyExpenses();
                             expencesRequests(response);
                             getPendingExpences();
                             getCancelledExpences();
@@ -826,11 +889,13 @@ $(document).ready(function(){
                             Notification("Expense Declined Successfully", "success");
                             break;
                         case "admin":
+                            getRevisedExpences();
                             recommendedExpRequests(response);
                             Notification("Expense Accepted", "success");
                             break;
                         case "admin-decline":
-                            recommendedExpRequests(response);
+                            getRevisedExpences();
+                            getRecommendedExpences();
                             $("#expenseCancel").modal("hide");
                             $(".cancel-btn").prop("disabled", false)
                                 .html('<i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Submit')
@@ -857,7 +922,7 @@ $(document).ready(function(){
         $(document).on("click", ".viewed", function(e) {
             e.preventDefault();
             const id = $(this).attr("data");
-            Actions("expenses/seen", id, "hr");
+            Actions("expenses/seen", id, "hr", " ", $(this).attr("data-revised"));
         });
 
         //hr decline action
@@ -872,7 +937,7 @@ $(document).ready(function(){
             e.preventDefault();
             $(".cancel-btn").attr("id-data", $(this).attr("data"))
                 .attr("user-data", "hr-revised")
-                .html('<i class="fa fa-check" aria-hidden="true"></i>Revised');
+                .html('<i class="fa fa-check" aria-hidden="true"></i> Revised');
             $(".cancel-title").html("Reason for Recommending again");
             $("#expenseCancel").modal("show");
         });
@@ -898,11 +963,6 @@ $(document).ready(function(){
                 default:
                     break;
             }
-            // if($(".cancel-btn").attr("user-data") === "admin") {
-            //     Actions("expences/admin/decline", id, "admin-decline", ("Manager:" + $(".reason").val().trim()));
-            // }else if($(".cancel-btn").attr("user-data") === "hr"){
-            //     Actions("expences/decline", id, "decline", ("Human Resource:" + $(".reason").val().trim()));
-            // }
         });
 
 
@@ -943,6 +1003,66 @@ $(document).ready(function(){
                     newfeeds = "new-feeds"
                     var descValue = expence.desc.split(" ");
                     $(".admin-recommended").append(`
+                            <tr class="${newfeeds}">
+                                <td>
+                                    ${descValue[0]}  ..... 
+                                    <a href="#" data-toggle="modal" 
+                                        data-desc="${expence.desc}"
+                                        data-amount="${expence.amount}"
+                                        exp-type="recommended"
+                                        data-id = ${expence.id}
+                                        data-reason = "${expence.reason}"
+                                        data-target="#expenseDetails"
+                                        class="more"
+                                    >more details</a>
+                                </td>
+                                <td class="budget">${numberWithCommas(expence.amount)}</td>
+                                <td>
+                                    <span class="status">${expence.name}</span>
+                                </td>
+                                <td>
+                                    ${
+                                        expence.created_at.includes("T") ?
+                                        expence.created_at.split('T')[0] :
+                                        expence.created_at.split(' ')[0]
+                                    }
+                                </td>
+                                <td class="text-left">
+                                    <div class="dropdown-lg">
+                                        <a style="font-size: 18px" class="btn btn-sm btn-icon-only text-black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                        <a class="dropdown-item text-success accept" data="${expence.id}" href="#"><i class="fa fa-check" aria-hidden="true"></i> Accept</a>
+                                        <a class="dropdown-item text-danger admin-decline" data="${expence.id}" href="#"><i class="fa fa-times-circle-o" aria-hidden="true"></i> Decline</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        `)
+                })
+            }
+
+            //get Revised Expences for Admin
+            getRevisedExpences();
+            function getRevisedExpences() {
+                $.when(getRequest('fetch/revised').done(response => {
+                    revisedExpRender(response);
+                }).fail(error => {
+                    console.log(error);
+                }));
+            }
+
+            //Rendering Revised Expences for Admin
+            function revisedExpRender(expence_data) {
+                var counter = expence_data.length;
+                (counter === 0) ? $(".badge-revised").text("") : $(".badge-revised").text(counter)
+                var newfeeds = "nothing";
+                $(".admin-revised").html("");
+                expence_data.forEach(expence => {
+                    newfeeds = "new-feeds"
+                    var descValue = expence.desc.split(" ");
+                    $(".admin-revised").append(`
                             <tr class="${newfeeds}">
                                 <td>
                                     ${descValue[0]}  ..... 
@@ -1075,10 +1195,12 @@ $(document).ready(function(){
                 getPendingExpences();
                 getApprovedExpences();
                 getCancelledExpences();
+                getClarifyExpenses();
             } else if(initialUser === "admin"){
                 getAllExpences();
                 getRecommendedExpences();
                 getAcceptedExpences();
+                getRevisedExpences();
             }else{
                 getPendingExpences();
                 getApprovedExpences();

@@ -32,6 +32,7 @@ Route::middleware([PreventBackHistory::class])->group(function() {
         Route::get("/register", "Auth\RegisterController@showRegistrationForm")->name("register");
         Route::post("/register", "Auth\RegisterController@register");
         Route::get('/expences/pending', 'ExpencesController@pending')->name('getPendingExps');
+        Route::get("/expenses/clarify", "ExpencesController@clarify")->name("clarifyExps");
         Route::post('/expences/recommended', 'ExpencesController@recommend')->name('recommendExpence');
         Route::post('/expences/decline', 'ExpencesController@decline')->name('declineExpence');
         Route::post('/expences/revised', 'ExpencesController@revised')->name('revisedExpence');
@@ -49,6 +50,7 @@ Route::middleware([PreventBackHistory::class])->group(function() {
         Route::post('/expences/accept', 'ExpencesController@accept')->name('accept');
         Route::post('/expences/admin/decline', 'ExpencesController@adminDecline')->name('adminDecline');
         Route::get('/fetch/recommended/expenses', 'ExpencesController@hrRecommendation')->name('hrRecommendation');
+        Route::get("/fetch/revised", "ExpencesController@getRevised")->name("getRevised");
     });
 });
 
