@@ -35,35 +35,33 @@
                         <!-- Nav items -->
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                            <a {!! Request::is('dashboard') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="dashboard">
-                                <i class="fa fa-align-center" aria-hidden="true"></i>
-                                <span class="nav-link-text">Dashboard</span>
-                            </a>
+                                <a {!! Request::is('dashboard') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="dashboard">
+                                    <i class="fa fa-align-center" aria-hidden="true"></i>
+                                    <span class="nav-link-text">Dashboard</span>
+                                </a>
                             </li>
                             
                         </ul>
-                        @if((Auth()->user()->userType==="admin")||(Auth()->user()->userType==="hr"))
-                            <hr class="my-3">
-                            <!-- Heading -->
-                            <h6 class="navbar-heading p-0 text-muted">
-                                <span class="docs-normal">Company Tasks</span>
-                            </h6>
-                            <!-- Navigation -->
-                            <ul class="navbar-nav mb-md-3">
-                                <li class="nav-item">
-                                <a {!! Request::is('projects') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="projects.html">
+                        <hr class="my-3">
+                        <!-- Heading -->
+                        <h6 class="navbar-heading p-0 text-muted">
+                            <span class="docs-normal">Company Tasks</span>
+                        </h6>
+                        <!-- Navigation -->
+                        <ul class="navbar-nav mb-md-3">
+                            <li class="nav-item">
+                                <a {!! Request::is('projects') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="projects">
                                     <i class="fa fa-product-hunt" aria-hidden="true"></i>
                                     <span class="nav-link-text">Projects</span>
                                 </a>
-                                </li>
-                                <li class="nav-item">
-                                <a {!! Request::is('table') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="tables.html">
-                                    <i class="fa fa-edit"></i>
-                                    <span class="nav-link-text">Contracts</span>
-                                </a>
-                                </li>
-                            </ul>
-                        @endif
+                            </li>
+                            {{-- <li class="nav-item">
+                            <a {!! Request::is('table') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="tables.html">
+                                <i class="fa fa-edit"></i>
+                                <span class="nav-link-text">Contracts</span>
+                            </a>
+                            </li> --}}
+                        </ul>
 
                         <hr class="my-3">
                         <!-- Heading -->
@@ -131,12 +129,12 @@
                         </h6>
                         <!-- Navigation -->
                         <ul class="navbar-nav mb-md-3">
-                        <li class="nav-item">
-                        <a {!! Request::is('attendance') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="attendance">
-                            <i class="fa fa-sliders" aria-hidden="true"></i>
-                            <span class="nav-link-text">Attendance</span>
-                        </a>
-                        </li>
+                            <li class="nav-item">
+                                <a {!! Request::is('attendance') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="attendance">
+                                    <i class="fa fa-sliders" aria-hidden="true"></i>
+                                    <span class="nav-link-text">Attendance</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>

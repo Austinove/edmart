@@ -14,6 +14,11 @@ Route::get('/', "Auth\LoginController@showLoginForm")->name('login');
 
 Route::middleware([PreventBackHistory::class])->group(function() {
     Auth::routes();
+
+    Route::get("projects", function(){
+        return view("tasks.projects");
+    })->name("projects");
+
     //Aunthentication routes
     Route::get('/dashboard', 'HomeController@index')->name('home')->middleware("userActivation");
     Route::get('/profile', "ProfilesController@index")->name('profile');

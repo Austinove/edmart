@@ -124,3 +124,22 @@ main {
     font-size: 30px !important;
     color: black !important;
 }
+
+
+/*----------------------- projects css -----------------------------*/
+.custom-card> .card-img-top {
+    margin: 5px auto;
+    width: 70%;
+}
+
+.custom-btn-black {
+    color: #353854 !important;
+    border-color: #353854 !important;
+    background-color: white !important;
+}
+
+.custom-btn-black:hover {
+    color: white !important;
+    border-color: #353854 !important;
+    background-color: #353854 !important;
+}
