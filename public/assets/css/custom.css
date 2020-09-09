@@ -137,9 +137,13 @@ main {
     border-color: #353854 !important;
     background-color: white !important;
 }
-
 .custom-btn-black:hover {
     color: white !important;
     border-color: #353854 !important;
     background-color: #353854 !important;
+}
+.project-add-exp {
+    position: absolute;
+    top: 20px;
+    right: 15px;
 }
