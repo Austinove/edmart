@@ -1,11 +1,6 @@
 $(document).ready(function(){
     let initialUser = $(".user-span").text();
     //---------------------------Expences--------------------------------
-    //Under review-->blue
-    //Not viewed-->warning
-    //cancelled-->danger
-    //recommended-->info
-    //approved--success
 
     //set current month
     // Setting up print url to print button
@@ -828,6 +823,9 @@ $(document).ready(function(){
         //Hr Cash out action
         $(document).on("click", ".cashOut", function (e) {
             e.preventDefault();
+            $(this).prop("disabled", true);
+            $(this).html("please wait...");
+            $(this).addClass("waiting");
             const id = $(this).attr("data");
             Actions("expenses/cashOut", id, "hr-cashout");
         });
@@ -875,6 +873,9 @@ $(document).ready(function(){
                             getPendingExpences();
                             getCancelledExpences();
                             Notification("Expence Cashed out", "success");
+                            $(".cashOut").prop("disabled", false);
+                            $(".cashOut").removeClass("waiting");
+                            $(".cashOut").html('<i class="fa fa-check" aria-hidden="true"></i> Cash Out');
                             break;
                         case "decline":
                             getClarifyExpenses();
@@ -908,19 +909,25 @@ $(document).ready(function(){
                     }
                 })
                 .fail(error => {
-                    Notification("An Error occuired !!!", "danger");
+                    Notification("An error occuired reload page", "danger");
                 })
         }
 
         // Recommendation action
         $(document).on("click", ".recommend", function (e) {
             e.preventDefault();
+            $(this).prop("disabled", true);
+            $(this).html("please wait...");
+            $(this).addClass("waiting");
             const id = $(this).attr("data");
             Actions("expences/recommended", id, "hr");
         });
-
+        //viewed action
         $(document).on("click", ".viewed", function(e) {
             e.preventDefault();
+            $(this).prop("disabled", true);
+            $(this).html("please wait...");
+            $(this).addClass("waiting");
             const id = $(this).attr("data");
             Actions("expenses/seen", id, "hr", " ", $(this).attr("data-revised"));
         });
@@ -982,6 +989,9 @@ $(document).ready(function(){
             //Admin accept action
             $(document).on("click", ".accept", function (e) {
                 e.preventDefault();
+                $(this).prop("disabled", true);
+                $(this).html("please wait...");
+                $(this).addClass("waiting");
                 const id = $(this).attr("data");
                 Actions("expences/accept", id, "admin");
             });

@@ -124,3 +124,6 @@ main {
     font-size: 30px !important;
     color: black !important;
 }
+.waiting {
+    cursor: not-allowed !important;
+}
