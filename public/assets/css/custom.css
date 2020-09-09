@@ -124,6 +124,9 @@ main {
     font-size: 30px !important;
     color: black !important;
 }
+.waiting {
+    cursor: not-allowed !important;
+}
 
 
 /*----------------------- projects css -----------------------------*/
@@ -147,3 +150,4 @@ main {
     top: 20px;
     right: 15px;
 }
+
