@@ -25,7 +25,7 @@
                         <div class="card custom-card">
                             <div class="card-body">
                                 <h5 class="custom-color ">#48YAA78</h5>
-                                <a href="{{route('project-expenses')}}" class="project-add-exp btn-light btn-sm float-left"><i class="fa fa-plus-circle" aria-hidden="true"></i> expense</a>
+                                <a href="{{route('project-expenses')}}" class="project-add-exp btn-neutral btn-sm float-left"><i class="fa fa-plus-circle" aria-hidden="true"></i> expense</a>
                                 <div class="mb-2">
                                     <h5 class="card-title mb-0">Customer</h5>
                                     <p class="card-text font-13 custom-color">Post Bank (U) LTD</p>

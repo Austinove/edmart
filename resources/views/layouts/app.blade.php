@@ -35,7 +35,7 @@
                         <!-- Nav items -->
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a {!! Request::is('dashboard') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="dashboard">
+                                <a {!! (Request::segment(1) === 'dashboard') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="/dashboard">
                                     <i class="fa fa-align-center" aria-hidden="true"></i>
                                     <span class="nav-link-text">Dashboard</span>
                                 </a>
@@ -50,17 +50,11 @@
                         <!-- Navigation -->
                         <ul class="navbar-nav mb-md-3">
                             <li class="nav-item">
-                                <a {!! Request::is('projects') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="projects">
+                                <a {!! (Request::segment(1) === 'projects') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="/projects">
                                     <i class="fa fa-product-hunt" aria-hidden="true"></i>
                                     <span class="nav-link-text">Projects</span>
                                 </a>
                             </li>
-                            {{-- <li class="nav-item">
-                            <a {!! Request::is('table') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="tables.html">
-                                <i class="fa fa-edit"></i>
-                                <span class="nav-link-text">Contracts</span>
-                            </a>
-                            </li> --}}
                         </ul>
 
                         <hr class="my-3">
@@ -71,26 +65,26 @@
                         <!-- Navigation -->
                         <ul class="navbar-nav mb-md-3">
                             <li class="nav-item">
-                                <a {!! Request::is('expenses') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="expenses">
+                                <a {!! (Request::segment(1) === 'expenses') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="/expenses">
                                     <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>
                                     <span class="nav-link-text">Expenses</span>
                                 </a>
                             </li>
                             @if((Auth()->user()->userType==="admin")||(Auth()->user()->userType==="hr"))
                                 <li class="nav-item">
-                                    <a {!! Request::is('quatations') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="quatations.html">
+                                    <a {!! (Request::segment(1) === 'quatations') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="/notFound">
                                         <i class="fa fa-book" aria-hidden="true"></i>
                                         <span class="nav-link-text">Quotation</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a {!! Request::is('payments') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="payments.html">
+                                    <a {!! (Request::segment(1) === 'payments') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="/notFound">
                                         <i class="fa fa-pencil-square" aria-hidden="true"></i>
                                         <span class="nav-link-text">Payments</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a {!! Request::is('lpo') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="lpo.html">
+                                    <a {!! (Request::segment(1) === 'lpo') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="/notFound">
                                         <i class="fa fa-tasks" aria-hidden="true"></i>
                                         <span class="nav-link-text">LPO</span>
                                     </a>
@@ -107,14 +101,14 @@
                         <!-- Navigation -->
                         <ul class="navbar-nav mb-md-3">
                             <li class="nav-item">
-                                <a {!! Request::is('profile') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="profile">
+                                <a {!! (Request::segment(1) === 'profile') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="/profile">
                                     <i class="fa fa-user-md" aria-hidden="true"></i>
                                     <span class="nav-link-text">Profile</span>
                                 </a>
                             </li>
                             @if((Auth()->user()->userType==="admin")||(Auth()->user()->userType==="hr"))
                                 <li class="nav-item">
-                                    <a {!! Request::is('register') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="register">
+                                    <a {!! (Request::segment(1) === 'register') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="/register">
                                         <i class="fa fa-cog" aria-hidden="true"></i>
                                         <span class="nav-link-text">Accounts Settings</span>
                                     </a>
@@ -130,7 +124,7 @@
                         <!-- Navigation -->
                         <ul class="navbar-nav mb-md-3">
                             <li class="nav-item">
-                                <a {!! Request::is('attendance') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="attendance">
+                                <a {!! (Request::segment(1) === 'attendance') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="/notFound">
                                     <i class="fa fa-sliders" aria-hidden="true"></i>
                                     <span class="nav-link-text">Attendance</span>
                                 </a>

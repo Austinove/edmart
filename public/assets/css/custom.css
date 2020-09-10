@@ -149,8 +149,30 @@ main {
     position: absolute;
     top: 20px;
     right: 15px;
+    color: #d27f1b;
 }
 .project-add-exp:hover {
     background-color: #d27f1b;
+    color: white;
+}
+.breadcrumb { 
+    background-color: #fffaf5;
+}
+.nav-expenses> .nav-tabs {
+    background-color: #d98219;
+    height: 45px;
+    justify-content: center;
+    align-content: flex-end;
+    border-radius: 30px;
+}
+.nav-expenses> .nav-tabs> .nav-item {
+    height: 35px;
+}
+.nav-expenses> .nav-tabs> .nav-link {
+    color: white;
+}
+.nav-expenses> .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    color: #d98219;
+    font-weight: bold;
 }
 

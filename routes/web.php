@@ -15,12 +15,17 @@ Route::get('/', "Auth\LoginController@showLoginForm")->name('login');
 Route::middleware([PreventBackHistory::class])->group(function() {
     Auth::routes();
 
-    Route::get("projects", function(){
+    Route::get("/projects", function(){
         return view("tasks.projects");
     })->name("projects");
+
     Route::get("/projects/expenses", function(){
         return view("tasks.expenses");
     })->name("project-expenses");
+
+    Route::get("/notFound", function() {
+        return view("notFound");
+    })->name("notFound");
 
     //Aunthentication routes
     Route::get('/dashboard', 'HomeController@index')->name('home')->middleware("userActivation");
