@@ -150,4 +150,7 @@ main {
     top: 20px;
     right: 15px;
 }
+.project-add-exp:hover {
+    background-color: #d27f1b;
+}
 

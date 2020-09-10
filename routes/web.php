@@ -18,6 +18,9 @@ Route::middleware([PreventBackHistory::class])->group(function() {
     Route::get("projects", function(){
         return view("tasks.projects");
     })->name("projects");
+    Route::get("/projects/expenses", function(){
+        return view("tasks.expenses");
+    })->name("project-expenses");
 
     //Aunthentication routes
     Route::get('/dashboard', 'HomeController@index')->name('home')->middleware("userActivation");
