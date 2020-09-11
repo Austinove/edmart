@@ -157,6 +157,8 @@ main {
 }
 .breadcrumb { 
     background-color: #fffaf5;
+    height: 30px;
+    align-content: center;
 }
 .nav-expenses> .nav-tabs {
     background-color: #d98219;
@@ -175,4 +177,25 @@ main {
     color: #d98219;
     font-weight: bold;
 }
+.accordion-expense> .card {
+    border-radius: 0px;
+}
+.accordion-expense> .card> .card-header {
+    background-color: white;
+}
+.accordion-expense> .card> .card-header:hover> h2:hover {
+    font-weight: bold;
+    background: #efeeec;
+}
+.accordion-expense> .card> .card-header:hover {
+    background: #efeeec;
+}
+.project-btn {
+    color: #d27f1b;
+}
+.project-btn:hover {
+    background-color: #d27f1b;
+    color: white;
+}
+
 
