@@ -37,4 +37,17 @@ $(document).ready(function(){
             $('.project-contents').removeClass('d-none');
         }
     });
+    //toggling between pending and closed projects
+    $(".pending-proj-btn").click(function(){
+        $(this).addClass("active");
+        $(".closed-proj-btn").removeClass("active");
+        $(".pending-proj-container").removeClass("d-none");
+        $(".closed-proj-container").addClass("d-none");
+    });
+    $(".closed-proj-btn").click(function(){
+        $(this).addClass("active");
+        $(".pending-proj-btn").removeClass("active");
+        $(".pending-proj-container").addClass("d-none");
+        $(".closed-proj-container").removeClass("d-none");
+    })
 });
