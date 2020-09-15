@@ -11,8 +11,8 @@
                     <div class="col-md-12">
                         <span class="custom-color font-weight-bold d-inline-block mb-0">Projects</span>
                         <div class="btn-group ml-4" role="group" aria-label="Basic example">
-                            <button type="button" class="btn pending-proj-btn btn-sm btn-secondary active"><i class="fa fa-arrow-circle-left mr-2" aria-hidden="true"></i> Pending ones</button>
-                            <button type="button" class="btn closed-proj-btn btn-sm btn-secondary">Closed ones <i class="fa fa-arrow-circle-right ml-2" aria-hidden="true"></i></button>
+                            <button type="button" class="btn pending-proj-btn btn-sm btn-secondary active"><i class="fa fa-arrow-circle-left mr-2" aria-hidden="true"></i> Pending</button>
+                            <button type="button" class="btn closed-proj-btn btn-sm btn-secondary">Closed<i class="fa fa-arrow-circle-right ml-2" aria-hidden="true"></i></button>
                         </div>
                         <button class="btn btn-neutral project-btn project-add-btn btn-sm float-right mb-2 add-project">
                             <i class="fa fa-plus"></i>
@@ -105,66 +105,15 @@
                     <div class="row project-contents">
                         <div class="col-md-6 col-sm-6">
                             <div class="card custom-card">
-                                <div class="card-body">
-                                    <h5 class="custom-color ">#48YAA78</h5>
-                                    <a href="{{route('project-expenses')}}" class="project-add-exp btn-neutral btn-sm float-left"><i class="fa fa-plus-circle" aria-hidden="true"></i> expense</a>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Customer</h5>
-                                        <p class="card-text font-13 custom-color">Post Bank (U) LTD</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Assistant Project Manager</h5>
-                                        <p class="card-text font-13">Mr: Pinyi Othieno Eria</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Project Title</h5>
-                                        <p class="card-text font-13">Tables are slightly adjusted to style, collapse borders, and ensure consistent...</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Commencement Date</h5>
-                                        <p class="card-text font-13">08/09/2020, 9:30 am</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Completion Date</h5>
-                                        <p class="card-text font-13">08/10/2020, 9:30 am</p>
-                                    </div>
-                                    <hr class="mb-1 mt-3"/>
-                                    <div class="row mb-2">
-                                        <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <h5 class="card-title mb-0">Current Expenses</h5>
-                                            <p class="card-text"><span class="badge badge-warning">3,000,000 UGX</span></p>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <h5 class="card-title mb-0">Expected Amount</h5>
-                                            <p class="card-text"><span class="badge badge-success">3,000,000 UGX</span></p>
-                                        </div>
-                                    </div>
-                                    <hr class="mb-1 mt-1"/>
-                                    <div class="progress-wrapper">
-                                        <div class="progress-info">
-                                            <div class="progress-label">
-                                                <span>days used</span>
-                                            </div>
-                                            <div class="progress-percentage">
-                                                <span class="font-13">60%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"></div>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn btn-outline-secondary custom-btn-black btn-sm float-right">More...</a>
+                                <div>
+                                    <button class="btn btn-outline-warning btn-sm mr-0" data-toggle="tooltip" data-placement="top" title="Delete Project"><i class="fa fa-times"></i></button>
+                                    <button class="btn btn-outline-primary btn-sm mr-0" data-toggle="tooltip" data-placement="top" title="Edit Project"><i class="fa fa-edit"></i></button>
+                                    <button class="btn btn-outline-success btn-sm" data-toggle="tooltip" data-placement="top" title="Close Project"><i class="fa fa-check"></i></button>
+                                    <a href="{{route('project-expenses')}}" class="browse-add-exp btn-neutral btn-sm float-right" data-toggle="tooltip" data-placement="top" title="Check Expenses"><i class="fa fa-plus-circle" aria-hidden="true"></i> Expenses</a>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-6">
-                            <div class="card custom-card">
                                 <div class="card-body">
-                                    <h5 class="custom-color ">#48YAA78</h5>
-                                    <a href="{{route('project-expenses')}}" class="project-add-exp btn-neutral btn-sm float-left"><i class="fa fa-plus-circle" aria-hidden="true"></i> expense</a>
                                     <div class="mb-2">
-                                        <h5 class="card-title mb-0">Customer</h5>
+                                        <h5 class="card-title mb-0">Client</h5>
                                         <p class="card-text font-13 custom-color">Post Bank (U) LTD</p>
                                     </div>
                                     <div class="mb-2">
@@ -208,177 +157,13 @@
                                             <div class="progress-bar bg-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"></div>
                                         </div>
                                     </div>
-                                    <a href="#" class="btn btn-outline-secondary custom-btn-black btn-sm float-right">More...</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-6">
-                            <div class="card custom-card">
-                                <div class="card-body">
-                                    <h5 class="custom-color ">#48YAA78</h5>
-                                    <a href="{{route('project-expenses')}}" class="project-add-exp btn-neutral btn-sm float-left"><i class="fa fa-plus-circle" aria-hidden="true"></i> expense</a>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Customer</h5>
-                                        <p class="card-text font-13 custom-color">Post Bank (U) LTD</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Assistant Project Manager</h5>
-                                        <p class="card-text font-13">Mr: Pinyi Othieno Eria</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Project Title</h5>
-                                        <p class="card-text font-13">Tables are slightly adjusted to style, collapse borders, and ensure consistent...</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Commencement Date</h5>
-                                        <p class="card-text font-13">08/09/2020, 9:30 am</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Completion Date</h5>
-                                        <p class="card-text font-13">08/10/2020, 9:30 am</p>
-                                    </div>
-                                    <hr class="mb-1 mt-3"/>
-                                    <div class="row mb-2">
-                                        <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <h5 class="card-title mb-0">Current Expenses</h5>
-                                            <p class="card-text"><span class="badge badge-warning">3,000,000 UGX</span></p>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <h5 class="card-title mb-0">Expected Amount</h5>
-                                            <p class="card-text"><span class="badge badge-success">3,000,000 UGX</span></p>
-                                        </div>
-                                    </div>
-                                    <hr class="mb-1 mt-1"/>
-                                    <div class="progress-wrapper">
-                                        <div class="progress-info">
-                                            <div class="progress-label">
-                                                <span>days used</span>
-                                            </div>
-                                            <div class="progress-percentage">
-                                                <span class="font-13">60%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"></div>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn btn-outline-secondary custom-btn-black btn-sm float-right">More...</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-6">
-                            <div class="card custom-card">
-                                <div class="card-body">
-                                    <h5 class="custom-color ">#48YAA78</h5>
-                                    <a href="{{route('project-expenses')}}" class="project-add-exp btn-neutral btn-sm float-left"><i class="fa fa-plus-circle" aria-hidden="true"></i> expense</a>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Customer</h5>
-                                        <p class="card-text font-13 custom-color">Post Bank (U) LTD</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Assistant Project Manager</h5>
-                                        <p class="card-text font-13">Mr: Pinyi Othieno Eria</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Project Title</h5>
-                                        <p class="card-text font-13">Tables are slightly adjusted to style, collapse borders, and ensure consistent...</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Commencement Date</h5>
-                                        <p class="card-text font-13">08/09/2020, 9:30 am</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Completion Date</h5>
-                                        <p class="card-text font-13">08/10/2020, 9:30 am</p>
-                                    </div>
-                                    <hr class="mb-1 mt-3"/>
-                                    <div class="row mb-2">
-                                        <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <h5 class="card-title mb-0">Current Expenses</h5>
-                                            <p class="card-text"><span class="badge badge-warning">3,000,000 UGX</span></p>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <h5 class="card-title mb-0">Expected Amount</h5>
-                                            <p class="card-text"><span class="badge badge-success">3,000,000 UGX</span></p>
-                                        </div>
-                                    </div>
-                                    <hr class="mb-1 mt-1"/>
-                                    <div class="progress-wrapper">
-                                        <div class="progress-info">
-                                            <div class="progress-label">
-                                                <span>days used</span>
-                                            </div>
-                                            <div class="progress-percentage">
-                                                <span class="font-13">60%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"></div>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn btn-outline-secondary custom-btn-black btn-sm float-right">More...</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-6">
-                            <div class="card custom-card">
-                                <div class="card-body">
-                                    <h5 class="custom-color ">#48YAA78</h5>
-                                    <a href="{{route('project-expenses')}}" class="project-add-exp btn-neutral btn-sm float-left"><i class="fa fa-plus-circle" aria-hidden="true"></i> expense</a>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Customer</h5>
-                                        <p class="card-text font-13 custom-color">Post Bank (U) LTD</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Assistant Project Manager</h5>
-                                        <p class="card-text font-13">Mr: Pinyi Othieno Eria</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Project Title</h5>
-                                        <p class="card-text font-13">Tables are slightly adjusted to style, collapse borders, and ensure consistent...</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Commencement Date</h5>
-                                        <p class="card-text font-13">08/09/2020, 9:30 am</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Completion Date</h5>
-                                        <p class="card-text font-13">08/10/2020, 9:30 am</p>
-                                    </div>
-                                    <hr class="mb-1 mt-3"/>
-                                    <div class="row mb-2">
-                                        <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <h5 class="card-title mb-0">Current Expenses</h5>
-                                            <p class="card-text"><span class="badge badge-warning">3,000,000 UGX</span></p>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <h5 class="card-title mb-0">Expected Amount</h5>
-                                            <p class="card-text"><span class="badge badge-success">3,000,000 UGX</span></p>
-                                        </div>
-                                    </div>
-                                    <hr class="mb-1 mt-1"/>
-                                    <div class="progress-wrapper">
-                                        <div class="progress-info">
-                                            <div class="progress-label">
-                                                <span>days used</span>
-                                            </div>
-                                            <div class="progress-percentage">
-                                                <span class="font-13">60%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"></div>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn btn-outline-secondary custom-btn-black btn-sm float-right">More...</a>
+                                    <a href="#" class="btn btn-outline-secondary custom-btn-black btn-sm float-right" data-toggle="modal" data-target=".expenses-details">More...</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="closed-proj-container d-none">
                     <div class="row project-contents">
                         <div class="col-md-6 col-sm-6">
@@ -387,7 +172,7 @@
                                     <h5 class="custom-color ">#48YA-TYY</h5>
                                     <a href="{{route('project-expenses')}}" class="project-add-exp btn-neutral btn-sm float-left"><i class="fa fa-plus-circle" aria-hidden="true"></i> expense</a>
                                     <div class="mb-2">
-                                        <h5 class="card-title mb-0">Customer</h5>
+                                        <h5 class="card-title mb-0">Client</h5>
                                         <p class="card-text font-13 custom-color">Post Bank (U) LTD</p>
                                     </div>
                                     <div class="mb-2">
@@ -431,7 +216,7 @@
                                             <div class="progress-bar bg-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"></div>
                                         </div>
                                     </div>
-                                    <a href="#" class="btn btn-outline-secondary custom-btn-black btn-sm float-right">More...</a>
+                                    <a href="#" class="btn btn-outline-secondary custom-btn-black btn-sm float-right" data-toggle="modal" data-target=".expenses-details">More...</a>
                                 </div>
                             </div>
                         </div>

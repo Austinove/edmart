@@ -62,7 +62,7 @@ main {
 .toggleForms {
     display: none !important;
 }
-.pointer :hover {
+.pointer:hover {
     cursor: pointer !important;
 }
 .material-icons {
@@ -76,7 +76,7 @@ main {
     background-color: #908888 !important;
     margin-left: 5px !important;
 }
-.custom-td{
+.custom-td {
     white-space: break-spaces !important;
     min-width: 150px !important;
 }
@@ -88,18 +88,19 @@ main {
 .td-text {
     font-size: 11px !important;
 }
-.icon-delete{
+.icon-delete {
     color: #f35e2f;
 }
-.icon-edit{
+.icon-edit {
     color: #2196f3;
 }
 .custom-icon {
     cursor: pointer;
     font-weight: bold;
 }
-.tableFixHead thead th{ 
-    position: sticky !important; top: 0 !important;
+.tableFixHead thead th {
+    position: sticky !important;
+    top: 0 !important;
 }
 .total-row {
     font-weight: bold;
@@ -130,7 +131,7 @@ main {
 
 
 /*----------------------- projects css -----------------------------*/
-.custom-card> .card-img-top {
+.custom-card > .card-img-top {
     margin: 5px auto;
     width: 70%;
 }
@@ -155,32 +156,33 @@ main {
     background-color: #d27f1b;
     color: white;
 }
-.breadcrumb { 
+.breadcrumb {
     background-color: #fffaf5;
     height: 30px;
     align-content: center;
 }
-.nav-expenses> .nav-tabs {
+.nav-expenses > .nav-tabs {
     background-color: #d98219;
     height: 45px;
     justify-content: center;
     align-content: flex-end;
     border-radius: 30px;
 }
-.nav-expenses> .nav-tabs> .nav-item {
+.nav-expenses > .nav-tabs > .nav-item {
     height: 35px;
 }
-.nav-expenses> .nav-tabs> .nav-link {
+.nav-expenses > .nav-tabs > .nav-link {
     color: white;
 }
-.nav-expenses> .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+.nav-expenses > .nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
     color: #d98219;
     font-weight: bold;
 }
-.accordion-expense> .card {
-    border-radius: 0px;
+.accordion-expense > .card {
+    border-radius: 0;
 }
-.accordion-expense> .card> .card-header {
+.accordion-expense > .card > .card-header {
     background-color: white;
 }
 .accordion-expense> .card> .card-header:hover> h2:hover {
@@ -197,5 +199,14 @@ main {
     background-color: #d27f1b;
     color: white;
 }
-
+.accordion .card-header:after {
+    display: none;
+}
+.browse-add-exp {
+    color: #d27f1b;
+}
+.browse-add-exp:hover {
+    background-color: #d27f1b;
+    color: white;
+}
 

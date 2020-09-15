@@ -98,3 +98,89 @@
       </div>
   </div>
 </div>
+
+{{-- project details --}}
+<div class="modal fade expenses-details" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h3 class="mb-0 custom-color font-14 cancel-title">#48YA-TYY</h3>
+          <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <div class="modal-body pb-0 pt-0">
+        <div class="card mx-2 mt-2 mb-2">
+          <div class="card-body">
+              <div class="mb-2">
+                  <h5 class="card-title mb-0">Customer</h5>
+                  <p class="card-text font-13 custom-color">Post Bank (U) LTD</p>
+              </div>
+              <div class="mb-2">
+                  <h5 class="card-title mb-0">Assistant Project Manager</h5>
+                  <p class="card-text font-13">Mr: Pinyi Othieno Eria</p>
+              </div>
+              <div class="mb-2">
+                  <h5 class="card-title mb-0">Project Title</h5>
+                  <p class="card-text font-13">
+                    Tables are slightly adjusted to style, collapse borders, and ensure consistent.
+                  </p>
+              </div>
+              <div class="mb-2">
+                  <h5 class="card-title mb-0">Project Summary Description</h5>
+                  <p class="card-text font-13">
+                    Tables are slightly adjusted to style, collapse borders, and ensure consistent.
+                    Tables are slightly adjusted to style, collapse borders, and ensure consistent.
+                    Tables are slightly adjusted to style, collapse borders, and ensure consistent.
+                    Tables are slightly adjusted to style, collapse borders, and ensure consistent.
+                  </p>
+              </div>
+              <div class="row mt-4 mb-2">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                  <h5 class="card-title mb-0">Commencement Date</>
+                  <p class="card-text font-13">08/09/2020, 9:30 am</p>
+                </div>
+                  <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h5 class="card-title mb-0">Completion Date</h5>
+                  <p class="card-text font-13">08/10/2020, 9:30 am</p>
+                  </div>
+              </div>
+              <hr class="mb-1 mt-3"/>
+              <div class="row mb-2">
+                  <div class="col-md-6 col-sm-6 col-xs-6">
+                      <h5 class="card-title mb-0">Current Expenses</h5>
+                      <p class="card-text"><span class="badge badge-warning">3,000,000 UGX</span></p>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-6">
+                      <h5 class="card-title mb-0">Expected Amount</h5>
+                      <p class="card-text"><span class="badge badge-success">3,000,000 UGX</span></p>
+                  </div>
+              </div>
+              <hr class="mb-1 mt-1"/>
+              <div class="row mt-4">
+                <div class="col-md-8">
+                  <h5 class="card-title mb-0">Days elapsed</h5>
+                  <div class="progress-wrapper">
+                    <div class="progress-info">
+                        <div class="progress-label">
+                            <span>days used</span>
+                        </div>
+                        <div class="progress-percentage">
+                            <span class="font-13">60%</span>
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer pt-0">
+          <button type="button" class="btn btn-outline-warning btn-sm modal-close" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

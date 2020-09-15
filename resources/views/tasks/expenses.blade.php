@@ -181,6 +181,14 @@
                                                     </h2>
                                                     <span class="mt-2 font-13">Total: <Strong><span class="badge badge-warning">3,000,000 UGX</span></Strong></span>
                                                     <span class="mt-2 ml-4 font-12 text-mute">Date: 11/09/2020</span>
+                                                    <br/>
+                                                    <div class="mt-2 float-right">
+                                                        <button class="btn btn-outline-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Decline Expense"><i class="fa fa-thumbs-down"></i></button>
+                                                        <button class="btn btn-outline-success btn-sm" data-toggle="tooltip" data-placement="top" title="Accept Expense"><i class="fa fa-check"></i></button>
+                                                        <button class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Recommend Expense"><i class="fa fa-thumbs-up"></i></button>
+                                                        <button class="btn btn-outline-info btn-sm"  data-toggle="tooltip" data-placement="top" title="Recommend Again"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>
+                                                        <button class="btn btn-outline-danger btn-sm"  data-toggle="tooltip" data-placement="top" title="Withdraw Expense"><i class="fa fa-times"></i></button>
+                                                    </div>
                                                 </div>
                                                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                                                     <div class="card-body">
