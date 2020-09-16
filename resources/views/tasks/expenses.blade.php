@@ -439,317 +439,324 @@
                                             </div>
                                         @endif
 
-                                        {{-- Submitted requests content --}}
-                                        <div class="tab-pane fade" id="nav-submitted" role="tabpanel" aria-labelledby="nav-submitted-tab">
-                                            <h5 class="mb-3 mt-3 custom-color">Submitted Expense Requests</h5>
-                                            <div class="accordion accordion-expense" id="accordionExample">
-                                                <div class="card mb-2">
-                                                    <div class="card-header p-2" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        <h2 class="mb-1 font-13">
-                                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
-                                                        </h2>
-                                                        <span class="mt-2 font-13">Total: <Strong><span class="badge badge-warning">3,000,000 UGX</span></Strong></span>
-                                                    </div>
-                                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                        <div class="card-body">
-                                                            <div class="table-responsive">
-                                                                <table class="table align-items-center table-flush">
-                                                                    <thead class="thead-light">
-                                                                        <tr>
-                                                                        <th scope="col">S/N</th>
-                                                                        <th scope="col">ITEM</th>
-                                                                        <th scope="col">QTY</th>
-                                                                        <th scope="col">UNIT</th>
-                                                                        <th scope="col">RATE</th>
-                                                                        <th scope="col">AMOUNT</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <th scope="row" class="text-wrap">1</th>
-                                                                            <td class="text-wrap">Routers</td>
-                                                                            <td>2</td>
-                                                                            <td>Pcs</td>
-                                                                            <td>400,000</td>
-                                                                            <td>800,000</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <th scope="row" class="text-wrap">1</th>
-                                                                            <td class="text-wrap">Routers</td>
-                                                                            <td>2</td>
-                                                                            <td>Pcs</td>
-                                                                            <td>400,000</td>
-                                                                            <td>800,000</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
+                                        @if (Auth()->user()->userType === "hr")
+                                            {{-- Submitted requests content --}}
+                                            <div class="tab-pane fade" id="nav-submitted" role="tabpanel" aria-labelledby="nav-submitted-tab">
+                                                <h5 class="mb-3 mt-3 custom-color">Submitted Expense Requests</h5>
+                                                <div class="accordion accordion-expense" id="accordionExample">
+                                                    <div class="card mb-2">
+                                                        <div class="card-header p-2" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                            <h2 class="mb-1 font-13">
+                                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                                                            </h2>
+                                                            <span class="mt-2 font-13">Total: <Strong><span class="badge badge-warning">3,000,000 UGX</span></Strong></span>
+                                                        </div>
+                                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                            <div class="card-body">
+                                                                <div class="table-responsive">
+                                                                    <table class="table align-items-center table-flush">
+                                                                        <thead class="thead-light">
+                                                                            <tr>
+                                                                            <th scope="col">S/N</th>
+                                                                            <th scope="col">ITEM</th>
+                                                                            <th scope="col">QTY</th>
+                                                                            <th scope="col">UNIT</th>
+                                                                            <th scope="col">RATE</th>
+                                                                            <th scope="col">AMOUNT</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <th scope="row" class="text-wrap">1</th>
+                                                                                <td class="text-wrap">Routers</td>
+                                                                                <td>2</td>
+                                                                                <td>Pcs</td>
+                                                                                <td>400,000</td>
+                                                                                <td>800,000</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th scope="row" class="text-wrap">1</th>
+                                                                                <td class="text-wrap">Routers</td>
+                                                                                <td>2</td>
+                                                                                <td>Pcs</td>
+                                                                                <td>400,000</td>
+                                                                                <td>800,000</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @endif
 
-                                        {{-- Recommended requests content --}}
-                                        <div class="tab-pane fade" id="nav-recommended" role="tabpanel" aria-labelledby="nav-recommended-tab">
-                                            <h5 class="mb-3 mt-3 custom-color">Recommended Expense Requests</h5>
-                                            <div class="accordion accordion-expense" id="accordionExample">
-                                                <div class="card mb-2">
-                                                    <div class="card-header p-2" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        <h2 class="mb-1 font-13">
-                                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
-                                                        </h2>
-                                                        <span class="mt-2 font-13">Total: <Strong><span class="badge badge-warning">3,000,000 UGX</span></Strong></span>
-                                                    </div>
-                                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                        <div class="card-body">
-                                                            <div class="table-responsive">
-                                                                <table class="table align-items-center table-flush">
-                                                                    <thead class="thead-light">
-                                                                        <tr>
-                                                                        <th scope="col">S/N</th>
-                                                                        <th scope="col">ITEM</th>
-                                                                        <th scope="col">QTY</th>
-                                                                        <th scope="col">UNIT</th>
-                                                                        <th scope="col">RATE</th>
-                                                                        <th scope="col">AMOUNT</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <th scope="row" class="text-wrap">1</th>
-                                                                            <td class="text-wrap">Routers</td>
-                                                                            <td>2</td>
-                                                                            <td>Pcs</td>
-                                                                            <td>400,000</td>
-                                                                            <td>800,000</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <th scope="row" class="text-wrap">1</th>
-                                                                            <td class="text-wrap">Routers</td>
-                                                                            <td>2</td>
-                                                                            <td>Pcs</td>
-                                                                            <td>400,000</td>
-                                                                            <td>800,000</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
+                                        @if (Auth()->user()->userType === "admin")
+                                            {{-- Recommended requests content --}}
+                                            <div class="tab-pane fade" id="nav-recommended" role="tabpanel" aria-labelledby="nav-recommended-tab">
+                                                <h5 class="mb-3 mt-3 custom-color">Recommended Expense Requests</h5>
+                                                <div class="accordion accordion-expense" id="accordionExample">
+                                                    <div class="card mb-2">
+                                                        <div class="card-header p-2" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                            <h2 class="mb-1 font-13">
+                                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                                                            </h2>
+                                                            <span class="mt-2 font-13">Total: <Strong><span class="badge badge-warning">3,000,000 UGX</span></Strong></span>
+                                                        </div>
+                                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                            <div class="card-body">
+                                                                <div class="table-responsive">
+                                                                    <table class="table align-items-center table-flush">
+                                                                        <thead class="thead-light">
+                                                                            <tr>
+                                                                            <th scope="col">S/N</th>
+                                                                            <th scope="col">ITEM</th>
+                                                                            <th scope="col">QTY</th>
+                                                                            <th scope="col">UNIT</th>
+                                                                            <th scope="col">RATE</th>
+                                                                            <th scope="col">AMOUNT</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <th scope="row" class="text-wrap">1</th>
+                                                                                <td class="text-wrap">Routers</td>
+                                                                                <td>2</td>
+                                                                                <td>Pcs</td>
+                                                                                <td>400,000</td>
+                                                                                <td>800,000</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th scope="row" class="text-wrap">1</th>
+                                                                                <td class="text-wrap">Routers</td>
+                                                                                <td>2</td>
+                                                                                <td>Pcs</td>
+                                                                                <td>400,000</td>
+                                                                                <td>800,000</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @endif
 
-                                        {{-- Revised requests content --}}
-                                        <div class="tab-pane fade" id="nav-revised" role="tabpanel" aria-labelledby="nav-revised-tab">
-                                            <h5 class="mb-3 mt-3 custom-color">Revised Expense Requests</h5>
-                                            <div class="accordion accordion-expense" id="accordionExample">
-                                                <div class="card mb-2">
-                                                    <div class="card-header p-2" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        <h2 class="mb-1 font-13">
-                                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
-                                                        </h2>
-                                                        <span class="mt-2 font-13">Total: <Strong><span class="badge badge-warning">3,000,000 UGX</span></Strong></span>
-                                                    </div>
-                                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                        <div class="card-body">
-                                                            <div class="table-responsive">
-                                                                <table class="table align-items-center table-flush">
-                                                                    <thead class="thead-light">
-                                                                        <tr>
-                                                                        <th scope="col">S/N</th>
-                                                                        <th scope="col">ITEM</th>
-                                                                        <th scope="col">QTY</th>
-                                                                        <th scope="col">UNIT</th>
-                                                                        <th scope="col">RATE</th>
-                                                                        <th scope="col">AMOUNT</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <th scope="row" class="text-wrap">1</th>
-                                                                            <td class="text-wrap">Routers</td>
-                                                                            <td>2</td>
-                                                                            <td>Pcs</td>
-                                                                            <td>400,000</td>
-                                                                            <td>800,000</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <th scope="row" class="text-wrap">1</th>
-                                                                            <td class="text-wrap">Routers</td>
-                                                                            <td>2</td>
-                                                                            <td>Pcs</td>
-                                                                            <td>400,000</td>
-                                                                            <td>800,000</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
+                                        @if (Auth()->user()->userType === "hr" || Auth()->user()->position === "Assistant Project Manager")
+                                            {{-- Clarify requests content --}}
+                                            <div class="tab-pane fade" id="nav-clarify" role="tabpanel" aria-labelledby="nav-clarify-tab">
+                                                <h5 class="mb-3 mt-3 custom-color">Clarify Expense Requests</h5>
+                                                <div class="accordion accordion-expense" id="accordionExample">
+                                                    <div class="card mb-2">
+                                                        <div class="card-header p-2" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                            <h2 class="mb-1 font-13">
+                                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                                                            </h2>
+                                                            <span class="mt-2 font-13">Total: <Strong><span class="badge badge-warning">3,000,000 UGX</span></Strong></span>
+                                                        </div>
+                                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                            <div class="card-body">
+                                                                <div class="table-responsive">
+                                                                    <table class="table align-items-center table-flush">
+                                                                        <thead class="thead-light">
+                                                                            <tr>
+                                                                            <th scope="col">S/N</th>
+                                                                            <th scope="col">ITEM</th>
+                                                                            <th scope="col">QTY</th>
+                                                                            <th scope="col">UNIT</th>
+                                                                            <th scope="col">RATE</th>
+                                                                            <th scope="col">AMOUNT</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <th scope="row" class="text-wrap">1</th>
+                                                                                <td class="text-wrap">Routers</td>
+                                                                                <td>2</td>
+                                                                                <td>Pcs</td>
+                                                                                <td>400,000</td>
+                                                                                <td>800,000</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th scope="row" class="text-wrap">1</th>
+                                                                                <td class="text-wrap">Routers</td>
+                                                                                <td>2</td>
+                                                                                <td>Pcs</td>
+                                                                                <td>400,000</td>
+                                                                                <td>800,000</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @endif
 
-                                        {{-- Clarify requests content --}}
-                                        <div class="tab-pane fade" id="nav-clarify" role="tabpanel" aria-labelledby="nav-clarify-tab">
-                                            <h5 class="mb-3 mt-3 custom-color">Clarify Expense Requests</h5>
-                                            <div class="accordion accordion-expense" id="accordionExample">
-                                                <div class="card mb-2">
-                                                    <div class="card-header p-2" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        <h2 class="mb-1 font-13">
-                                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
-                                                        </h2>
-                                                        <span class="mt-2 font-13">Total: <Strong><span class="badge badge-warning">3,000,000 UGX</span></Strong></span>
-                                                    </div>
-                                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                        <div class="card-body">
-                                                            <div class="table-responsive">
-                                                                <table class="table align-items-center table-flush">
-                                                                    <thead class="thead-light">
-                                                                        <tr>
-                                                                        <th scope="col">S/N</th>
-                                                                        <th scope="col">ITEM</th>
-                                                                        <th scope="col">QTY</th>
-                                                                        <th scope="col">UNIT</th>
-                                                                        <th scope="col">RATE</th>
-                                                                        <th scope="col">AMOUNT</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <th scope="row" class="text-wrap">1</th>
-                                                                            <td class="text-wrap">Routers</td>
-                                                                            <td>2</td>
-                                                                            <td>Pcs</td>
-                                                                            <td>400,000</td>
-                                                                            <td>800,000</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <th scope="row" class="text-wrap">1</th>
-                                                                            <td class="text-wrap">Routers</td>
-                                                                            <td>2</td>
-                                                                            <td>Pcs</td>
-                                                                            <td>400,000</td>
-                                                                            <td>800,000</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
+                                        @if (Auth()->user()->userType === "admin" || Auth()->user()->userType === "hr")
+                                            {{-- Revised requests content --}}
+                                            <div class="tab-pane fade" id="nav-revised" role="tabpanel" aria-labelledby="nav-revised-tab">
+                                                <h5 class="mb-3 mt-3 custom-color">Revised Expense Requests</h5>
+                                                <div class="accordion accordion-expense" id="accordionExample">
+                                                    <div class="card mb-2">
+                                                        <div class="card-header p-2" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                            <h2 class="mb-1 font-13">
+                                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                                                            </h2>
+                                                            <span class="mt-2 font-13">Total: <Strong><span class="badge badge-warning">3,000,000 UGX</span></Strong></span>
+                                                        </div>
+                                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                            <div class="card-body">
+                                                                <div class="table-responsive">
+                                                                    <table class="table align-items-center table-flush">
+                                                                        <thead class="thead-light">
+                                                                            <tr>
+                                                                            <th scope="col">S/N</th>
+                                                                            <th scope="col">ITEM</th>
+                                                                            <th scope="col">QTY</th>
+                                                                            <th scope="col">UNIT</th>
+                                                                            <th scope="col">RATE</th>
+                                                                            <th scope="col">AMOUNT</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <th scope="row" class="text-wrap">1</th>
+                                                                                <td class="text-wrap">Routers</td>
+                                                                                <td>2</td>
+                                                                                <td>Pcs</td>
+                                                                                <td>400,000</td>
+                                                                                <td>800,000</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th scope="row" class="text-wrap">1</th>
+                                                                                <td class="text-wrap">Routers</td>
+                                                                                <td>2</td>
+                                                                                <td>Pcs</td>
+                                                                                <td>400,000</td>
+                                                                                <td>800,000</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        {{-- Accepted requests content --}}
-                                        <div class="tab-pane fade" id="nav-accepted" role="tabpanel" aria-labelledby="nav-accepted-tab">
-                                            <h5 class="mb-3 mt-3 custom-color">Accepted Expense Requests</h5>
-                                            <div class="accordion accordion-expense" id="accordionExample">
-                                                <div class="card mb-2">
-                                                    <div class="card-header p-2" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        <h2 class="mb-1 font-13">
-                                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
-                                                        </h2>
-                                                        <span class="mt-2 font-13">Total: <Strong><span class="badge badge-warning">3,000,000 UGX</span></Strong></span>
-                                                    </div>
-                                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                        <div class="card-body">
-                                                            <div class="table-responsive">
-                                                                <table class="table align-items-center table-flush">
-                                                                    <thead class="thead-light">
-                                                                        <tr>
-                                                                        <th scope="col">S/N</th>
-                                                                        <th scope="col">ITEM</th>
-                                                                        <th scope="col">QTY</th>
-                                                                        <th scope="col">UNIT</th>
-                                                                        <th scope="col">RATE</th>
-                                                                        <th scope="col">AMOUNT</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <th scope="row" class="text-wrap">1</th>
-                                                                            <td class="text-wrap">Routers</td>
-                                                                            <td>2</td>
-                                                                            <td>Pcs</td>
-                                                                            <td>400,000</td>
-                                                                            <td>800,000</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <th scope="row" class="text-wrap">1</th>
-                                                                            <td class="text-wrap">Routers</td>
-                                                                            <td>2</td>
-                                                                            <td>Pcs</td>
-                                                                            <td>400,000</td>
-                                                                            <td>800,000</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
+                                            {{-- Accepted requests content --}}
+                                            <div class="tab-pane fade" id="nav-accepted" role="tabpanel" aria-labelledby="nav-accepted-tab">
+                                                <h5 class="mb-3 mt-3 custom-color">Accepted Expense Requests</h5>
+                                                <div class="accordion accordion-expense" id="accordionExample">
+                                                    <div class="card mb-2">
+                                                        <div class="card-header p-2" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                            <h2 class="mb-1 font-13">
+                                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                                                            </h2>
+                                                            <span class="mt-2 font-13">Total: <Strong><span class="badge badge-warning">3,000,000 UGX</span></Strong></span>
+                                                        </div>
+                                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                            <div class="card-body">
+                                                                <div class="table-responsive">
+                                                                    <table class="table align-items-center table-flush">
+                                                                        <thead class="thead-light">
+                                                                            <tr>
+                                                                            <th scope="col">S/N</th>
+                                                                            <th scope="col">ITEM</th>
+                                                                            <th scope="col">QTY</th>
+                                                                            <th scope="col">UNIT</th>
+                                                                            <th scope="col">RATE</th>
+                                                                            <th scope="col">AMOUNT</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <th scope="row" class="text-wrap">1</th>
+                                                                                <td class="text-wrap">Routers</td>
+                                                                                <td>2</td>
+                                                                                <td>Pcs</td>
+                                                                                <td>400,000</td>
+                                                                                <td>800,000</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th scope="row" class="text-wrap">1</th>
+                                                                                <td class="text-wrap">Routers</td>
+                                                                                <td>2</td>
+                                                                                <td>Pcs</td>
+                                                                                <td>400,000</td>
+                                                                                <td>800,000</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        {{-- Cash Out requests content --}}
-                                        <div class="tab-pane fade" id="nav-cashOut" role="tabpanel" aria-labelledby="nav-cashOut-tab">
-                                            <h5 class="mb-3 mt-3 custom-color">Cash Out Expense Requests</h5>
-                                            <div class="accordion accordion-expense" id="accordionExample">
-                                                <div class="card mb-2">
-                                                    <div class="card-header p-2" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        <h2 class="mb-1 font-13">
-                                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
-                                                        </h2>
-                                                        <span class="mt-2 font-13">Total: <Strong><span class="badge badge-warning">3,000,000 UGX</span></Strong></span>
-                                                    </div>
-                                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                        <div class="card-body">
-                                                            <div class="table-responsive">
-                                                                <table class="table align-items-center table-flush">
-                                                                    <thead class="thead-light">
-                                                                        <tr>
-                                                                        <th scope="col">S/N</th>
-                                                                        <th scope="col">ITEM</th>
-                                                                        <th scope="col">QTY</th>
-                                                                        <th scope="col">UNIT</th>
-                                                                        <th scope="col">RATE</th>
-                                                                        <th scope="col">AMOUNT</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <th scope="row" class="text-wrap">1</th>
-                                                                            <td class="text-wrap">Routers</td>
-                                                                            <td>2</td>
-                                                                            <td>Pcs</td>
-                                                                            <td>400,000</td>
-                                                                            <td>800,000</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <th scope="row" class="text-wrap">1</th>
-                                                                            <td class="text-wrap">Routers</td>
-                                                                            <td>2</td>
-                                                                            <td>Pcs</td>
-                                                                            <td>400,000</td>
-                                                                            <td>800,000</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
+                                            {{-- Cash Out requests content --}}
+                                            <div class="tab-pane fade" id="nav-cashOut" role="tabpanel" aria-labelledby="nav-cashOut-tab">
+                                                <h5 class="mb-3 mt-3 custom-color">Cash Out Expense Requests</h5>
+                                                <div class="accordion accordion-expense" id="accordionExample">
+                                                    <div class="card mb-2">
+                                                        <div class="card-header p-2" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                            <h2 class="mb-1 font-13">
+                                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                                                            </h2>
+                                                            <span class="mt-2 font-13">Total: <Strong><span class="badge badge-warning">3,000,000 UGX</span></Strong></span>
+                                                        </div>
+                                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                            <div class="card-body">
+                                                                <div class="table-responsive">
+                                                                    <table class="table align-items-center table-flush">
+                                                                        <thead class="thead-light">
+                                                                            <tr>
+                                                                            <th scope="col">S/N</th>
+                                                                            <th scope="col">ITEM</th>
+                                                                            <th scope="col">QTY</th>
+                                                                            <th scope="col">UNIT</th>
+                                                                            <th scope="col">RATE</th>
+                                                                            <th scope="col">AMOUNT</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <th scope="row" class="text-wrap">1</th>
+                                                                                <td class="text-wrap">Routers</td>
+                                                                                <td>2</td>
+                                                                                <td>Pcs</td>
+                                                                                <td>400,000</td>
+                                                                                <td>800,000</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th scope="row" class="text-wrap">1</th>
+                                                                                <td class="text-wrap">Routers</td>
+                                                                                <td>2</td>
+                                                                                <td>Pcs</td>
+                                                                                <td>400,000</td>
+                                                                                <td>800,000</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
                     @endauth
-
                 </div>
             </div>
         </div>
