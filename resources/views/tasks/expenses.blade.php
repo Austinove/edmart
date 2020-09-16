@@ -236,7 +236,7 @@
                                                 <h5 class="mb-3 mt-3 custom-color">Your Expense Requests</h5>
                                                 <div class="accordion accordion-expense" id="accordionExample">
                                                     <div class="card mb-2">
-                                                        <div class="card-header p-2" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        <div class="card-header p-2" id="myReq1" data-toggle="collapse" data-target="#collapseMyReq1" aria-expanded="true" aria-controls="collapseMyReq1">
                                                             <h2 class="mb-1 font-13">
                                                                 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
                                                             </h2>
@@ -247,11 +247,11 @@
                                                                 <button class="btn btn-outline-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Decline Expense"><i class="fa fa-thumbs-down"></i></button>
                                                                 <button class="btn btn-outline-success btn-sm" data-toggle="tooltip" data-placement="top" title="Accept Expense"><i class="fa fa-check"></i></button>
                                                                 <button class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Recommend Expense"><i class="fa fa-thumbs-up"></i></button>
-                                                                <button class="btn btn-outline-info btn-sm"  data-toggle="tooltip" data-placement="top" title="Recommend Again"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>
+                                                                <button class="btn btn-outline-info btn-sm"  data-toggle="tooltip" data-placement="top" title="Recommend Again"><i class="fa fa-check-square-o"></i></button>
                                                                 <button class="btn btn-outline-danger btn-sm"  data-toggle="tooltip" data-placement="top" title="Withdraw Expense"><i class="fa fa-times"></i></button>
                                                             </div>
                                                         </div>
-                                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                        <div id="collapseMyReq1" class="collapse show" aria-labelledby="myReq1" data-parent="#accordionExample">
                                                             <div class="card-body">
                                                                 <div class="table-responsive">
                                                                     <table class="table align-items-center table-flush">
@@ -291,18 +291,27 @@
                                                 </div>
                                             </div>
 
-                                            {{-- Dclined requests content --}}
+                                            {{-- Declined requests content --}}
                                             <div class="tab-pane fade" id="nav-declined" role="tabpanel" aria-labelledby="nav-declined-tab">
                                                 <h5 class="mb-3 mt-3 custom-color">Declined Expense Requests</h5>
-                                                <div class="accordion accordion-expense" id="accordionExample">
+                                                <div class="accordion accordion-expense" id="decline-accordion">
                                                     <div class="card mb-2">
-                                                        <div class="card-header p-2" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        <div class="card-header p-2" id="decline1" data-toggle="collapse" data-target="#collapseDecline1" aria-expanded="true" aria-controls="collapseDecline1">
                                                             <h2 class="mb-1 font-13">
                                                                 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
                                                             </h2>
                                                             <span class="mt-2 font-13">Total: <Strong><span class="badge badge-warning">3,000,000 UGX</span></Strong></span>
+                                                            <span class="mt-2 ml-4 font-12 text-mute">Date: 11/09/2020</span>
+                                                            <br/>
+                                                            <div class="mt-2 float-right">
+                                                                <button class="btn btn-outline-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Decline Expense"><i class="fa fa-thumbs-down"></i></button>
+                                                                <button class="btn btn-outline-success btn-sm" data-toggle="tooltip" data-placement="top" title="Accept Expense"><i class="fa fa-check"></i></button>
+                                                                <button class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Recommend Expense"><i class="fa fa-thumbs-up"></i></button>
+                                                                <button class="btn btn-outline-info btn-sm"  data-toggle="tooltip" data-placement="top" title="Recommend Again"><i class="fa fa-check-square-o"></i></button>
+                                                                <button class="btn btn-outline-danger btn-sm"  data-toggle="tooltip" data-placement="top" title="Withdraw Expense"><i class="fa fa-times"></i></button>
+                                                            </div>
                                                         </div>
-                                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                        <div id="collapseDecline1" class="collapse show" aria-labelledby="decline1" data-parent="#decline-accordion">
                                                             <div class="card-body">
                                                                 <div class="table-responsive">
                                                                     <table class="table align-items-center table-flush">
@@ -341,13 +350,22 @@
                                                     </div>
 
                                                     <div class="card mb-2">
-                                                        <div class="card-header p-2" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                        <div class="card-header p-2" id="declin2" data-toggle="collapse" data-target="#collapseDecline2" aria-expanded="false" aria-controls="collapseDecline2">
                                                             <h2 class="mb-1 font-13">
                                                                 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
                                                             </h2>
                                                             <span class="mt-2 font-13">Total: <Strong><span class="badge badge-warning">3,000,000 UGX</span></Strong></span>
+                                                            <span class="mt-2 ml-4 font-12 text-mute">Date: 11/09/2020</span>
+                                                            <br/>
+                                                            <div class="mt-2 float-right">
+                                                                <button class="btn btn-outline-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Decline Expense"><i class="fa fa-thumbs-down"></i></button>
+                                                                <button class="btn btn-outline-success btn-sm" data-toggle="tooltip" data-placement="top" title="Accept Expense"><i class="fa fa-check"></i></button>
+                                                                <button class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Recommend Expense"><i class="fa fa-thumbs-up"></i></button>
+                                                                <button class="btn btn-outline-info btn-sm"  data-toggle="tooltip" data-placement="top" title="Recommend Again"><i class="fa fa-check-square-o"></i></button>
+                                                                <button class="btn btn-outline-danger btn-sm"  data-toggle="tooltip" data-placement="top" title="Withdraw Expense"><i class="fa fa-times"></i></button>
+                                                            </div>
                                                         </div>
-                                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                                        <div id="collapseDecline2" class="collapse" aria-labelledby="declin2" data-parent="#decline-accordion">
                                                             <div class="card-body">
                                                                 <div class="table-responsive">
                                                                     <table class="table align-items-center table-flush">
@@ -397,6 +415,14 @@
                                                                 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
                                                             </h2>
                                                             <span class="mt-2 font-13">Total: <Strong><span class="badge badge-warning">3,000,000 UGX</span></Strong></span>
+                                                            <br/>
+                                                            <div class="mt-2 float-right">
+                                                                <button class="btn btn-outline-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Decline Expense"><i class="fa fa-thumbs-down"></i></button>
+                                                                <button class="btn btn-outline-success btn-sm" data-toggle="tooltip" data-placement="top" title="Accept Expense"><i class="fa fa-check"></i></button>
+                                                                <button class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Recommend Expense"><i class="fa fa-thumbs-up"></i></button>
+                                                                <button class="btn btn-outline-info btn-sm"  data-toggle="tooltip" data-placement="top" title="Recommend Again"><i class="fa fa-check-square-o"></i></button>
+                                                                <button class="btn btn-outline-danger btn-sm"  data-toggle="tooltip" data-placement="top" title="Withdraw Expense"><i class="fa fa-times"></i></button>
+                                                            </div>
                                                         </div>
                                                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                                                             <div class="card-body">
