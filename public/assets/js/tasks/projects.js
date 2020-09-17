@@ -60,7 +60,7 @@ $(document).ready(function () {
                     .prop("disabled", false)
                     .html(`<i class="fa fa-arrow-right"></i> Submit Project`);
             }
-            
+            clearInputs();
         }).fail(error => {
             notification("An error occuired", "warning");
             $("#submit-project-btn")

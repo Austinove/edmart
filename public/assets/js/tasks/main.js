@@ -63,9 +63,18 @@ const viewed = (viewedUrl, expenses) => {
 
 //Empting inputs function
 const clearInputs = () => {
-    $('.desc').val('');
-    $('.rate').val('');
-    $('.units').val('');
-    $('.quantity').val('');
-    $('.title').val('');
+    //projects inputs
+    $(".projectContract").val("");
+    $(".projectClient").val("");
+    $(".projectStart").val("");
+    $(".projectEnd").val("");
+    $(".projectFee").val("");
+    $(".projectDesc").val("");
+    $(".projectTitle").val("");
+    //projects expenses inputs
+    $(".desc").val("");
+    $(".rate").val("");
+    $(".units").val("");
+    $(".quantity").val("");
+    $(".title").val("");
 }

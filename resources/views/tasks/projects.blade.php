@@ -37,9 +37,9 @@
                                         </div>
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group">
-                                                <label for="exampleFormControlInput1" class="small-text">Customer Name <span class="error">*</span></label>
+                                                <label for="exampleFormControlInput1" class="small-text">Client Name <span class="error">*</span></label>
                                                 <div class="bg-secondary">
-                                                    <input required name="customer" type="text" class="projectCustomer form-control-sm form-control form-control-alternative" placeholder="Company name">
+                                                    <input required name="Client" type="text" class="projectClient form-control-sm form-control form-control-alternative" placeholder="Company name">
                                                 </div>
                                             </div>
                                         </div>
