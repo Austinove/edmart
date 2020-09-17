@@ -196,7 +196,7 @@
                                             Recommended
                                         </a>
                                     @endif
-                                    @if (Auth()->user()->userType === "hr" || Auth()->user()->position === "Assistant Project Manage")
+                                    @if (Auth()->user()->userType === "hr" || Auth()->user()->position === "Assistant Project Manager")
                                         <a class="nav-item nav-link" 
                                             id="nav-clarify-tab" data-toggle="tab" 
                                             href="#nav-clarify" role="tab" 

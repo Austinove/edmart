@@ -1,6 +1,6 @@
 @section('dynamic-js')
     <script src="{{ asset('assets/js/tasks/main.js') }}"></script>
-    <script src="{{ asset('assets/js/tasks/tasks.js') }}"></script>
+    <script src="{{ asset('assets/js/tasks/projects.js') }}"></script>
 @stop
 @extends('layouts.app')
 @section('content')
@@ -105,12 +105,18 @@
                     <div class="row project-contents">
                         <div class="col-md-6 col-sm-6">
                             <div class="card custom-card">
-                                <div>
+                                <div class="mt-2 pr-2 pl-2">
                                     <button class="btn btn-outline-warning btn-sm mr-0" data-toggle="tooltip" data-placement="top" title="Delete Project"><i class="fa fa-times"></i></button>
-                                    <button class="btn btn-outline-primary btn-sm mr-0" data-toggle="tooltip" data-placement="top" title="Edit Project"><i class="fa fa-edit"></i></button>
+                                    <button class="btn btn-outline-primary btn-sm mr-0" data-id="1" data-toggle="tooltip" data-placement="top" title="Edit Project"><i class="fa fa-edit"></i></button>
                                     <button class="btn btn-outline-success btn-sm" data-toggle="tooltip" data-placement="top" title="Close Project"><i class="fa fa-check"></i></button>
-                                    <a href="{{route('project-expenses')}}" class="browse-add-exp btn-neutral btn-sm float-right" data-toggle="tooltip" data-placement="top" title="Check Expenses"><i class="fa fa-plus-circle" aria-hidden="true"></i> Expenses</a>
+                                    <a href="{{route('project-expenses')}}" class="browse-add-exp btn-neutral btn-sm float-right ml-1" data-toggle="tooltip" data-placement="top" title="Check Expenses"><i class="fa fa-plus-circle" aria-hidden="true"></i> Expenses</a>
+                                    <a href="#"
+                                        class="browse-add-exp btn-neutral btn-sm float-right" 
+                                        data-toggle="modal" data-target="#projectEmployee">
+                                        <i class="fa fa-plus-circle" aria-hidden="true"></i> Employee
+                                    </a>
                                 </div>
+                                <hr class="mb-1 mt-1"/>
                                 <div class="card-body">
                                     <div class="mb-2">
                                         <h5 class="card-title mb-0">Client</h5>

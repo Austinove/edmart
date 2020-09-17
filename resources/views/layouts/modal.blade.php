@@ -99,6 +99,56 @@
   </div>
 </div>
 
+<!-- Expenses Add Employee -->
+<div class="modal" id="projectEmployee" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+      <div class="modal-content">
+        <form id="cancel-reason">
+          <div class="modal-header">
+            <h3 class="mb-0 custom-color font-14">Assign Employees to project</h3>
+            <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body pb-0 pt-0">
+              <div class="card">
+                <div class="card-body">
+                    @csrf
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="cancellingReason" class="small-text">Check form Employees List below: <span class="error">*</span></label>
+                          <div class="bg-secondary custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1">Bryan Austin</label>
+                          </div>
+                          <div class="bg-secondary custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck2">
+                            <label class="custom-control-label" for="customCheck2">Muwaya Hussein</label>
+                          </div>
+                          <div class="bg-secondary custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck3">
+                            <label class="custom-control-label" for="customCheck3">Pinyi Eria</label>
+                          </div>
+                          <div class="bg-secondary custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck4">
+                            <label class="custom-control-label" for="customCheck4">Ocho Gideon</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer pt-0">
+            <button type="button" class="btn btn-outline-warning btn-sm modal-close" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            <button type="submit" user-data="" id-data="" class="assign-btn btn btn-outline-success btn-sm custom-btn"><i class="fa fa-check" aria-hidden="true"></i> Assign</button>
+          </div>
+        </form>
+      </div>
+  </div>
+</div>
+
 {{-- project details --}}
 <div class="modal fade expenses-details" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
