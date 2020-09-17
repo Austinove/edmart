@@ -22,7 +22,7 @@
                 </div>
                 <div class="row project-inputs d-none">
                     <div class="col-md-12">
-                        <form id="exp-formList" enctype="multipart/form-data">
+                        <form id="project-forms" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">
@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="col-md-6 col-sm-6 ml-auto">
                                     <div class="form-group float-right">
-                                        <button data-id="0" data-edit="no" id="add-list"  class="btn-sm btn btn-outline-secondary mt-2 custom-btn btn-md">
+                                        <button data-id="0" data-edit="no" id="submit-project-btn" type="submit"  class="btn-sm btn btn-outline-secondary mt-2 custom-btn btn-md">
                                             <i class="fa fa-plus"></i>
                                             Create Project
                                         </button>
@@ -106,9 +106,9 @@
                         <div class="col-md-6 col-sm-6">
                             <div class="card custom-card">
                                 <div class="mt-2 pr-2 pl-2">
-                                    <button class="btn btn-outline-warning btn-sm mr-0" data-toggle="tooltip" data-placement="top" title="Delete Project"><i class="fa fa-times"></i></button>
-                                    <button class="btn btn-outline-primary btn-sm mr-0" data-id="1" data-toggle="tooltip" data-placement="top" title="Edit Project"><i class="fa fa-edit"></i></button>
-                                    <button class="btn btn-outline-success btn-sm" data-toggle="tooltip" data-placement="top" title="Close Project"><i class="fa fa-check"></i></button>
+                                    <button class="btn btn-outline-warning btn-sm mr-0 delete-project" data-id="1" data-toggle="tooltip" data-placement="top" title="Delete Project"><i class="fa fa-times"></i></button>
+                                    <button class="btn btn-outline-primary btn-sm mr-0 edit-project" data-id="1" data-toggle="tooltip" data-placement="top" title="Edit Project"><i class="fa fa-edit"></i></button>
+                                    <button class="btn btn-outline-success btn-sm close-project" data-toggle="tooltip" data-placement="top" title="Close Project"><i class="fa fa-check"></i></button>
                                     <a href="{{route('project-expenses')}}" class="browse-add-exp btn-neutral btn-sm float-right ml-1" data-toggle="tooltip" data-placement="top" title="Check Expenses"><i class="fa fa-plus-circle" aria-hidden="true"></i> Expenses</a>
                                     <a href="#"
                                         class="browse-add-exp btn-neutral btn-sm float-right" 
@@ -124,7 +124,7 @@
                                     </div>
                                     <div class="mb-2">
                                         <h5 class="card-title mb-0">Assistant Project Manager</h5>
-                                        <p class="card-text font-13">Mr: Pinyi Othieno Eria</p>
+                                        <p class="card-text font-13">Mr: Pinyi Othieno Eria </p>
                                     </div>
                                     <div class="mb-2">
                                         <h5 class="card-title mb-0">Project Title</h5>

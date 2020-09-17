@@ -25,10 +25,11 @@ const getRequest = url => {
 }
 
 //delete request function
-const deleteRequest = url => {
+const deleteRequest = (url, id) => {
     return $.ajax({
         url: url,
         type: 'delete',
+        data: JSON.stringify(id),
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
