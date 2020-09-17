@@ -5,11 +5,13 @@ $(document).ready(function () {
         if (toggleText === "Create Project") {
             $('.project-inputs').removeClass('d-none');
             $('.project-contents').addClass('d-none');
-            $("#submit-project-btn").html(`<i class="fa fa-save"></i> Save Project`);
+            $("#submit-project-btn").attr("data-edit") !== "no" ?
+            $("#submit-project-btn").attr("data-edit", "no").html(`<i class="fa fa-arrow-right"></i> Submit Project`) : null;
             $(this).html(`
                     <i class="fa fa-arrow-circle-o-left"></i>
                     <span class="toggleproject">Return</span>
                     `);
+            console.log($("#submit-project-btn").attr("data-edit"));
         } else {
             $(this).html(`
                     <i class="fa fa-plus"></i>
@@ -36,27 +38,40 @@ $(document).ready(function () {
 
     //-----------------CRUD Projetcs-----------------------
     //Create Project and Updating Project
-    $(".project-forms").on("submit", function (e) {
-        e.preventDetault();
+    $("#projectForm").submit(function (e) {
+        e.preventDefault();
+        $("#submit-project-btn").prop("disabled", true).html("Submiting...");
         var actionURL;
-        $("#submit-project-btn").attr("data-edit") === "no" ? 
-            actioinUrl = "projects/create" : 
-            actioinUrl = "projects/update";
+        $("#submit-project-btn").attr("data-edit") === "no" ?
+            actionURL = "projects/create" :
+            actionURL = "projects/update";
         var projectData = $(this).serialize();
         $.when(postRequest(actionURL, projectData)).done(response => {
             renderProjects(response);
-            $("#submit-project-btn").attr("data-edit") === "no" ? 
-            notification("Project created successfully", "success") : 
-            notification("Updated successfully", "success");
-            $("#submit-project-btn").attr("data-edit", "no").html(`<i class="fa fa-plus"></i> Create Project`);
+            if($("#submit-project-btn").attr("data-edit") === "no"){
+                notification("Project created successfully", "success");
+                $("#submit-project-btn")
+                    .prop("disabled", false)
+                    .html(`<i class="fa fa-arrow-right"></i> Submit Project`);
+            }else{
+                notification("Updated successfully", "success");
+                $("#submit-project-btn")
+                    .attr("data-edit", "no")
+                    .prop("disabled", false)
+                    .html(`<i class="fa fa-arrow-right"></i> Submit Project`);
+            }
+            
         }).fail(error => {
             notification("An error occuired", "warning");
+            $("#submit-project-btn")
+                .prop("disabled", false)
+                .html(`<i class="fa fa-arrow-right"></i> Submit Project`);
             console.log(error);
         });
     });
 
     //Editing project
-    $(document).on("click", ".edit-project", function() {
+    $(document).on("click", ".edit-project", function () {
         $('.project-inputs').removeClass('d-none');
         $('.project-contents').addClass('d-none');
         $("#submit-project-btn").attr("data-edit", "yes").html(`<i class="fa fa-save"></i> Save Project`);
@@ -64,6 +79,7 @@ $(document).ready(function () {
                 <i class="fa fa-arrow-circle-o-left"></i>
                 <span class="toggleproject">Return</span>
             `);
+        console.log($("#submit-project-btn").attr("data-edit"));
     });
 
     //Fetching Projects
@@ -75,8 +91,8 @@ $(document).ready(function () {
             console.log(error);
         });
     };
-    fetchProjects();
-    
+    // fetchProjects();
+
     //Rendering Projects
     const renderProjects = (projectData) => {
         console.log(projectData);

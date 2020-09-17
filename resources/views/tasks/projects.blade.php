@@ -22,7 +22,7 @@
                 </div>
                 <div class="row project-inputs d-none">
                     <div class="col-md-12">
-                        <form id="project-forms" enctype="multipart/form-data">
+                        <form id="projectForm" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">
@@ -31,7 +31,7 @@
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput1" class="small-text">Contract No. <span class="error">*</span></label>
                                                 <div class="bg-secondary">
-                                                    <input required name="contract_No" type="text" class="contract form-control-sm form-control form-control-alternative" placeholder="#R05273189">
+                                                    <input required name="contract_No" type="text" class="projectContract form-control-sm form-control form-control-alternative" placeholder="#R05273189">
                                                 </div>
                                             </div>
                                         </div>
@@ -39,7 +39,7 @@
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput1" class="small-text">Customer Name <span class="error">*</span></label>
                                                 <div class="bg-secondary">
-                                                    <input required name="customer" type="text" class="customer form-control-sm form-control form-control-alternative" placeholder="Company name">
+                                                    <input required name="customer" type="text" class="projectCustomer form-control-sm form-control form-control-alternative" placeholder="Company name">
                                                 </div>
                                             </div>
                                         </div>
@@ -47,7 +47,7 @@
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput1" class="small-text">Start Date <span class="error">*</span></label>
                                                 <div class="bg-secondary">
-                                                    <input required name="start" type="date" class="start form-control-sm form-control form-control-alternative" placeholder="e.g 20000">
+                                                    <input required name="start" type="date" class="projectStart form-control-sm form-control form-control-alternative" placeholder="e.g 20000">
                                                     <span style="display: none" class="user-type small-text">{{Auth()->user()->userType}}</span>
                                                 </div>
                                             </div>
@@ -56,7 +56,7 @@
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput1" class="small-text">End Date <span class="error">*</span></label>
                                                 <div class="bg-secondary">
-                                                    <input required name="end" type="date" class="end form-control-sm form-control form-control-alternative" placeholder="e.g 20000">
+                                                    <input required name="end" type="date" class="projectEnd form-control-sm form-control form-control-alternative" placeholder="e.g 20000">
                                                     <span style="display: none" class="user-type small-text">{{Auth()->user()->userType}}</span>
                                                 </div>
                                             </div>
@@ -65,7 +65,7 @@
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput1" class="small-text">Contract Fee <span class="error">*</span></label>
                                                 <div class="bg-secondary">
-                                                    <input required name="fee" min="1" type="number" class="fee form-control-sm form-control form-control-alternative" placeholder="e.g 20000">
+                                                    <input required name="fee" min="1" type="number" class="projectFee form-control-sm form-control form-control-alternative" placeholder="e.g 20000">
                                                     <span style="display: none" class="user-type small-text">{{Auth()->user()->userType}}</span>
                                                 </div>
                                             </div>
@@ -78,13 +78,13 @@
                                             <I class="text-danger font-12 checker-list"></I>
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1" class="small-text">Title <span class="error">*</span></label>
-                                                <input required name="title" id="title" type="text" class="title form-control-sm form-control form-control-alternative">
+                                                <input required name="title" id="title" type="text" class="projectTitle form-control-sm form-control form-control-alternative">
                                             </div>
                                         </div> 
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1" class="small-text">Description <span class="error">*</span></label>
-                                                <textarea required name="desc" class="desc form-control-sm form-control form-control-alternative" id="exampleFormControlTextarea1" rows="6"></textarea>
+                                                <textarea required name="desc" class="projectDesc form-control-sm form-control form-control-alternative" id="exampleFormControlTextarea1" rows="6"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -92,8 +92,8 @@
                                 <div class="col-md-6 col-sm-6 ml-auto">
                                     <div class="form-group float-right">
                                         <button data-id="0" data-edit="no" id="submit-project-btn" type="submit"  class="btn-sm btn btn-outline-secondary mt-2 custom-btn btn-md">
-                                            <i class="fa fa-plus"></i>
-                                            Create Project
+                                            <i class="fa fa-arrow-right"></i>
+                                            Submit Project
                                         </button>
                                     </div>
                                 </div>
@@ -175,8 +175,6 @@
                         <div class="col-md-6 col-sm-6">
                             <div class="card custom-card">
                                 <div class="card-body">
-                                    <h5 class="custom-color ">#48YA-TYY</h5>
-                                    <a href="{{route('project-expenses')}}" class="project-add-exp btn-neutral btn-sm float-left"><i class="fa fa-plus-circle" aria-hidden="true"></i> expense</a>
                                     <div class="mb-2">
                                         <h5 class="card-title mb-0">Client</h5>
                                         <p class="card-text font-13 custom-color">Post Bank (U) LTD</p>
