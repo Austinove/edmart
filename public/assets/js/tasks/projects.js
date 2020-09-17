@@ -1,4 +1,39 @@
 $(document).ready(function () {
+    //toggling project
+    $(".project-add-btn").click(function (e) {
+        var toggleText = $('.toggleproject').text();
+        if (toggleText === "Create Project") {
+            $('.project-inputs').removeClass('d-none');
+            $('.project-contents').addClass('d-none');
+            $("#submit-project-btn").html(`<i class="fa fa-save"></i> Save Project`);
+            $(this).html(`
+                    <i class="fa fa-arrow-circle-o-left"></i>
+                    <span class="toggleproject">Return</span>
+                    `);
+        } else {
+            $(this).html(`
+                    <i class="fa fa-plus"></i>
+                    <span class="toggleproject">Create Project</span>
+                    `);
+            $('.project-inputs').addClass('d-none');
+            $('.project-contents').removeClass('d-none');
+        }
+    });
+
+    //toggling between pending and closed projects
+    $(".pending-proj-btn").click(function () {
+        $(this).addClass("active");
+        $(".closed-proj-btn").removeClass("active");
+        $(".pending-proj-container").removeClass("d-none");
+        $(".closed-proj-container").addClass("d-none");
+    });
+    $(".closed-proj-btn").click(function () {
+        $(this).addClass("active");
+        $(".pending-proj-btn").removeClass("active");
+        $(".pending-proj-container").addClass("d-none");
+        $(".closed-proj-container").removeClass("d-none");
+    });
+
     //-----------------CRUD Projetcs-----------------------
     //Create Project and Updating Project
     $(".project-forms").on("submit", function (e) {
@@ -11,13 +46,24 @@ $(document).ready(function () {
         $.when(postRequest(actionURL, projectData)).done(response => {
             renderProjects(response);
             $("#submit-project-btn").attr("data-edit") === "no" ? 
-            notification("Project created successfully", "success"):
+            notification("Project created successfully", "success") : 
             notification("Updated successfully", "success");
-            $("#submit-project-btn").attr("data-edit", "no");
+            $("#submit-project-btn").attr("data-edit", "no").html(`<i class="fa fa-plus"></i> Create Project`);
         }).fail(error => {
             notification("An error occuired", "warning");
             console.log(error);
         });
+    });
+
+    //Editing project
+    $(document).on("click", ".edit-project", function() {
+        $('.project-inputs').removeClass('d-none');
+        $('.project-contents').addClass('d-none');
+        $("#submit-project-btn").attr("data-edit", "yes").html(`<i class="fa fa-save"></i> Save Project`);
+        $(".project-add-btn").html(`
+                <i class="fa fa-arrow-circle-o-left"></i>
+                <span class="toggleproject">Return</span>
+            `);
     });
 
     //Fetching Projects
