@@ -1,4 +1,8 @@
 $(document).ready(function () {
+    //Closing the modals
+    $(document).on("click", ".closer", function() {
+        clearInputs();
+    });
     //toggling project
     $(".project-add-btn").click(function (e) {
         var toggleText = $('.toggleproject').text();
@@ -11,7 +15,6 @@ $(document).ready(function () {
                     <i class="fa fa-arrow-circle-o-left"></i>
                     <span class="toggleproject">Return</span>
                     `);
-            console.log($("#submit-project-btn").attr("data-edit"));
         } else {
             $(this).html(`
                     <i class="fa fa-plus"></i>
@@ -79,7 +82,6 @@ $(document).ready(function () {
                 <i class="fa fa-arrow-circle-o-left"></i>
                 <span class="toggleproject">Return</span>
             `);
-        console.log($("#submit-project-btn").attr("data-edit"));
     });
 
     //Fetching Projects
@@ -91,7 +93,7 @@ $(document).ready(function () {
             console.log(error);
         });
     };
-    // fetchProjects();
+    fetchProjects();
 
     //Rendering Projects
     const renderProjects = (projectData) => {
@@ -111,6 +113,21 @@ $(document).ready(function () {
             notification("Not deleted", "warning");
             console.log(error);
             $(this).prop("disabled", false).html('<i class="fa fa-times"></i>');
+        });
+    });
+
+    //assign Employee to project
+    $("#assign-emp").submit(function(e) {
+        e.preventDefault();
+        var empData = $(this).serialize();
+        console.log(empData);
+        $.when(postRequest("project/assign", empData)).done(response => {
+            console.log(response);
+            clearInputs();
+        }).fail(error => {
+            clearInputs();
+            notification("An error occuired", "warning");
+            console.log(error);
         });
     });
 

@@ -71,6 +71,7 @@ const clearInputs = () => {
     $(".projectFee").val("");
     $(".projectDesc").val("");
     $(".projectTitle").val("");
+    $(".emp-checkbox").prop("checked", false);
     //projects expenses inputs
     $(".desc").val("");
     $(".rate").val("");
