@@ -13,7 +13,7 @@ const postRequest = (requestUrl, requestData) => {
         cache: false,
         processData: false,
     })
-}
+};
 
 //get request function
 const getRequest = url => {
@@ -22,7 +22,7 @@ const getRequest = url => {
         type: "get",
         dataType: 'json'
     });
-}
+};
 
 //delete request function
 const deleteRequest = (url, id) => {
@@ -35,7 +35,7 @@ const deleteRequest = (url, id) => {
         },
         dataType: 'json'
     });
-}
+};
 
 //notification function
 const notification = (description, notifType, delayTime = 2000) => {
@@ -43,7 +43,7 @@ const notification = (description, notifType, delayTime = 2000) => {
         autoHide: true,
         autoHideDelay: delayTime
     });
-}
+};
 
 // function to send viewed
 const viewed = (viewedUrl, expenses) => {
@@ -59,7 +59,7 @@ const viewed = (viewedUrl, expenses) => {
         cache: false,
         processData: false,
     });
-}
+};
 
 //Empting inputs function
 const clearInputs = () => {
@@ -78,4 +78,11 @@ const clearInputs = () => {
     $(".units").val("");
     $(".quantity").val("");
     $(".title").val("");
-}
+};
+
+//setting up commas in budget
+const numberWithCommas = (number) => {
+    var parts = number.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+};
