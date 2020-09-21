@@ -255,40 +255,52 @@ $(document).ready(function() {
             .html("wait..");
         const id = new FormData();
         id.append("id", $(this).attr("data-id"));
-        $.when(deleteRequest("project/expense/delete", id))
-            .done(response => {
-                console.log(response);
-                notification("Deleted successfully", "success");
-                $(this)
-                    .prop("disabled", false)
-                    .html('<i class="fa fa-times"></i>');
-            })
-            .fail(error => {
-                console.log(error);
-                notification("Error occuired...", "warning");
-                $(this)
-                    .prop("disabled", false)
-                    .html('<i class="fa fa-times"></i>');
-            });
+        const actionUrl = "project/expense/delete";
+        btnActions("withdraw", actionUrl, id);
     });
 
     //declining button
     $(document).on("click", ".decline-btn", function() {
-        console.log($(this).attr("data-id"));
+        $(this)
+            .prop("disabled", true)
+            .html("wait..");
+        const id = new FormData();
+        id.append("id", $(this).attr("data-id"));
+        const actionUrl = "project/expense/decline";
+        btnActions("decline", actionUrl, id);
     });
 
     //accepting button
     $(document).on("click", ".accept-btn", function() {
-        console.log($(this).attr("data-id"));
+        $(this)
+            .prop("disabled", true)
+            .html("wait..");
+        const id = new FormData();
+        id.append("id", $(this).attr("data-id"));
+        const actionUrl = "project/expense/accept";
+        btnActions("accept", actionUrl, id);
     });
 
     //recommend button
     $(document).on("click", ".recommend-btn", function() {
-        console.log($(this).attr("data-id"));
+        $(this)
+            .prop("disabled", true)
+            .html("wait..");
+        const id = new FormData();
+        id.append("id", $(this).attr("data-id"));
+        const actionUrl = "project/expense/recommend";
+        btnActions("recommend", actionUrl, id);
     });
 
     //revised button
     $(document).on("click", ".revised-btn", function() {
-        console.log($(this).attr("data-id"));
+        $(this)
+            .prop("disabled", true)
+            .html("wait..");
+        const id = new FormData();
+        id.append("id", $(this).attr("data-id"));
+        const actionUrl = "project/expense/revised";
+        btnActions("revised", actionUrl, id);
     });
+
 });
