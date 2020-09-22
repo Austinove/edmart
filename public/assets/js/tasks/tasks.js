@@ -342,4 +342,124 @@ $(document).ready(function() {
             // card iteration
         });
     };
+
+    //Fetch Approved requests
+    fetchApprovedRequests = () => {
+        const requestUrl = "project/expense/myRequests";
+        $.when(getRequest(requestUrl))
+            .done(response => {
+                renderApprovedRequests(response);
+            })
+            .fail(error => {
+                console.log(error);
+                notification("Couldn't fetch data", "warning");
+            });
+    };
+    fetchApprovedRequests();
+    //rendering Approved requests
+    const renderApprovedRequests = expenseData => {
+        expenseData.forEach(expense => {
+            // card iteration
+        });
+    };
+
+    //Fetch Submitted requests
+    fetchSubmittedRequests = () => {
+        const requestUrl = "project/expense/myRequests";
+        $.when(getRequest(requestUrl))
+            .done(response => {
+                renderSubmittedRequests(response);
+            })
+            .fail(error => {
+                console.log(error);
+                notification("Couldn't fetch data", "warning");
+            });
+    };
+    fetchSubmittedRequests();
+    //rendering Submitted requests
+    const renderSubmittedRequests = expenseData => {
+        expenseData.forEach(expense => {
+            // card iteration
+        });
+    };
+
+    //Fetch Revised requests
+    fetchRevisedRequests = () => {
+        const requestUrl = "project/expense/myRequests";
+        $.when(getRequest(requestUrl))
+            .done(response => {
+                renderRevisedRequests(response);
+            })
+            .fail(error => {
+                console.log(error);
+                notification("Couldn't fetch data", "warning");
+            });
+    };
+    fetchRevisedRequests();
+    //rendering Revised requests
+    const renderRevisedRequests = expenseData => {
+        expenseData.forEach(expense => {
+            // card iteration
+        });
+    };
+
+    //Fetch Clarify requests
+    fetchClarifyRequests = () => {
+        const requestUrl = "project/expense/myRequests";
+        $.when(getRequest(requestUrl))
+            .done(response => {
+                renderClarifyRequests(response);
+            })
+            .fail(error => {
+                console.log(error);
+                notification("Couldn't fetch data", "warning");
+            });
+    };
+    fetchClarifyRequests();
+    //rendering Clarify requests
+    const renderClarifyRequests = expenseData => {
+        expenseData.forEach(expense => {
+            // card iteration
+        });
+    };
+
+    //Fetch Accepted requests
+    fetchAcceptedRequests = () => {
+        const requestUrl = "project/expense/myRequests";
+        $.when(getRequest(requestUrl))
+            .done(response => {
+                renderAcceptedRequests(response);
+            })
+            .fail(error => {
+                console.log(error);
+                notification("Couldn't fetch data", "warning");
+            });
+    };
+    fetchAcceptedRequests();
+    //rendering Accepted requests
+    const renderAcceptedRequests = expenseData => {
+        expenseData.forEach(expense => {
+            // card iteration
+        });
+    };
+
+    //Fetch CashedOut requests
+    fetchCashedOutRequests = () => {
+        const requestUrl = "project/expense/myRequests";
+        $.when(getRequest(requestUrl))
+            .done(response => {
+                renderCashedOutRequests(response);
+            })
+            .fail(error => {
+                console.log(error);
+                notification("Couldn't fetch data", "warning");
+            });
+    };
+    fetchCashedOutRequests();
+    //rendering CashedOut requests
+    const renderCashedOutRequests = expenseData => {
+        expenseData.forEach(expense => {
+            // card iteration
+        });
+    };
 });
