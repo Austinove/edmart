@@ -238,7 +238,7 @@
                                                 <h5 class="mb-3 mt-3 custom-color">Your Expense Requests</h5>
                                                 <div class="accordion accordion-expense" id="accordionExample">
                                                     <div class="card mb-2">
-                                                        <div class="card-header p-2" id="myReq1" data-toggle="collapse" data-target="#collapseMyReq1" aria-expanded="true" aria-controls="collapseMyReq1">
+                                                        <div class="card-header p-2 myReq-header" id="myReq1" data-toggle="collapse" data-target="#collapseMyReq1" aria-expanded="true" aria-controls="collapseMyReq1">
                                                             <h2 class="mb-1 font-13">
                                                                 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
                                                             </h2>
@@ -253,7 +253,7 @@
                                                                 <button class="btn btn-outline-danger btn-sm withdraw-btn" data-id="nothing"  data-toggle="tooltip" data-placement="top" title="Withdraw Expense"><i class="fa fa-times"></i></button>
                                                             </div>
                                                         </div>
-                                                        <div id="collapseMyReq1" class="collapse show" aria-labelledby="myReq1" data-parent="#accordionExample">
+                                                        <div id="collapseMyReq1" class="collapse show expensesTableShow" aria-labelledby="myReq1" data-parent="#accordionExample">
                                                             <div class="card-body">
                                                                 <div class="table-responsive">
                                                                     <table class="table align-items-center table-flush">

@@ -303,4 +303,43 @@ $(document).ready(function() {
         btnActions("revised", actionUrl, id);
     });
 
+    //Fetch my requests
+    fetchMyRequests = () => {
+        const requestUrl = "project/expense/myRequests";
+        $.when(getRequest(requestUrl))
+            .done(response => {
+                renderMyRequests(response);
+            })
+            .fail(error => {
+                console.log(error);
+                notification("Couldn't fetch data", "warning");
+            });
+    };
+    fetchMyRequests();
+    //rendering my requests
+    const renderMyRequests = expenseData => {
+        expenseData.forEach(expense => {
+            // card iteration
+        });
+    };
+
+    //Fetch Declined requests
+    fetchDeclinedRequests = () => {
+        const requestUrl = "project/expense/myRequests";
+        $.when(getRequest(requestUrl))
+            .done(response => {
+                renderDeclinedRequests(response);
+            })
+            .fail(error => {
+                console.log(error);
+                notification("Couldn't fetch data", "warning");
+            });
+    };
+    fetchDeclinedRequests();
+    //rendering Declined requests
+    const renderDeclinedRequests = expenseData => {
+        expenseData.forEach(expense => {
+            // card iteration
+        });
+    };
 });

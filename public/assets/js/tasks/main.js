@@ -1,3 +1,5 @@
+//signed in user type
+let initialUser = $(".user-span").text();
 
 //post function request
 const postRequest = (requestUrl, requestData) => {
