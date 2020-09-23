@@ -14,15 +14,7 @@ Route::get('/', "Auth\LoginController@showLoginForm")->name('login');
 
 Route::middleware([PreventBackHistory::class])->group(function() {
     Auth::routes();
-
-    Route::get("/projects", function(){
-        return view("tasks.projects");
-    })->name("projects");
-
-    Route::get("/projects/expenses", function(){
-        return view("tasks.expenses");
-    })->name("project-expenses");
-
+    
     Route::get("/notFound", function() {
         return view("notFound");
     })->name("notFound");
@@ -41,6 +33,10 @@ Route::middleware([PreventBackHistory::class])->group(function() {
     Route::post('/edit/user/info', "Auth\RegisterController@editUserInfo")->name('editUserInfo');
     Route::post('/edit/user/password', "Auth\RegisterController@editUserPassword")->name('editUserPassword');
     //Project routes
+    Route::get("/projects", "ProjectsController@index")->name("projects");
+    Route::post("/project/expenses/create", "ProjectsController@create")->name("createProject");
+    //Projects Expenses routes
+    Route::get("/projects/expenses", "ProjectExpencesController@index")->name("project-expenses");
 
     // hr or admin routes only
     Route::middleware([CheckHr::class])->group(function() {

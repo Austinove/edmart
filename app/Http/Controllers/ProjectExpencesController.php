@@ -13,7 +13,7 @@ class ProjectExpencesController extends Controller
      */
     public function index()
     {
-        //
+        return view("tasks.expenses");
     }
 
     /**

@@ -207,7 +207,7 @@ $(document).ready(function() {
             expenseData.append("desc", descData);
             expenseData.append("amount", $(".total").text());
             expenseData.append("userType", $(this).attr("user-type"));
-            var actionUrl = "project/expences/create";
+            var actionUrl = "project/expenses/create";
             let id = $("#exp-btn").attr("data");
 
             // handling house keeping (disabling button and clearing inputs with title&total)
