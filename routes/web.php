@@ -27,7 +27,7 @@ Route::middleware([PreventBackHistory::class])->group(function() {
         return view("notFound");
     })->name("notFound");
 
-    //Aunthentication routes
+    //all users routes
     Route::get('/dashboard', 'HomeController@index')->name('home')->middleware("userActivation");
     Route::get('/profile', "ProfilesController@index")->name('profile');
     Route::get('/expenses', 'ExpencesController@index')->name('expenses');
@@ -37,13 +37,19 @@ Route::middleware([PreventBackHistory::class])->group(function() {
     Route::post('/expences/create', 'ExpencesController@create')->name('createExpences');
     Route::post('/user/approved', 'ExpencesController@userApproved')->name('userApproved');
     Route::post('/approved/cancelled', 'ExpencesController@cancelledViewed')->name('cancelledViewed');
+    //Aunthentication routes
     Route::post('/edit/user/info', "Auth\RegisterController@editUserInfo")->name('editUserInfo');
     Route::post('/edit/user/password', "Auth\RegisterController@editUserPassword")->name('editUserPassword');
+    //Project routes
 
     // hr or admin routes only
     Route::middleware([CheckHr::class])->group(function() {
+        //auth routes
+        Route::post('/user/action', "Auth\RegisterController@userActions")->name("userActions");
+        Route::get("/fetch/users", "Auth\RegisterController@fetchUsers")->name("fetchUsers");
         Route::get("/register", "Auth\RegisterController@showRegistrationForm")->name("register");
         Route::post("/register", "Auth\RegisterController@register");
+        //expenses routes
         Route::get('/expences/pending', 'ExpencesController@pending')->name('getPendingExps');
         Route::get("/expenses/clarify", "ExpencesController@clarify")->name("clarifyExps");
         Route::post('/expences/recommended', 'ExpencesController@recommend')->name('recommendExpence');
@@ -52,8 +58,7 @@ Route::middleware([PreventBackHistory::class])->group(function() {
         Route::get('/fetch/expenses/accepted', 'ExpencesController@getAccepted')->name("getAccepted");
         Route::post('/expenses/cashOut', 'ExpencesController@cashOut')->name('cashOut');
         Route::post('/expenses/approved/month', 'ExpencesController@approved')->name('approved');
-        Route::post('/user/action', "Auth\RegisterController@userActions")->name("userActions");
-        Route::get("/fetch/users", "Auth\RegisterController@fetchUsers")->name("fetchUsers");
+        
         Route::post(("/expenses/seen"), "ExpencesController@viewed")->name("viewed");
         Route::get('/expense/printPdf/{month}', ['as' => 'printPdf', 'uses' => 'ExpencesController@printPDF']);
     });
