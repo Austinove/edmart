@@ -304,6 +304,7 @@ $(document).ready(function() {
     });
 
     //Fetch my requests
+    fetchMyRequests();
     fetchMyRequests = () => {
         const requestUrl = "project/expense/myRequests";
         $.when(getRequest(requestUrl))
@@ -315,7 +316,6 @@ $(document).ready(function() {
                 notification("Couldn't fetch data", "warning");
             });
     };
-    fetchMyRequests();
     //rendering my requests
     const renderMyRequests = expenseData => {
         expenseData.forEach(expense => {
@@ -324,6 +324,7 @@ $(document).ready(function() {
     };
 
     //Fetch Declined requests
+    fetchDeclinedRequests();
     fetchDeclinedRequests = () => {
         const requestUrl = "project/expense/myRequests";
         $.when(getRequest(requestUrl))
@@ -335,7 +336,6 @@ $(document).ready(function() {
                 notification("Couldn't fetch data", "warning");
             });
     };
-    fetchDeclinedRequests();
     //rendering Declined requests
     const renderDeclinedRequests = expenseData => {
         expenseData.forEach(expense => {
@@ -344,6 +344,7 @@ $(document).ready(function() {
     };
 
     //Fetch Approved requests
+    fetchApprovedRequests();
     fetchApprovedRequests = () => {
         const requestUrl = "project/expense/myRequests";
         $.when(getRequest(requestUrl))
@@ -355,7 +356,6 @@ $(document).ready(function() {
                 notification("Couldn't fetch data", "warning");
             });
     };
-    fetchApprovedRequests();
     //rendering Approved requests
     const renderApprovedRequests = expenseData => {
         expenseData.forEach(expense => {
@@ -364,6 +364,7 @@ $(document).ready(function() {
     };
 
     //Fetch Submitted requests
+    fetchSubmittedRequests();
     fetchSubmittedRequests = () => {
         const requestUrl = "project/expense/myRequests";
         $.when(getRequest(requestUrl))
@@ -375,7 +376,6 @@ $(document).ready(function() {
                 notification("Couldn't fetch data", "warning");
             });
     };
-    fetchSubmittedRequests();
     //rendering Submitted requests
     const renderSubmittedRequests = expenseData => {
         expenseData.forEach(expense => {
@@ -384,6 +384,7 @@ $(document).ready(function() {
     };
 
     //Fetch Revised requests
+    fetchRevisedRequests();
     fetchRevisedRequests = () => {
         const requestUrl = "project/expense/myRequests";
         $.when(getRequest(requestUrl))
@@ -395,7 +396,6 @@ $(document).ready(function() {
                 notification("Couldn't fetch data", "warning");
             });
     };
-    fetchRevisedRequests();
     //rendering Revised requests
     const renderRevisedRequests = expenseData => {
         expenseData.forEach(expense => {
@@ -404,6 +404,7 @@ $(document).ready(function() {
     };
 
     //Fetch Clarify requests
+    fetchClarifyRequests();
     fetchClarifyRequests = () => {
         const requestUrl = "project/expense/myRequests";
         $.when(getRequest(requestUrl))
@@ -415,7 +416,6 @@ $(document).ready(function() {
                 notification("Couldn't fetch data", "warning");
             });
     };
-    fetchClarifyRequests();
     //rendering Clarify requests
     const renderClarifyRequests = expenseData => {
         expenseData.forEach(expense => {
@@ -424,6 +424,7 @@ $(document).ready(function() {
     };
 
     //Fetch Accepted requests
+    fetchAcceptedRequests();
     fetchAcceptedRequests = () => {
         const requestUrl = "project/expense/myRequests";
         $.when(getRequest(requestUrl))
@@ -435,7 +436,6 @@ $(document).ready(function() {
                 notification("Couldn't fetch data", "warning");
             });
     };
-    fetchAcceptedRequests();
     //rendering Accepted requests
     const renderAcceptedRequests = expenseData => {
         expenseData.forEach(expense => {
@@ -444,6 +444,7 @@ $(document).ready(function() {
     };
 
     //Fetch CashedOut requests
+    fetchCashedOutRequests();
     fetchCashedOutRequests = () => {
         const requestUrl = "project/expense/myRequests";
         $.when(getRequest(requestUrl))
@@ -455,11 +456,31 @@ $(document).ready(function() {
                 notification("Couldn't fetch data", "warning");
             });
     };
-    fetchCashedOutRequests();
     //rendering CashedOut requests
     const renderCashedOutRequests = expenseData => {
         expenseData.forEach(expense => {
             // card iteration
         });
     };
+
+    //Refreshing the System's Information
+    setInterval(() => {
+        $.when(getRequest('projects/expences/fetch').done(response => {
+            $(".checker").text('');
+            // retrieve other information after check
+            if(initialUser === "hr"){
+                
+            } else if(initialUser === "admin"){
+                
+            }else{
+                
+            }
+            
+        }).fail(error => {
+            $(".checker").text("No internet access, please check your connection");
+            console.log(error);
+            // Notification("An Error occuired OR No internet access", "warning");
+        }));
+        
+    },30000);
 });

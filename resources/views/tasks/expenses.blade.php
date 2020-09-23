@@ -145,6 +145,7 @@
 
                     @auth
                         <div class="col-md-12 expenses-contents">
+                            <I class=" ml-4 text-danger font-12 checker-list">juhaoifeog</I>
                             {{-- expense nav bar --}}
                             <nav class="fluid nav-expenses">
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
