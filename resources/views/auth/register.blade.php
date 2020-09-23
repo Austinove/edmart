@@ -4,8 +4,8 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="row ">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header font-weight-bold custom-color">Register New Users</div>
                 <div class="row">
@@ -38,33 +38,46 @@
                                 </div>
                             </div>
                             <div class="form-group mb-3">
-                                <label for="exampleFormControlInput1" class="small-text custom-color">User Type</label>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="worker" name="userType" required value="worker" class="custom-control-input">
-                                    <label class="custom-control-label custom-color font-italic font-weight-light" for="worker">Worker</label>
+                                <label for="exampleFormControlInput1" class="small-text">
+                                    User Type
+                                    <span class="error">*</span>
+                                </label><br>
+                                <a href="#" class="return-selection d-none">
+                                    <U><I class="font-12">Select again</I></U>
+                                </a>
+                                <div class="bg-secondary selectInput">
+                                    <select name="userType" class="userType form-control form-control form-control-alternative" required>
+                                        <option value="">Select user type</option>
+                                        <option value="worker">Worker</option>
+                                        <option value="hr">Human Resource</option>
+                                        <option value="admin">Administrator</option>
+                                    </select>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="hr" name="userType" required value="hr" class="custom-control-input">
-                                    <label class="custom-control-label custom-color font-italic font-weight-light" for="hr">Human Resource</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="admin" name="userType" required value="admin" class="custom-control-input">
-                                    <label class="custom-control-label custom-color font-italic font-weight-light" for="admin">Admin</label>
+                                <div class="bg-secondary d-none positionInput">
+                                    <span class="error error-user"></span>
+                                    <input name="position" class="position form-control form-control form-control-alternative" placeholder="Enter worker's position">
                                 </div>
                             </div>
                             <div class="alert alert-default custom-bg" role="alert">
-                                <strong>Cation!! </strong>
-                                <div>
+                                <strong class="font-13">Cation!! </strong>
+                                <div class="font-13">
                                     By default password will be <strong> "password" </strong> without spaces
                                 </div>
                             </div>
-
                             <div class="text-left">
                             <button type="submit" id="register-btn" class="btn btn-outline-primary my-4 btn-md custom-btn">Register User</button>
                             </div>
                         </form>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header font-weight-bold custom-color">Current Users <span class="badge badge-users custom-badge badge-default font-weight-bold"></span></div>
+                {{-- Users are fro jQuery --}}
+                <div class="row users-container"></div>
             </div>
         </div>
     </div>

@@ -63,12 +63,12 @@
 </div>
 
 <!-- Expenses Cancelling Reason -->
-<div class="modal fade" id="expenseCancel" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="expenseCancel" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-md" role="document">
       <div class="modal-content">
         <form id="cancel-reason">
           <div class="modal-header">
-            <h3 class="mb-0 custom-color font-12">Reason for cancelling expense</h3>
+            <h3 class="mb-0 custom-color font-14 cancel-title">Reason for cancelling expense</h3>
             <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -82,7 +82,7 @@
                         <div class="form-group">
                           <label for="cancellingReason" class="small-text">Reason <span class="error">*</span></label>
                           <div class="bg-secondary">
-                            <textarea required name="reason" rows="2" type="text" class="reason form-control-sm form-control form-control-alternative" placeholder="Enter reason for cancelling the expense"></textarea>
+                            <textarea required name="reason" rows="2" type="text" class="reason form-control-sm form-control form-control-alternative" placeholder="Enter reason please..."></textarea>
                           </div>
                         </div>
                       </div>

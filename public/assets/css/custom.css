@@ -114,3 +114,16 @@ main {
 .font-12 {
     font-size: 12px !important;
 }
+.font-13 {
+    font-size: 13px !important;
+}
+.font-14 {
+    font-size: 14px !important;
+}
+.custom-close {
+    font-size: 30px !important;
+    color: black !important;
+}
+.waiting {
+    cursor: not-allowed !important;
+}

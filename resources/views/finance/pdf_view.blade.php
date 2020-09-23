@@ -83,7 +83,7 @@
                     @endif
                 </strong>
             </span>
-            <span style="float: right;">Total: 
+            <span style="float: right;">Grand Total: 
                 <strong>
                     @if (count($show)>0)
                         @php
@@ -92,7 +92,7 @@
                             $sum += intval($item->amount);
                             }
                         @endphp
-                        {{$sum}}
+                        {{number_format($sum, 2)}} UGX
                     @endif
                 </strong>
             </span>
@@ -102,9 +102,10 @@
             <thead>
                 <tr>
                     <th scope="col" class="th-main">Description</th>
-                    <th scope="col" class="th-main">Budget</th>
-                    <th scope="col" class="th-main">user</th>
-                    <th scope="col" class="th-main">Date/Time</th>
+                    <th scope="col" class="th-main" style="width: 8%;">Total</th>
+                    <th scope="col" class="th-main" style="width: 10%;">Name</th>
+                    <th scope="col" class="th-main" style="width: 12%">Position</th>
+                    <th scope="col" class="th-main" style="width: 10%;">Date/Time</th>
                 </tr>
             </thead>
             <tbody>
@@ -116,8 +117,9 @@
                                     <thead>
                                         <tr>
                                             <th scope="col" class="th-inside">{{explode('>|<', $item->desc)[0]}}</th>
-                                            <th scope="col" class="th-inside">quantity</th>
-                                            <th scope="col" class="th-inside">unit</th>
+                                            <th scope="col" class="th-inside">Quantity</th>
+                                            <th scope="col" class="th-inside">Unit</th>
+                                            <th scope="col" class="th-inside">Unit Price</th>
                                             <th scope="col" class="th-inside">Amount</th>
                                         </tr>
                                     </thead>
@@ -127,14 +129,16 @@
                                                 <td class="custom-td td-inside">{{explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[0]}}</td>
                                                 <td class="td-inside">{{explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[1]}}</td>
                                                 <td class="td-inside">{{explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[2]}}</td>
-                                                <td class="td-inside">{{explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[3]}}</td>
+                                                <td class="td-inside">{{number_format(explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[3])}}</td>
+                                                <td class="td-inside">{{number_format(intval(explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[3]) * intval(explode('<>', (explode('||', (explode('>|<', $item->desc)[1]))[$i]))[1]))}}</td>
                                             </tr>
                                         @endfor
                                     </tbody>
                                 </table>
                             </td>
-                            <td class="td-main">{{$item->amount}}</td>
+                            <td class="td-main">{{number_format($item->amount, 2)}}</td>
                             <td class="td-main">{{$item->name}}</td>
+                            <td class="td-main">{{$item->position}}</td>
                             <td class="td-main">{{$item->created_at}}</td>
                         </tr>
                     @endforeach

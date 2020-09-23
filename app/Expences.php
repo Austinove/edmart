@@ -10,7 +10,8 @@ class Expences extends Model
         "desc",
         "amount",
         "status",
-        "viewed"
+        "viewed",
+        "reason"
     ];
 
     public function requestedExps() {
