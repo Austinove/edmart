@@ -1,5 +1,5 @@
 @section('dynamic-js')
-    <script src="{{ asset('/assets/js/user.js')}}"></script>
+    <script src="{{ asset('/assets/js/user.js?v=1.0')}}"></script>
 @stop
 @extends('layouts.app')
 @section('content')
@@ -64,6 +64,7 @@
                                     By default password will be <strong> "password" </strong> without spaces
                                 </div>
                             </div>
+
                             <div class="text-left">
                             <button type="submit" id="register-btn" class="btn btn-outline-primary my-4 btn-md custom-btn">Register User</button>
                             </div>
@@ -72,7 +73,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header font-weight-bold custom-color">Current Users <span class="badge badge-users custom-badge badge-default font-weight-bold"></span></div>

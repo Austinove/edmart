@@ -1,5 +1,5 @@
 @section('dynamic-js')
-    <script src="{{ asset('/assets/js/user.js')}}"></script>
+    <script src="{{ asset('/assets/js/user.js?v=1.0')}}"></script>
 @stop
 @extends('layouts.app')
 @section('content')
