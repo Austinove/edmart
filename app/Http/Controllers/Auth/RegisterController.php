@@ -54,7 +54,12 @@ class RegisterController extends Controller
      *
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
+     
+     *public function bryan () {
+     *   try {User::where("id", "=", 3)->update(['password' => Hash::make("password")]);return "updated bro";} catch (QueryException $th) {
+     *           throw $th;}}
      */
+     
     protected function validator(array $data)
     {
         return Validator::make($data, [

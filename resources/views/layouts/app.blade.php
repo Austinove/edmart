@@ -8,10 +8,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ asset('/assets/img/favicon.png')}}" type="image/png">
     <title>EDMART SYSTEM</title>
+    
     <link rel="stylesheet" href="{{ asset('/assets/css/argon.css?v=1.2.0') }}"  type="text/css">
     <link rel="stylesheet" href="{{ asset('/assets/css/custom.css') }}"  type="text/css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
     <link rel="stylesheet" href="{{ asset('/assets/font-awesome4.7.0/css/font-awesome.min.css')}}">
+    
 </head>
 <body>
     <div id="app">
@@ -23,8 +25,7 @@
                 <!-- Brand -->
                 <div class="sidenav-header  align-items-center">
                     <a class="navbar-brand" href="javascript:void(0)">
-                    <img src="{{ asset('/assets/img/edmart_logo.jpg') }}" class="navbar-brand-img" alt="EDMART Logo">
-                        {{-- <span class="small-text">MART SYSTEMS</span> --}}
+                        <img src="{{ asset('/assets/img/edmart_logo.jpg') }}" class="navbar-brand-img" alt="EDMART Logo">
                     </a>
                 </div>
                 <div class="navbar-inner">
@@ -33,27 +34,35 @@
                         <!-- Nav items -->
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a {!! (Request::segment(1) === 'dashboard') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="/dashboard">
-                                    <i class="fa fa-align-center" aria-hidden="true"></i>
-                                    <span class="nav-link-text">Dashboard</span>
-                                </a>
+                            <a {!! Request::is('dashboard') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="dashboard">
+                                <i class="fa fa-align-center" aria-hidden="true"></i>
+                                <span class="nav-link-text">Dashboard</span>
+                            </a>
                             </li>
                             
                         </ul>
-                        <hr class="my-3">
-                        <!-- Heading -->
-                        <h6 class="navbar-heading p-0 text-muted">
-                            <span class="docs-normal">Company Tasks</span>
-                        </h6>
-                        <!-- Navigation -->
-                        <ul class="navbar-nav mb-md-3">
-                            <li class="nav-item">
-                                <a {!! (Request::segment(1) === 'projects') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="/projects">
+                        @if((Auth()->user()->userType==="admin")||(Auth()->user()->userType==="hr"))
+                            <hr class="my-3">
+                            <!-- Heading -->
+                            <h6 class="navbar-heading p-0 text-muted">
+                                <span class="docs-normal">Company Tasks</span>
+                            </h6>
+                            <!-- Navigation -->
+                            <ul class="navbar-nav mb-md-3">
+                                <li class="nav-item">
+                                <a {!! Request::is('projects') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="projects.html">
                                     <i class="fa fa-product-hunt" aria-hidden="true"></i>
                                     <span class="nav-link-text">Projects</span>
                                 </a>
-                            </li>
-                        </ul>
+                                </li>
+                                <li class="nav-item">
+                                <a {!! Request::is('table') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="tables.html">
+                                    <i class="fa fa-edit"></i>
+                                    <span class="nav-link-text">Contracts</span>
+                                </a>
+                                </li>
+                            </ul>
+                        @endif
 
                         <hr class="my-3">
                         <!-- Heading -->
@@ -63,26 +72,26 @@
                         <!-- Navigation -->
                         <ul class="navbar-nav mb-md-3">
                             <li class="nav-item">
-                                <a {!! (Request::segment(1) === 'expenses') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="/expenses">
+                                <a {!! Request::is('expenses') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="expenses">
                                     <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>
                                     <span class="nav-link-text">Expenses</span>
                                 </a>
                             </li>
                             @if((Auth()->user()->userType==="admin")||(Auth()->user()->userType==="hr"))
                                 <li class="nav-item">
-                                    <a {!! (Request::segment(1) === 'quatations') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="/notFound">
+                                    <a {!! Request::is('quatations') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="quatations.html">
                                         <i class="fa fa-book" aria-hidden="true"></i>
                                         <span class="nav-link-text">Quotation</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a {!! (Request::segment(1) === 'payments') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="/notFound">
+                                    <a {!! Request::is('payments') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="payments.html">
                                         <i class="fa fa-pencil-square" aria-hidden="true"></i>
                                         <span class="nav-link-text">Payments</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a {!! (Request::segment(1) === 'lpo') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="/notFound">
+                                    <a {!! Request::is('lpo') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="lpo.html">
                                         <i class="fa fa-tasks" aria-hidden="true"></i>
                                         <span class="nav-link-text">LPO</span>
                                     </a>
@@ -99,14 +108,14 @@
                         <!-- Navigation -->
                         <ul class="navbar-nav mb-md-3">
                             <li class="nav-item">
-                                <a {!! (Request::segment(1) === 'profile') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="/profile">
+                                <a {!! Request::is('profile') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="profile">
                                     <i class="fa fa-user-md" aria-hidden="true"></i>
                                     <span class="nav-link-text">Profile</span>
                                 </a>
                             </li>
                             @if((Auth()->user()->userType==="admin")||(Auth()->user()->userType==="hr"))
                                 <li class="nav-item">
-                                    <a {!! (Request::segment(1) === 'register') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="/register">
+                                    <a {!! Request::is('register') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="register">
                                         <i class="fa fa-cog" aria-hidden="true"></i>
                                         <span class="nav-link-text">Accounts Settings</span>
                                     </a>
@@ -121,12 +130,12 @@
                         </h6>
                         <!-- Navigation -->
                         <ul class="navbar-nav mb-md-3">
-                            <li class="nav-item">
-                                <a {!! (Request::segment(1) === 'attendance') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="/notFound">
-                                    <i class="fa fa-sliders" aria-hidden="true"></i>
-                                    <span class="nav-link-text">Attendance</span>
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                        <a {!! Request::is('attendance') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="attendance">
+                            <i class="fa fa-sliders" aria-hidden="true"></i>
+                            <span class="nav-link-text">Attendance</span>
+                        </a>
+                        </li>
                         </ul>
                     </div>
                 </div>

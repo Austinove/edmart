@@ -3417,7 +3417,7 @@ fieldset:disabled a.btn
 .btn-secondary:not(:disabled):not(.disabled).active,
 .show > .btn-secondary.dropdown-toggle
 {
-    color: #b76c11;
+    color: #212529;
     border-color: #f7fafc; 
     background-color: #d2e3ee;
 }

@@ -200,7 +200,7 @@ $(document).ready(function(){
                     break;
 
                 case "no":
-                    (expenseDesc.length < 6) ? 
+                    (expenseDesc.length <= 6) ? 
                     expenseDesc.push(
                         {               
                             "id": count,

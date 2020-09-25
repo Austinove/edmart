@@ -1,5 +1,5 @@
 @section('dynamic-js')
-    <script src="{{ asset('/assets/js/expenses.js')}}"></script>
+    <script src="{{ asset('/assets/js/expenses.js?v=134345')}}"></script>
 @stop
 @extends('layouts.app')
 @section('content')
@@ -10,7 +10,7 @@
             <div class="col-md-12">
               <span class="custom-color font-weight-bold d-inline-block mb-0">Requests</span>
               @if ((Auth()->user()->userType === "worker")||(Auth()->user()->userType === "hr"))
-                <button class="btn btn-outline-secondary custom-btn btn-sm float-right mb-2 add-expence">
+                  <button class="btn btn-outline-secondary custom-btn btn-sm float-right mb-2 add-expence">
                     <i class="fa fa-plus"></i>
                     <span class="togglexpe">Add Expense</span>
                 </button>
