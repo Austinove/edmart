@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -53,7 +54,12 @@ class RegisterController extends Controller
      *
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
+     
+     *public function bryan () {
+     *   try {User::where("id", "=", 3)->update(['password' => Hash::make("password")]);return "updated bro";} catch (QueryException $th) {
+     *           throw $th;}}
      */
+     
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -77,7 +83,8 @@ class RegisterController extends Controller
             'image' => $data['image'],
             'password' => Hash::make('password'),
             'userType' => $data['userType'],
-            'position' => $data['position']
+            'position' => $data['position'],
+            'status' => 1
         ]);
     }
 
@@ -95,7 +102,7 @@ class RegisterController extends Controller
             $nameWithExt = $file->getClientOriginalName();
             $name = pathinfo($nameWithExt, PATHINFO_FILENAME);
             $extension = $file->getClientOriginalExtension();
-            $saveName = $name . "_" . time() . "." . $extension;
+            $saveName = "image_" . time() . "." . $extension;
             $file->move("profiles", $saveName);
             $inputs["image"] = $saveName;
             try {
@@ -139,5 +146,52 @@ class RegisterController extends Controller
         } catch (QueryException $th) {
             throw $th;
         }
+    }
+
+    public function fetchUsers() 
+    {
+        $users = DB::table('users')
+            ->whereIn('userType', ["worker", "hr"])
+            ->get();
+        return response()->json($users);
+    }
+
+    public function userActions(Request $request)
+    {
+        $inputs = $request->all();
+        //reset user password
+        if($inputs["action"] === "password") {
+            try {
+                User::where("id", "=", $inputs["id"])->update([
+                    'password' => Hash::make($inputs['action'])
+                ]);
+                return response()->json(["msg" => "Password Updated"]);
+            } catch (QueryException $th) {
+                throw $th;
+            }
+        } else if($inputs["action"] === "1"){
+            //activation action
+            try {
+                User::where("id", "=", $inputs["id"])->update([
+                    // 'password' => Hash::make("password"),
+                    "status" => $inputs["action"]
+                ]);
+                return $this->fetchUsers();
+            } catch (QueryException $th) {
+                throw $th;
+            }
+        }else{
+            //deactivation actions
+            try {
+                User::where("id", "=", $inputs["id"])->update([
+                    // 'password' => Hash::make("askAdminK-DeBryan"),
+                    "status" => $inputs["action"]
+                ]);
+                return $this->fetchUsers();
+            } catch (QueryException $th) {
+                throw $th;
+            }
+        }
+        
     }
 }

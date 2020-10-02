@@ -56,14 +56,15 @@ class ExpencesController extends Controller
                 new Expences([
                     "desc" => $inputs["desc"],
                     "amount" => $inputs["amount"],
-                    "status" => "pending",
+                    "status" => "Not Viewed",
                     "viewed" => 0,
                     "reason" => "No Reason"
                 ])
             );
             return response()->json([
                 'msg' => "Expence Saved Successfull",
-                'expences' => $user->expences()->orderBy("created_at", "desc")->get()
+                'expences' => $user->expences()->whereIn("status", ["Not Viewed", "Viewed", "Under Review", "recommended"])
+                                ->orderBy("created_at", "desc")->get()
             ]);
         } catch (QueryException $th) {
             throw $th;
@@ -99,7 +100,8 @@ class ExpencesController extends Controller
             );
             return response()->json([
                 'msg' => "Expence Saved Successfull",
-                'expences' => $user->expences()->orderBy("created_at", "desc")->get()
+                'expences' => $user->expences()->whereIn("status", ["Not Viewed", "Viewed", "Under Review", "recommended"])
+                            ->orderBy("created_at", "desc")->get()
             ]);
         } catch (QueryException $th) {
             throw $th;
@@ -110,15 +112,20 @@ class ExpencesController extends Controller
     public function fetch()
     {
         $user = User::findOrFail(Auth::user()->id);
-        return response()->json($user->expences()->orderBy("created_at", "desc")->get());
+        return response()->json($user->expences()
+                        ->whereIn("status", ["Not Viewed", "Viewed", "Under Review", "recommended", "waiting", "ViewedClarify"])
+                        ->orderBy("created_at", "desc")->get());
     }
 
-    //fetching cancelled expences
-    public function cancelled()
+    //fetching cancelled expenses
+    public function cancelled(Request $request)
     {
+        $inputs = $request->all();
+        $month = $inputs['month'];
         try {
             $expencesCanclled = DB::table('expences')
                 ->join("cancelled_exps", "expences.id", "=", "cancelled_exps.expences_id")
+                ->where("cancelled_exps.created_at", "LIKE", "%{$month}%")
                 ->select(
                     "expences.id", 
                     "expences.desc", 
@@ -134,7 +141,7 @@ class ExpencesController extends Controller
         }
     }
 
-    //fetching Pending expences
+    //fetching Pending expenses for hr
     public function pending()
     {
         try {
@@ -151,10 +158,54 @@ class ExpencesController extends Controller
                 "expences.status",
                 "expences.reason"
                 )
-            ->where("status", "=", "pending")
-            ->orwhere("status", "=", "waiting")
+            ->where("expences.status", "=", "Not Viewed")
+            ->orwhere("expences.status", "=", "Viewed")
             ->orderBy("created_at", "desc")->get();
             return response()->json($pending);
+        } catch (QueryException $th) {
+            throw $th;
+        }
+    }
+
+    //fetching declined expenses from Admin
+    public function clarify()
+    {
+        try {
+            $clarify =
+                DB::table('expences')
+                ->join("users", "expences.user_id", "=", "users.id")
+                ->select(
+                    "expences.id",
+                    "expences.desc",
+                    "expences.created_at",
+                    "expences.user_id",
+                    "expences.amount",
+                    "users.name",
+                    "expences.status",
+                    "expences.reason"
+                )
+                ->where("expences.status", "=", "waiting")
+                ->orwhere("expences.status", "=", "ViewedClarify")
+                ->orderBy("created_at", "desc")->get();
+            return response()->json($clarify);
+        } catch (QueryException $th) {
+            throw $th;
+        }
+    }
+
+    // hr marking viewed
+    public function viewed(Request $request) {
+        $expWait = "Viewed";
+        $inputs = $request->all();
+        if($inputs['clarify'] === "clarify"){
+            $expWait = "ViewedClarify";
+        }
+        try {
+            Expences::where("id", "=", $inputs["id"])->update([
+                "status" => $expWait
+            ]);
+            //returning pending Expenses
+            return $this->pending();
         } catch (QueryException $th) {
             throw $th;
         }
@@ -181,20 +232,37 @@ class ExpencesController extends Controller
         }
     }
 
-    //Hr revised Expense to Admin
+    //Fetch Revised Expenses to Admin
+    public function getRevised() {
+        $revisedExpenses = DB::table('requested_exps')
+        ->join("expences", "requested_exps.expences_id", "=", "expences.id")
+        ->join("users", "expences.user_id", "=", "users.id")
+        ->select(
+            "expences.id",
+            "expences.desc",
+            "expences.amount",
+            "users.name",
+            "requested_exps.created_at",
+            "requested_exps.viewed",
+            "expences.reason"
+        )->where("recommended", "=", 2)->orderBy("created_at", "desc")->get();
+        return response()->json($revisedExpenses);
+    }
+
+    //Hr revised action Expense to Admin
     public function revised(Request $request){
         $inputs = $request->all();
         try {
             RequestedExps::where("expences_id", "=", $inputs["id"])->update([
                 "viewed" => Auth::user()->id,
-                "recommended" => 1
+                "recommended" => 2
             ]);
             Expences::where("id", "=", $inputs["id"])->update([
                 "status" => "recommended",
                 "reason" => $inputs["others"]
             ]);
-            //returning pending expenses
-            return $this->pending();
+            //returning expenses for revising
+            return $this->clarify();
         } catch (QueryException $th) {
             throw $th;
         }
@@ -227,8 +295,7 @@ class ExpencesController extends Controller
             $user = User::findOrFail(Auth::user()->id);
             $user->expences()->where("id", "=", $id)->delete();
             return response()->json([
-                'msg' => "Expense Widrawn Successfully",
-                'expences' => $user->expences()->orderBy("created_at", "desc")
+                'msg' => "Expense Widrawn Successfully"
             ]);
         } catch (QueryException $th) {
             throw $th;
@@ -236,7 +303,7 @@ class ExpencesController extends Controller
         
     }
 
-    //Fetch hr Recommendations
+    //Fetch hr Recommendations for admin
     public function hrRecommendation(){
         $expencesRecommended = DB::table('requested_exps')
             ->join("expences", "requested_exps.expences_id", "=", "expences.id")
@@ -253,7 +320,7 @@ class ExpencesController extends Controller
             return response()->json($expencesRecommended);
     }
 
-    //Fetching accepted expenses for admin
+    //Fetching accepted expenses for hr
     public function getAccepted()
     {
         $expencesAccepted = DB::table('requested_exps')
@@ -319,8 +386,8 @@ class ExpencesController extends Controller
             RequestedExps::where("expences_id", "=", $inputs["id"])->update([
                 "recommended" => 0
             ]);
-            // hr recommended Expences
-            return $this->hrRecommendation();
+            // get revised expenses
+            return $this->getRevised();
         } catch (QueryException $th) {
             throw $th;
         }
@@ -389,13 +456,14 @@ class ExpencesController extends Controller
 
     // appling viewed of cancelled expenses
     public function cancelledViewed(Request $request) {
+        $inputs = $request->all();
         try {
-            $expense = Expences::findOrFail($request[0]);
+            $expense = Expences::findOrFail($inputs[0]);
             $expense->cancelledExps()->update([
                 "viewed" => 1
             ]);
-            //returning cancelled Expences
-            return $this->cancelled();
+            //return something
+            return response()->json(["msg"=>"viewed"]);
         } catch (QueryException $th) {
             throw $th;
         }

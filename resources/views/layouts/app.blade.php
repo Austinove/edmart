@@ -25,8 +25,7 @@
                 <!-- Brand -->
                 <div class="sidenav-header  align-items-center">
                     <a class="navbar-brand" href="javascript:void(0)">
-                    <img src="{{ asset('/assets/img/favicon.png') }}" class="navbar-brand-img" alt="EDMART Logo">
-                        <span class="small-text">MART SYSTEMS</span>
+                        <img src="{{ asset('/assets/img/edmart_logo.jpg') }}" class="navbar-brand-img" alt="EDMART Logo">
                     </a>
                 </div>
                 <div class="navbar-inner">
@@ -82,7 +81,7 @@
                                 <li class="nav-item">
                                     <a {!! Request::is('quatations') ? 'class="nav-link active"' : 'class="nav-link"' !!} href="quatations.html">
                                         <i class="fa fa-book" aria-hidden="true"></i>
-                                        <span class="nav-link-text">Quatation</span>
+                                        <span class="nav-link-text">Quotation</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
