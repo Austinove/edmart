@@ -37,7 +37,7 @@ Route::middleware([PreventBackHistory::class])->group(function () {
     Route::post("/project/create", "ProjectsController@create")->name("createProject");
     Route::post("/project/update", "ProjectsController@update")->name("updateProject");
     //Projects Expenses routes
-    Route::get("/projects/expenses", "ProjectExpencesController@index")->name("project-expenses");
+    Route::get("/projects/expenses", "ProjectExpensesController@index")->name("project-expenses");
 
     // hr or admin routes only
     Route::middleware([CheckHr::class])->group(function () {

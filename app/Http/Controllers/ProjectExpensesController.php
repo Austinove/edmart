@@ -1,19 +1,9 @@
 <?php
-
-// namespace App\Http\Controllers;
-
-// use Illuminate\Http\Request;
-
-// class ProjectExpensesController extends Controller
-// {
-//     //
-// }
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ProjectExpencesController extends Controller
+class ProjectExpensesController extends Controller
 {
     public function __construct()
     {
