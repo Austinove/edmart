@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProjectsTable extends Migration
+class CreateReasoningsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,20 @@ class CreateProjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create('reasonings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("projects_id")->constrained()
-                ->onUpdate("cascade")
-                ->onDelete("cascade");
-            $table->index("projects_id");
-            $table->foreignId("user_id")->constrained()
+            $table->foreignId("user_id")
+                ->constrained()
                 ->onUpdate("cascade")
                 ->onDelete("cascade");
             $table->index("user_id");
-            $table->text("desc");
-            $table->string("amount");
-            $table->string("status");
-            $table->string("viewed");
+            $table->foreignId("project_expenses_id")
+            ->constrained()
+                ->onUpdate("cascade")
+                ->onDelete("cascade");
+            $table->index("project_expenses_id");
+            $table->text("clarification");
+            $table->text("reason");
             $table->timestamps();
         });
     }
@@ -38,6 +38,6 @@ class CreateProjectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('reasonings');
     }
 }

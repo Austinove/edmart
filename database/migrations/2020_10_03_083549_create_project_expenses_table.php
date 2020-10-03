@@ -15,6 +15,13 @@ class CreateProjectExpensesTable extends Migration
     {
         Schema::create('project_expenses', function (Blueprint $table) {
             $table->id();
+            $table->string("client");
+            $table->text("desc");
+            $table->string("status");
+            $table->string("Assmanager");
+            $table->string("commencement");
+            $table->string("completion");
+            $table->string("fee");
             $table->timestamps();
         });
     }
