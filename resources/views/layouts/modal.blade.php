@@ -118,23 +118,9 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="cancellingReason" class="small-text">Check form Employees List below: <span class="error">*</span></label>
+                          {{-- data is from jQuery --}}
                           <div class="checkbox-holder">
-                            <div class="bg-secondary custom-control custom-checkbox">
-                              <input type="checkbox" name="customCheck1" class="custom-control-input emp-checkbox" value="Bryan" id="customCheck1">
-                              <label class="custom-control-label" name="customCheck4" for="customCheck1">Bryan Austin</label>
-                            </div>
-                            <div class="bg-secondary custom-control custom-checkbox">
-                              <input type="checkbox" name="customCheck2" class="custom-control-input emp-checkbox" value="Hussein" id="customCheck2">
-                              <label class="custom-control-label" name="customCheck4" for="customCheck2">Muwaya Hussein</label>
-                            </div>
-                            <div class="bg-secondary custom-control custom-checkbox">
-                              <input type="checkbox" name="customCheck3" class="custom-control-input emp-checkbox" value="Pinyi" id="customCheck3">
-                              <label class="custom-control-label" name="customCheck4" for="customCheck3">Pinyi Eria</label>
-                            </div>
-                            <div class="bg-secondary custom-control custom-checkbox">
-                              <input type="checkbox" name="customCheck4" class="custom-control-input emp-checkbox" value="Gideon" id="customCheck4">
-                              <label class="custom-control-label" name="customCheck4" for="customCheck4">Ocho Gideon</label>
-                            </div>
+                            <span class="font-14 custom-color">Loading Users ....</span>
                           </div>
                           <input required value="1" name="projectId-holder" class="projectId-holder d-none">
                         </div>

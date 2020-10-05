@@ -63,7 +63,8 @@
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput1" class="small-text">Assistant Project Manager <span class="error">*</span></label>
                                                 <div class="bg-secondary">
-                                                    <select class="Assmanager form-control-sm form-control form-control-alternative"></select>
+                                                    {{-- data is from jQuery --}}
+                                                    <select class="Assmanager form-control-sm form-control form-control-alternative"><option disabled value="" selected>loading Users ...</option></select>
                                                     <span style="display: none" class="user-type small-text">{{Auth()->user()->userType}}</span>
                                                 </div>
                                             </div>
@@ -109,7 +110,7 @@
                                     <button class="btn btn-outline-success btn-sm close-project" data-toggle="tooltip" data-placement="top" title="Close Project"><i class="fa fa-check"></i></button>
                                     <a href="{{route('project-expenses')}}" class="browse-add-exp btn-neutral btn-sm float-right ml-1" data-toggle="tooltip" data-placement="top" title="Check Expenses"><i class="fa fa-plus-circle" aria-hidden="true"></i> Expenses</a>
                                     <a href="#"
-                                        class="browse-add-exp btn-neutral btn-sm float-right" 
+                                        class="browse-add-exp btn-neutral btn-sm float-right employees" 
                                         data-toggle="modal" data-target="#projectEmployee">
                                         <i class="fa fa-plus-circle" aria-hidden="true"></i> Employee
                                     </a>

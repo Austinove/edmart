@@ -1,12 +1,17 @@
 $(document).ready(function () {
     //fetching users
     const fetchUsers = (userTypes) => {
-        $.when(getRequest('users/fetch')).done(response => {
-            (userTypes === "Assmanager") ? renderManagerSelect(response) : renderAssignCheckbox(response);
-            console.log(response);
-        }).fail(error => {
-            console.log(error);
-        });
+        $.when(getRequest("fetch/users"))
+            .done(response => {
+                console.log(response);
+                userTypes === "Assmanager"
+                    ? renderManagerSelect(response)
+                    : renderAssignCheckbox(response);
+                console.log(response);
+            })
+            .fail(error => {
+                console.log(error);
+            });
     }
     const renderManagerSelect = (userData) => {
         $(".Assmanager").html('<option disabled value="" selected>Select Manager</option>');
@@ -18,7 +23,7 @@ $(document).ready(function () {
         $(".checkbox-holder").html('');
         userData.forEach(user => {
             $(".checkbox-holder").append(`
-                <div class="bg-secondary custom-control custom-checkbox">
+                <div class="bg-secondary custom-control custom-checkbox mx-2 mt-2 mb-2">
                     <input type="checkbox" name="customCheck${user.id}" class="custom-control-input emp-checkbox" value="${user.id}" id="customCheck1">
                     <label class="custom-control-label" name="customCheck${user.id}" for="customCheck${user.id}">${user.name}</label>
                 </div>
@@ -29,8 +34,14 @@ $(document).ready(function () {
     $(document).on("click", ".closer", function () {
         clearInputs();
     });
+    //opening Assigning Modal 
+    $(document).on("click", ".employees", function () {
+        fetchUsers("Assign");
+    });
     //toggling project
     $(".project-add-btn").click(function (e) {
+        //fetch users.
+        fetchUsers("Assmanager");
         var toggleText = $('.toggleproject').text();
         if (toggleText === "Create Project") {
             $('.project-inputs').removeClass('d-none');
