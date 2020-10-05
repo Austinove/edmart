@@ -40,24 +40,30 @@
                                                 <label for="exampleFormControlInput1" class="small-text">Contract Fee <span class="error">*</span></label>
                                                 <div class="bg-secondary">
                                                     <input required name="fee" min="1" type="number" class="projectFee form-control-sm form-control form-control-alternative" placeholder="e.g 20000">
-                                                    <span style="display: none" class="user-type small-text">{{Auth()->user()->userType}}</span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group">
-                                                <label for="exampleFormControlInput1" class="small-text">Start Date <span class="error">*</span></label>
+                                                <label for="exampleFormControlInput1" class="small-text">Commencement Date <span class="error">*</span></label>
                                                 <div class="bg-secondary">
-                                                    <input required name="start" type="date" class="projectStart form-control-sm form-control form-control-alternative" placeholder="e.g 20000">
-                                                    <span style="display: none" class="user-type small-text">{{Auth()->user()->userType}}</span>
+                                                    <input required name="commencement" type="date" class="projectStart form-control-sm form-control form-control-alternative">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group">
-                                                <label for="exampleFormControlInput1" class="small-text">End Date <span class="error">*</span></label>
+                                                <label for="exampleFormControlInput1" class="small-text">Completion Date <span class="error">*</span></label>
                                                 <div class="bg-secondary">
-                                                    <input required name="end" type="date" class="projectEnd form-control-sm form-control form-control-alternative" placeholder="e.g 20000">
+                                                    <input required name="completion" type="date" class="projectEnd form-control-sm form-control form-control-alternative">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label for="exampleFormControlInput1" class="small-text">Assistant Project Manager <span class="error">*</span></label>
+                                                <div class="bg-secondary">
+                                                    <select class="Assmanager form-control-sm form-control form-control-alternative"></select>
                                                     <span style="display: none" class="user-type small-text">{{Auth()->user()->userType}}</span>
                                                 </div>
                                             </div>

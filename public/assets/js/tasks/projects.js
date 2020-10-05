@@ -1,4 +1,30 @@
 $(document).ready(function () {
+    //fetching users
+    const fetchUsers = (userTypes) => {
+        $.when(getRequest('users/fetch')).done(response => {
+            (userTypes === "Assmanager") ? renderManagerSelect(response) : renderAssignCheckbox(response);
+            console.log(response);
+        }).fail(error => {
+            console.log(error);
+        });
+    }
+    const renderManagerSelect = (userData) => {
+        $(".Assmanager").html('<option disabled value="" selected>Select Manager</option>');
+        userData.forEach(user => {
+            $('.Assmanager').append(`<option value="${user.id}">${user.name}</option>`);
+        });
+    };
+    const renderAssignCheckbox = (userData) => {
+        $(".checkbox-holder").html('');
+        userData.forEach(user => {
+            $(".checkbox-holder").append(`
+                <div class="bg-secondary custom-control custom-checkbox">
+                    <input type="checkbox" name="customCheck${user.id}" class="custom-control-input emp-checkbox" value="${user.id}" id="customCheck1">
+                    <label class="custom-control-label" name="customCheck${user.id}" for="customCheck${user.id}">${user.name}</label>
+                </div>
+            `);
+        })
+    };
     //Closing the modals
     $(document).on("click", ".closer", function () {
         clearInputs();
@@ -48,7 +74,13 @@ $(document).ready(function () {
         $("#submit-project-btn").attr("data-edit") === "no" ?
             actionURL = "project/create" :
             actionURL = "project/update";
-        var projectData = $(this).serialize();
+        var projectData = new FormData();
+        $.each(this, function(i, v){
+            var input = $(v);
+            projectData.append(input.attr("name"), input.val());
+            // delete projectData["undefined"];
+        });
+        console.log(projectData);
         $.when(postRequest(actionURL, projectData)).done(response => {
             renderProjects(response);
             if ($("#submit-project-btn").attr("data-edit") === "no") {
@@ -63,7 +95,7 @@ $(document).ready(function () {
                     .prop("disabled", false)
                     .html(`<i class="fa fa-arrow-right"></i> Submit Project`);
             }
-            clearInputs();
+            // clearInputs();
         }).fail(error => {
             notification("An error occuired", "warning");
             $("#submit-project-btn")
@@ -83,6 +115,8 @@ $(document).ready(function () {
                 <span class="toggleproject">Return</span>
             `);
     });
+
+
 
     //Fetching Projects
     const fetchProjects = () => {

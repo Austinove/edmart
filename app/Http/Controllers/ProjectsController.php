@@ -26,7 +26,8 @@ class ProjectsController extends Controller
      */
     public function create(Request $request)
     {
-        return $request;
+        $inputs = $request->all();
+        // return $request;
         $this->validate($request, [
             "desc" => "required",
             "fee" => "required|numeric",
@@ -34,8 +35,6 @@ class ProjectsController extends Controller
             "commencement" => "required",
             "completion" => "required"
         ]);
-        $inputs = $request->all();
-        return $inputs;
         try {
             $project = new Project();
             $project->save([

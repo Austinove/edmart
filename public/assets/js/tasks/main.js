@@ -3,18 +3,19 @@ let initialUser = $(".user-span").text();
 
 //post function request
 const postRequest = (requestUrl, requestData) => {
+    console.log(requestData);
     return $.ajax({
         url: requestUrl,
-        type: "POST",
-        data: JSON.stringify(requestData),
+        type: "post",
+        data: requestData,
         dataType: "json",
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
         },
-        contentType: "application/json",
+        contentType: false,
         cache: false,
-        processData: false,
-    })
+        processData: false
+    });
 };
 
 //get request function
