@@ -64,7 +64,9 @@
                                                 <label for="exampleFormControlInput1" class="small-text">Assistant Project Manager <span class="error">*</span></label>
                                                 <div class="bg-secondary">
                                                     {{-- data is from jQuery --}}
-                                                    <select class="Assmanager form-control-sm form-control form-control-alternative"><option disabled value="" selected>loading Users ...</option></select>
+                                                    <select name="Assmanager" class="Assmanager form-control-sm form-control form-control-alternative">
+                                                        <option disabled value="" selected>loading Users ...</option>
+                                                    </select>
                                                     <span style="display: none" class="user-type small-text">{{Auth()->user()->userType}}</span>
                                                 </div>
                                             </div>

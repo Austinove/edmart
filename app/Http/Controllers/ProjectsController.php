@@ -27,17 +27,18 @@ class ProjectsController extends Controller
     public function create(Request $request)
     {
         $inputs = $request->all();
-        // return $request;
+        // return $request['client'];
         $this->validate($request, [
             "desc" => "required",
             "fee" => "required|numeric",
             "Assmanager" => "required",
             "commencement" => "required",
-            "completion" => "required"
+            "completion" => "required",
+            "client" => "required"
         ]);
         try {
-            $project = new Project();
-            $project->save([
+            $project = new Project([
+                "client" => $inputs["client"],
                 "desc" => $inputs["desc"],
                 "fee" => $inputs["fee"],
                 "Assmanager" => $inputs["Assmanager"],
@@ -45,6 +46,7 @@ class ProjectsController extends Controller
                 "completion" => $inputs["completion"],
                 "status" => "open",
             ]);
+            $project->save();
             return response()->json(Project::all());
         } catch (QueryException $th) {
             throw $th;

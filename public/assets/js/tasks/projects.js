@@ -24,7 +24,7 @@ $(document).ready(function () {
         userData.forEach(user => {
             $(".checkbox-holder").append(`
                 <div class="bg-secondary custom-control custom-checkbox mx-2 mt-2 mb-2">
-                    <input type="checkbox" name="customCheck${user.id}" class="custom-control-input emp-checkbox" value="${user.id}" id="customCheck1">
+                    <input type="checkbox" name="customCheck${user.id}" class="custom-control-input emp-checkbox" value="${user.id}" id="customCheck${user.id}">
                     <label class="custom-control-label" name="customCheck${user.id}" for="customCheck${user.id}">${user.name}</label>
                 </div>
             `);
@@ -89,9 +89,7 @@ $(document).ready(function () {
         $.each(this, function(i, v){
             var input = $(v);
             projectData.append(input.attr("name"), input.val());
-            // delete projectData["undefined"];
         });
-        console.log(projectData);
         $.when(postRequest(actionURL, projectData)).done(response => {
             renderProjects(response);
             if ($("#submit-project-btn").attr("data-edit") === "no") {
@@ -106,7 +104,7 @@ $(document).ready(function () {
                     .prop("disabled", false)
                     .html(`<i class="fa fa-arrow-right"></i> Submit Project`);
             }
-            // clearInputs();
+            clearInputs();
         }).fail(error => {
             notification("An error occuired", "warning");
             $("#submit-project-btn")

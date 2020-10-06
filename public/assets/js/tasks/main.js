@@ -81,6 +81,7 @@ const clearInputs = () => {
     $(".units").val("");
     $(".quantity").val("");
     $(".title").val("");
+    $(".Assmanager").val("");
 };
 
 //setting up commas in budget
