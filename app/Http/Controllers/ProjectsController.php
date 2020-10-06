@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Project;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectsController extends Controller
 {
@@ -57,9 +58,23 @@ class ProjectsController extends Controller
     /*
         fetch projects
     */
-    public function fetProjetcs(Request $request)
+    public function fetchProjetcs(Request $request)
     {
-        Project::all();
+        if(Auth::user()->userType === "admin"){
+            return response()->json(Project::all());
+        }else{
+            return response()->json(
+                Project::all(
+                    "id", 
+                    "client", 
+                    "desc", 
+                    "status", 
+                    "Assmanager", 
+                    "commencement", 
+                    "completion"
+                )
+            );
+        }
     }
 
     /**

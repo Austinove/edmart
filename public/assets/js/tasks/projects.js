@@ -125,8 +125,6 @@ $(document).ready(function () {
             `);
     });
 
-
-
     //Fetching Projects
     const fetchProjects = () => {
         $.when(getRequest("projects/fetch")).done(response => {
