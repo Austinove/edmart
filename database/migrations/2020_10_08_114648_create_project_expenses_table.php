@@ -15,13 +15,18 @@ class CreateProjectExpensesTable extends Migration
     {
         Schema::create('project_expenses', function (Blueprint $table) {
             $table->id();
-            $table->string("client");
+            $table->foreignId("projects_id")->constrained()
+                ->onUpdate("cascade")
+                ->onDelete("cascade");
+            $table->index("projects_id");
+            $table->foreignId("user_id")->constrained()
+                ->onUpdate("cascade")
+                ->onDelete("cascade");
+            $table->index("user_id");
             $table->text("desc");
+            $table->string("amount");
             $table->string("status");
-            $table->string("Assmanager");
-            $table->string("commencement");
-            $table->string("completion");
-            $table->string("fee");
+            $table->string("viewed");
             $table->timestamps();
         });
     }
