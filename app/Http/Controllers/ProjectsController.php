@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Project;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectsController extends Controller
 {
@@ -26,26 +27,28 @@ class ProjectsController extends Controller
      */
     public function create(Request $request)
     {
-        return $request;
+        $inputs = $request->all();
         $this->validate($request, [
             "desc" => "required",
             "fee" => "required|numeric",
             "Assmanager" => "required",
             "commencement" => "required",
-            "completion" => "required"
+            "completion" => "required",
+            "client" => "required",
+            "title" => "required"
         ]);
-        $inputs = $request->all();
-        return $inputs;
         try {
-            $project = new Project();
-            $project->save([
-                "desc" => $inputs["desc"],
-                "fee" => $inputs["fee"],
-                "Assmanager" => $inputs["Assmanager"],
-                "commencement" => $inputs["commencement"],
-                "completion" => $inputs["completion"],
-                "status" => "open",
-            ]);
+            // $project = new Project([
+            //     "client" => $inputs["client"],
+            //     "desc" => $inputs["desc"],
+            //     "fee" => $inputs["fee"],
+            //     "Assmanager" => $inputs["Assmanager"],
+            //     "commencement" => $inputs["commencement"],
+            //     "completion" => $inputs["completion"],
+            //     "title" => $inputs["title"],
+            //     "status" => "open",
+            // ]);
+            // $project->save();
             return response()->json(Project::all());
         } catch (QueryException $th) {
             throw $th;
@@ -56,9 +59,24 @@ class ProjectsController extends Controller
     /*
         fetch projects
     */
-    public function fetProjetcs(Request $request)
+    public function fetchProjetcs(Request $request)
     {
-        Project::all();
+        if(Auth::user()->userType === "admin"){
+            return response()->json(Project::all());
+        }else{
+            return response()->json(
+                Project::all(
+                    "id", 
+                    "title",
+                    "client", 
+                    "desc", 
+                    "status", 
+                    "Assmanager", 
+                    "commencement", 
+                    "completion"
+                )
+            );
+        }
     }
 
     /**
