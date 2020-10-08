@@ -103,11 +103,18 @@
                     </div>
                 </div>
                 <div class="pending-proj-container">
-                    <div class="row project-contents">
-                        <div class="col-md-6 col-sm-6">
-                            {{-- Content from jQuery --}}
-                            <div class="card custom-card project-card-content"></div>
+                    {{-- Content from jQuery --}}
+                    <div class="row project-contents project-card-content">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="card custom-card">
+                                <div class="card-body">
+                                    <div class="mb-2 text-center">
+                                        <h5 class="card-title mb-0 text-info">Loading Projects...</h5>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 

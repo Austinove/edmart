@@ -28,26 +28,27 @@ class ProjectsController extends Controller
     public function create(Request $request)
     {
         $inputs = $request->all();
-        // return $request['client'];
         $this->validate($request, [
             "desc" => "required",
             "fee" => "required|numeric",
             "Assmanager" => "required",
             "commencement" => "required",
             "completion" => "required",
-            "client" => "required"
+            "client" => "required",
+            "title" => "required"
         ]);
         try {
-            $project = new Project([
-                "client" => $inputs["client"],
-                "desc" => $inputs["desc"],
-                "fee" => $inputs["fee"],
-                "Assmanager" => $inputs["Assmanager"],
-                "commencement" => $inputs["commencement"],
-                "completion" => $inputs["completion"],
-                "status" => "open",
-            ]);
-            $project->save();
+            // $project = new Project([
+            //     "client" => $inputs["client"],
+            //     "desc" => $inputs["desc"],
+            //     "fee" => $inputs["fee"],
+            //     "Assmanager" => $inputs["Assmanager"],
+            //     "commencement" => $inputs["commencement"],
+            //     "completion" => $inputs["completion"],
+            //     "title" => $inputs["title"],
+            //     "status" => "open",
+            // ]);
+            // $project->save();
             return response()->json(Project::all());
         } catch (QueryException $th) {
             throw $th;
@@ -66,6 +67,7 @@ class ProjectsController extends Controller
             return response()->json(
                 Project::all(
                     "id", 
+                    "title",
                     "client", 
                     "desc", 
                     "status", 
