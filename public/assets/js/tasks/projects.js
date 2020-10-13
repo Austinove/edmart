@@ -137,19 +137,32 @@ $(document).ready(function () {
         //-----------------------------
         if(projectData.length < 1) {
             $(".project-card-content").html(`
-            <div class="col-md-12 col-sm-12">
-                <div class="card custom-card">
-                    <div class="card-body">
-                        <div class="mb-2 text-center">
-                            <h5 class="card-title mb-0 text-info">No project founds</h5>
+                <div class="col-md-12 col-sm-12">
+                    <div class="card custom-card">
+                        <div class="card-body">
+                            <div class="mb-2 text-center">
+                                <h5 class="card-title mb-0 text-info">No project founds</h5>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `);
+            `);
+            $(".closed-project-contents").html(`
+                <div class="col-md-12 col-sm-12">
+                    <div class="card custom-card">
+                        <div class="card-body">
+                            <div class="mb-2 text-center">
+                                <h5 class="card-title mb-0 text-info">No project founds</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `);
         } else {
             $(".project-card-content").html("");
+            $(".closed-project-contents").html("");
             projectData.forEach(project => {
+                if(project.status === "open"){
                 $(".project-card-content").append(`
                         <div class="col-md-6 col-sm-6">
                             <div class="card custom-card ">
@@ -194,7 +207,7 @@ $(document).ready(function () {
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-6">
                                             <h5 class="card-title mb-0">Expected Amount</h5>
-                                            <p class="card-text"><span class="badge badge-success">3,000,000 UGX</span></p>
+                                            <p class="card-text"><span class="badge badge-success">${project.fee} UGX</span></p>
                                         </div>
                                     </div>
                                     <hr class="mb-1 mt-1"/>
@@ -216,6 +229,62 @@ $(document).ready(function () {
                             </div>
                         </div>
                     `);
+                }else{
+                    $(".closed-project-contents").append(`
+                        <div class="col-md-6 col-sm-6">
+                            <div class="card custom-card">
+                                <div class="card-body">
+                                    <div class="mb-2">
+                                        <h5 class="card-title mb-0">Client</h5>
+                                        <p class="card-text font-13 custom-color">${project.client}</p>
+                                    </div>
+                                    <div class="mb-2">
+                                        <h5 class="card-title mb-0">Assistant Project Manager</h5>
+                                        <p class="card-text font-13">${project.name}</p>
+                                    </div>
+                                    <div class="mb-2">
+                                        <h5 class="card-title mb-0">Project Title</h5>
+                                        <p class="card-text font-13">${project.title}</p>
+                                    </div>
+                                    <div class="mb-2">
+                                        <h5 class="card-title mb-0">Commencement Date</h5>
+                                        <p class="card-text font-13">${project.commencement}</p>
+                                    </div>
+                                    <div class="mb-2">
+                                        <h5 class="card-title mb-0">Completion Date</h5>
+                                        <p class="card-text font-13">${project.completion}</p>
+                                    </div>
+                                    <hr class="mb-1 mt-3"/>
+                                    <div class="row mb-2">
+                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                            <h5 class="card-title mb-0">Current Expenses</h5>
+                                            <p class="card-text"><span class="badge badge-warning">3,000,000 UGX</span></p>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                            <h5 class="card-title mb-0">Expected Amount</h5>
+                                            <p class="card-text"><span class="badge badge-success">${project.fee} UGX</span></p>
+                                        </div>
+                                    </div>
+                                    <hr class="mb-1 mt-1"/>
+                                    <div class="progress-wrapper">
+                                        <div class="progress-info">
+                                            <div class="progress-label">
+                                                <span>days used</span>
+                                            </div>
+                                            <div class="progress-percentage">
+                                                <span class="font-13">60%</span>
+                                            </div>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"></div>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="btn btn-outline-secondary custom-btn-black btn-sm float-right" data-toggle="modal" data-target=".expenses-details">More...</a>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                }
             });
         }
     }
