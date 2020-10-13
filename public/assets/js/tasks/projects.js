@@ -53,6 +53,7 @@ $(document).ready(function () {
                     <span class="toggleproject">Return</span>
                     `);
         } else {
+            clearInputs();
             $(this).html(`
                     <i class="fa fa-plus"></i>
                     <span class="toggleproject">Create Project</span>
@@ -91,7 +92,6 @@ $(document).ready(function () {
             projectData.append(input.attr("name"), input.val());
         });
         $.when(postRequest(actionURL, projectData)).done(response => {
-            console.log('done response->', response)
             renderProjects(response);
             if ($("#submit-project-btn").attr("data-edit") === "no") {
                 notification("Project created successfully", "success");
@@ -115,17 +115,6 @@ $(document).ready(function () {
         });
     });
 
-    //Editing project
-    $(document).on("click", ".edit-project", function () {
-        $('.project-inputs').removeClass('d-none');
-        $('.project-contents').addClass('d-none');
-        $("#submit-project-btn").attr("data-edit", "yes").html(`<i class="fa fa-save"></i> Save Project`);
-        $(".project-add-btn").html(`
-                <i class="fa fa-arrow-circle-o-left"></i>
-                <span class="toggleproject">Return</span>
-            `);
-    });
-
     //Fetching Projects
     const fetchProjects = () => {
         $.when(getRequest("projects/fetch")).done(response => {
@@ -138,89 +127,190 @@ $(document).ready(function () {
     };
     fetchProjects();
 
+    //global project variable to hold data for editing
+    let editProjectData = [];
+
     //Rendering Projects
     const renderProjects = (projectData) => {
-        console.log("render called",projectData);
-        $(".project-card-content").html(`
-            <div class="col-md-12 col-sm-12">
-                <div class="card custom-card">
-                    <div class="card-body">
-                        <div class="mb-2 text-center">
-                            <h5 class="card-title mb-0 text-info">No project founds</h5>
+        //assigning data to global variable.
+        editProjectData = projectData;
+        //-----------------------------
+        if(projectData.length < 1) {
+            $(".project-card-content").html(`
+                <div class="col-md-12 col-sm-12">
+                    <div class="card custom-card">
+                        <div class="card-body">
+                            <div class="mb-2 text-center">
+                                <h5 class="card-title mb-0 text-info">No project founds</h5>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `);
-        response.forEach(project => {
-            $(".project-card-content").html(`
-                    <div class="col-md-6 col-sm-6">
-                        <div class="card custom-card ">
-                            <div class="mt-2 pr-2 pl-2">
-                                <button class="btn btn-sm btn-outline-warning data-id="${project.id}" btn-sm mr-0 delete-project" data-id="1" data-toggle="tooltip" data-placement="top" title="Delete Project"><i class="fa fa-times"></i></button>
-                                <button class="btn btn-sm btn-outline-primary data-id="${project.id}" btn-sm mr-0 edit-project" data-id="1" data-toggle="tooltip" data-placement="top" title="Edit Project"><i class="fa fa-edit"></i></button>
-                                <button class="btn btn-sm btn-outline-success data-id="${project.id}" btn-sm close-project" data-toggle="tooltip" data-placement="top" title="Close Project"><i class="fa fa-check"></i></button>
-                                <a href="{{route('project-expenses')}}" class="browse-add-exp btn-neutral btn-sm float-right ml-1" data-toggle="tooltip" data-placement="top" title="Check Expenses"><i class="fa fa-plus-circle" aria-hidden="true"></i> Expenses</a>
-                                <a href="#"
-                                    class="browse-add-exp btn-neutral btn-sm float-right employees" 
-                                    data-toggle="modal" data-target="#projectEmployee">
-                                    <i class="fa fa-plus-circle" aria-hidden="true"></i> Employee
-                                </a>
-                            </div>
-                            <hr class="mb-1 mt-1"/>
-                            <div class="card-body">
-                                <div class="mb-2">
-                                    <h5 class="card-title mb-0">Client</h5>
-                                    <p class="card-text font-13 custom-color">${project.client}</p>
-                                </div>
-                                <div class="mb-2">
-                                    <h5 class="card-title mb-0">Assistant Project Manager</h5>
-                                    <p class="card-text font-13">${project.Assmanager}</p>
-                                </div>
-                                <div class="mb-2">
-                                    <h5 class="card-title mb-0">Project Title</h5>
-                                    <p class="card-text font-13">${project.title}</p>
-                                </div>
-                                <div class="mb-2">
-                                    <h5 class="card-title mb-0">Commencement Date</h5>
-                                    <p class="card-text font-13">${project.commencement}</p>
-                                </div>
-                                <div class="mb-2">
-                                    <h5 class="card-title mb-0">Completion Date</h5>
-                                    <p class="card-text font-13">${project.completion}</p>
-                                </div>
-                                <hr class="mb-1 mt-3"/>
-                                <div class="row mb-2">
-                                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                        <h5 class="card-title mb-0">Current Expenses</h5>
-                                        <p class="card-text"><span class="badge badge-warning">3,000,000 UGX</span></p>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                        <h5 class="card-title mb-0">Expected Amount</h5>
-                                        <p class="card-text"><span class="badge badge-success">3,000,000 UGX</span></p>
-                                    </div>
-                                </div>
-                                <hr class="mb-1 mt-1"/>
-                                <div class="progress-wrapper">
-                                    <div class="progress-info">
-                                        <div class="progress-label">
-                                            <span>days used</span>
-                                        </div>
-                                        <div class="progress-percentage">
-                                            <span class="font-13">60%</span>
-                                        </div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"></div>
-                                    </div>
-                                </div>
-                                <a href="#" class="btn btn-outline-secondary custom-btn-black btn-sm float-right" data-toggle="modal" data-target=".expenses-details">More...</a>
+            `);
+            $(".closed-project-contents").html(`
+                <div class="col-md-12 col-sm-12">
+                    <div class="card custom-card">
+                        <div class="card-body">
+                            <div class="mb-2 text-center">
+                                <h5 class="card-title mb-0 text-info">No project founds</h5>
                             </div>
                         </div>
                     </div>
-                `);
-        });
+                </div>
+            `);
+        } else {
+            $(".project-card-content").html("");
+            $(".closed-project-contents").html("");
+            projectData.forEach(project => {
+                if(project.status === "open"){
+                $(".project-card-content").append(`
+                        <div class="col-md-6 col-sm-6">
+                            <div class="card custom-card ">
+                                <div class="mt-2 pr-2 pl-2">
+                                    <button class="btn btn-sm mr-0 btn-outline-warning btn-sm delete-project" data-id="${project.id}" data-toggle="tooltip" data-placement="top" title="Delete Project"><i class="fa fa-times"></i></button>
+                                    <button class="btn btn-sm mr-0 btn-outline-primary btn-sm edit-project"   data-id="${project.id}" data-toggle="tooltip" data-placement="top" title="Edit Project"><i class="fa fa-edit"></i></button>
+                                    <button class="btn btn-sm mr-0 btn-outline-success btn-sm close-project"  data-id="${project.id}" data-toggle="tooltip" data-placement="top" title="Close Project"><i class="fa fa-check"></i></button>
+                                    <a href="{{route('project-expenses')}}" class="browse-add-exp btn-neutral btn-sm float-right ml-1" data-toggle="tooltip" data-placement="top" title="Check Expenses"><i class="fa fa-plus-circle" aria-hidden="true"></i> Expenses</a>
+                                    <a href="#"
+                                        class="browse-add-exp btn-neutral btn-sm float-right employees" 
+                                        data-toggle="modal" data-target="#projectEmployee">
+                                        <i class="fa fa-plus-circle" aria-hidden="true"></i> Employee
+                                    </a>
+                                </div>
+                                <hr class="mb-1 mt-1"/>
+                                <div class="card-body">
+                                    <div class="mb-2">
+                                        <h5 class="card-title mb-0">Client</h5>
+                                        <p class="card-text font-13 custom-color">${project.client}</p>
+                                    </div>
+                                    <div class="mb-2">
+                                        <h5 class="card-title mb-0">Assistant Project Manager</h5>
+                                        <p class="card-text font-13">${project.name}</p>
+                                    </div>
+                                    <div class="mb-2">
+                                        <h5 class="card-title mb-0">Project Title</h5>
+                                        <p class="card-text font-13">${project.title}</p>
+                                    </div>
+                                    <div class="mb-2">
+                                        <h5 class="card-title mb-0">Commencement Date</h5>
+                                        <p class="card-text font-13">${project.commencement}</p>
+                                    </div>
+                                    <div class="mb-2">
+                                        <h5 class="card-title mb-0">Completion Date</h5>
+                                        <p class="card-text font-13">${project.completion}</p>
+                                    </div>
+                                    <hr class="mb-1 mt-3"/>
+                                    <div class="row mb-2">
+                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                            <h5 class="card-title mb-0">Current Expenses</h5>
+                                            <p class="card-text"><span class="badge badge-warning">3,000,000 UGX</span></p>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                            <h5 class="card-title mb-0">Expected Amount</h5>
+                                            <p class="card-text"><span class="badge badge-success">${project.fee} UGX</span></p>
+                                        </div>
+                                    </div>
+                                    <hr class="mb-1 mt-1"/>
+                                    <div class="progress-wrapper">
+                                        <div class="progress-info">
+                                            <div class="progress-label">
+                                                <span>days used</span>
+                                            </div>
+                                            <div class="progress-percentage">
+                                                <span class="font-13">60%</span>
+                                            </div>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"></div>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="btn btn-outline-secondary custom-btn-black btn-sm float-right" data-toggle="modal" data-target=".expenses-details">More...</a>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                }else{
+                    $(".closed-project-contents").append(`
+                        <div class="col-md-6 col-sm-6">
+                            <div class="card custom-card">
+                                <div class="card-body">
+                                    <div class="mb-2">
+                                        <h5 class="card-title mb-0">Client</h5>
+                                        <p class="card-text font-13 custom-color">${project.client}</p>
+                                    </div>
+                                    <div class="mb-2">
+                                        <h5 class="card-title mb-0">Assistant Project Manager</h5>
+                                        <p class="card-text font-13">${project.name}</p>
+                                    </div>
+                                    <div class="mb-2">
+                                        <h5 class="card-title mb-0">Project Title</h5>
+                                        <p class="card-text font-13">${project.title}</p>
+                                    </div>
+                                    <div class="mb-2">
+                                        <h5 class="card-title mb-0">Commencement Date</h5>
+                                        <p class="card-text font-13">${project.commencement}</p>
+                                    </div>
+                                    <div class="mb-2">
+                                        <h5 class="card-title mb-0">Completion Date</h5>
+                                        <p class="card-text font-13">${project.completion}</p>
+                                    </div>
+                                    <hr class="mb-1 mt-3"/>
+                                    <div class="row mb-2">
+                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                            <h5 class="card-title mb-0">Current Expenses</h5>
+                                            <p class="card-text"><span class="badge badge-warning">3,000,000 UGX</span></p>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                            <h5 class="card-title mb-0">Expected Amount</h5>
+                                            <p class="card-text"><span class="badge badge-success">${project.fee} UGX</span></p>
+                                        </div>
+                                    </div>
+                                    <hr class="mb-1 mt-1"/>
+                                    <div class="progress-wrapper">
+                                        <div class="progress-info">
+                                            <div class="progress-label">
+                                                <span>days used</span>
+                                            </div>
+                                            <div class="progress-percentage">
+                                                <span class="font-13">60%</span>
+                                            </div>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"></div>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="btn btn-outline-secondary custom-btn-black btn-sm float-right" data-toggle="modal" data-target=".expenses-details">More...</a>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                }
+            });
+        }
     }
+
+    //Editing project
+    $(document).on("click", ".edit-project", function () {
+        fetchUsers("Assmanager");
+        $('.project-inputs').removeClass('d-none');
+        $('.project-contents').addClass('d-none');
+        $("#submit-project-btn").attr("data-edit", "yes").html(`<i class="fa fa-save"></i> Save Project`);
+        $(".project-add-btn").html(`
+                <i class="fa fa-arrow-circle-o-left"></i>
+                <span class="toggleproject">Return</span>
+            `);
+        var projectData = editProjectData.filter((project) => project.id === parseInt($(this).attr("data-id")));
+        console.log(projectData);
+        projectData.forEach(project => {
+            $(".projectClient").val(project.client);
+            $(".projectFee").val(project.fee);
+            $(".projectStart").val(project.commencement);
+            $(".projectEnd").val(project.completion);
+            $(".projectTitle").val(project.title);
+            $(".projectDesc").val(project.desc);
+            $(".id-holder").val(project.id);
+        })
+    });
 
     //Delete Project
     $(document).on("click", ".delete-project", function () {

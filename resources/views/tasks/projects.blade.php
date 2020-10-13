@@ -64,7 +64,7 @@
                                                 <label for="exampleFormControlInput1" class="small-text">Assistant Project Manager <span class="error">*</span></label>
                                                 <div class="bg-secondary">
                                                     {{-- data is from jQuery --}}
-                                                    <select name="Assmanager" class="Assmanager form-control-sm form-control form-control-alternative">
+                                                    <select required name="Assmanager" class="Assmanager form-control-sm form-control form-control-alternative">
                                                         <option disabled value="" selected>loading Users ...</option>
                                                     </select>
                                                     <span style="display: none" class="user-type small-text">{{Auth()->user()->userType}}</span>
@@ -87,6 +87,7 @@
                                                 <label for="exampleFormControlTextarea1" class="small-text">Description <span class="error">*</span></label>
                                                 <textarea required name="desc" class="projectDesc form-control-sm form-control form-control-alternative" id="exampleFormControlTextarea1" rows="6"></textarea>
                                             </div>
+                                            <input class="d-none id-holder form-control-sm form-control form-control-alternative" name="id" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -115,60 +116,17 @@
                             </div>
                         </div>
                     </div>
-                    </div>
                 </div>
 
                 <div class="closed-proj-container d-none">
-                    <div class="row project-contents">
-                        <div class="col-md-6 col-sm-6">
+                    {{-- Content from jQuery --}}
+                    <div class="row project-contents closed-project-contents">
+                        <div class="col-md-12 col-sm-12">
                             <div class="card custom-card">
                                 <div class="card-body">
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Client</h5>
-                                        <p class="card-text font-13 custom-color">Post Bank (U) LTD</p>
+                                    <div class="mb-2 text-center">
+                                        <h5 class="card-title mb-0 text-info">Loading Projects...</h5>
                                     </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Assistant Project Manager</h5>
-                                        <p class="card-text font-13">Mr: Pinyi Othieno Eria</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Project Title</h5>
-                                        <p class="card-text font-13">Tables are slightly adjusted to style, collapse borders, and ensure consistent...</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Commencement Date</h5>
-                                        <p class="card-text font-13">08/09/2020, 9:30 am</p>
-                                    </div>
-                                    <div class="mb-2">
-                                        <h5 class="card-title mb-0">Completion Date</h5>
-                                        <p class="card-text font-13">08/10/2020, 9:30 am</p>
-                                    </div>
-                                    <hr class="mb-1 mt-3"/>
-                                    <div class="row mb-2">
-                                        <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <h5 class="card-title mb-0">Current Expenses</h5>
-                                            <p class="card-text"><span class="badge badge-warning">3,000,000 UGX</span></p>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <h5 class="card-title mb-0">Expected Amount</h5>
-                                            <p class="card-text"><span class="badge badge-success">3,000,000 UGX</span></p>
-                                        </div>
-                                    </div>
-                                    <hr class="mb-1 mt-1"/>
-                                    <div class="progress-wrapper">
-                                        <div class="progress-info">
-                                            <div class="progress-label">
-                                                <span>days used</span>
-                                            </div>
-                                            <div class="progress-percentage">
-                                                <span class="font-13">60%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"></div>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn btn-outline-secondary custom-btn-black btn-sm float-right" data-toggle="modal" data-target=".expenses-details">More...</a>
                                 </div>
                             </div>
                         </div>
