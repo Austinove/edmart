@@ -64,7 +64,7 @@
                                                 <label for="exampleFormControlInput1" class="small-text">Assistant Project Manager <span class="error">*</span></label>
                                                 <div class="bg-secondary">
                                                     {{-- data is from jQuery --}}
-                                                    <select name="Assmanager" class="Assmanager form-control-sm form-control form-control-alternative">
+                                                    <select required name="Assmanager" class="Assmanager form-control-sm form-control form-control-alternative">
                                                         <option disabled value="" selected>loading Users ...</option>
                                                     </select>
                                                     <span style="display: none" class="user-type small-text">{{Auth()->user()->userType}}</span>
@@ -87,6 +87,7 @@
                                                 <label for="exampleFormControlTextarea1" class="small-text">Description <span class="error">*</span></label>
                                                 <textarea required name="desc" class="projectDesc form-control-sm form-control form-control-alternative" id="exampleFormControlTextarea1" rows="6"></textarea>
                                             </div>
+                                            <input class="d-none id-holder form-control-sm form-control form-control-alternative" name="id" value="">
                                         </div>
                                     </div>
                                 </div>

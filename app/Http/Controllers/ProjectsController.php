@@ -54,7 +54,6 @@ class ProjectsController extends Controller
         } catch (QueryException $th) {
             throw $th;
         }
-        
     }
     
     /*
@@ -62,80 +61,49 @@ class ProjectsController extends Controller
     */
     public function fetchProjetcs()
     {
-        $pending =
-            DB::table('expences')
-            ->join("users", "expences.user_id", "=", "users.id")
-            ->select(
-                "expences.id",
-                "expences.desc",
-                "expences.created_at",
-                "expences.user_id",
-                "expences.amount",
-                "users.name",
-                "expences.status",
-                "expences.reason"
-            )
-            ->where("expences.status", "=", "Not Viewed")
-            ->orwhere("expences.status", "=", "Viewed")
-            ->orderBy("created_at", "desc")->get();
-
         if(Auth::user()->userType === "admin"){
-            $projects = DB::table("projects")
-            ->join("users", "projects.Assmanager", "=", "users.id")
-            ->select(
-                "projects.id",
-                "projects.title",
-                "projects.client",
-                "projects.desc",
-                "projects.status",
-                "users.name",
-                "projects.Assmanager",
-                "projects.commencement",
-                "projects.completion",
-                "projects.fee"
-            )
-            ->orderBy("projects.created_at", "desc")->get();
-            return response()->json($projects);
+            try {
+                $projects = DB::table("projects")
+                ->join("users", "projects.Assmanager", "=", "users.id")
+                ->select(
+                    "projects.id",
+                    "projects.title",
+                    "projects.client",
+                    "projects.desc",
+                    "projects.status",
+                    "users.name",
+                    "projects.Assmanager",
+                    "projects.commencement",
+                    "projects.completion",
+                    "projects.fee"
+                )
+                ->orderBy("projects.created_at", "desc")->get();
+                return response()->json($projects);
+            } catch (QueryException $th) {
+                throw $th;
+            }
         }else{
-            $projects =
-            DB::table("projects")
-            ->join("users", "projects.Assmanager", "=", "users.id")
-            ->select(
-                "projects.id",
-                "projects.title",
-                "projects.client",
-                "projects.desc",
-                "projects.status",
-                "users.name",
-                "projects.Assmanager",
-                "projects.commencement",
-                "projects.completion"
-            )
-            ->orderBy("projects.created_at", "desc")->get();
-            return response()->json($projects);
+            try {
+                $projects =
+                DB::table("projects")
+                ->join("users", "projects.Assmanager", "=", "users.id")
+                ->select(
+                    "projects.id",
+                    "projects.title",
+                    "projects.client",
+                    "projects.desc",
+                    "projects.status",
+                    "users.name",
+                    "projects.Assmanager",
+                    "projects.commencement",
+                    "projects.completion"
+                )
+                ->orderBy("projects.created_at", "desc")->get();
+                return response()->json($projects);
+            } catch (QueryException $th) {
+                throw $th;
+            }
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -145,9 +113,33 @@ class ProjectsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $inputs = $request->all();
+        $this->validate($request, [
+            "desc" => "required",
+            "fee" => "required|numeric",
+            "Assmanager" => "required",
+            "commencement" => "required",
+            "completion" => "required",
+            "client" => "required",
+            "title" => "required",
+            "id" => "required"
+        ]);
+        try {
+            Project::where("id", "=", $inputs["id"])->update([
+                "client" => $inputs["client"],
+                "desc" => $inputs["desc"],
+                "fee" => $inputs["fee"],
+                "Assmanager" => $inputs["Assmanager"],
+                "commencement" => $inputs["commencement"],
+                "completion" => $inputs["completion"],
+                "title" => $inputs["title"],
+            ]);
+            return $this->fetchProjetcs();
+        } catch (QueryException $th) {
+            throw $th;
+        }
     }
 
     /**

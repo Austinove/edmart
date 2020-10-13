@@ -92,7 +92,6 @@ $(document).ready(function () {
             projectData.append(input.attr("name"), input.val());
         });
         $.when(postRequest(actionURL, projectData)).done(response => {
-            console.log('done response->', response)
             renderProjects(response);
             if ($("#submit-project-btn").attr("data-edit") === "no") {
                 notification("Project created successfully", "success");
@@ -240,6 +239,7 @@ $(document).ready(function () {
             $(".projectEnd").val(project.completion);
             $(".projectTitle").val(project.title);
             $(".projectDesc").val(project.desc);
+            $(".id-holder").val(project.id);
         })
     });
 
