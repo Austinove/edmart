@@ -5,7 +5,7 @@
         <div class="col-lg-6">
         <ul class="nav nav-footer justify-content-center justify-content-lg-end">
             <li class="nav-item">
-                <a href="https://github.com/austinove" class="nav-link" target="_blank">EDmart System Version 1.0</a>
+                <a href="https://github.com/austinove" class="nav-link" target="_blank">System Version 1.0</a>
             </li>
         </ul>
         </div>

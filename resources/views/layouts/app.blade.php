@@ -6,8 +6,8 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" href="{{ asset('/assets/img/favicon.png')}}" type="image/png">
-    <title>EDMART SYSTEM</title>
+    {{-- <link rel="icon" href="{{ asset('/assets/img/favicon.png')}}" type="image/png"> --}}
+    <title>SYSTEM</title>
     <link rel="stylesheet" href="{{ asset('/assets/css/argon.css?v=1.2.0') }}"  type="text/css">
     <link rel="stylesheet" href="{{ asset('/assets/css/custom.css') }}"  type="text/css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
@@ -23,8 +23,8 @@
                 <!-- Brand -->
                 <div class="sidenav-header  align-items-center">
                     <a class="navbar-brand" href="javascript:void(0)">
-                    <img src="{{ asset('/assets/img/edmart_logo.jpg') }}" class="navbar-brand-img" alt="EDMART Logo">
-                        {{-- <span class="small-text">MART SYSTEMS</span> --}}
+                    {{-- <img src="{{ asset('/assets/img/edmart_logo.jpg') }}" class="navbar-brand-img" alt="EDMART Logo"> --}}
+                        <span class="small-text">SYSTEMS</span>
                     </a>
                 </div>
                 <div class="navbar-inner">
